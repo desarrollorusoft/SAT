@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<div class="container-fluid">
+			<div class="row contenedor-pasos m-b-md">
+	
+		        <div class="col-xs-12 text-left color-azul-primary">
+		        	<h2><strong>Actualización de Datos</strong></h2>
+		        </div>
+				<div class="col-xs-12 text-left">
+					<ui:include src="/tiles/rs/tile-resumen.xhtml"/>
+				</div>
+				<div class="col-xs-12">
+					<div class="pull-left">
+						<p:commandButton value="Volver"
+										 styleClass="btn btn-default btn-rounded"
+										 action="#{ResumenRS.volver()}"
+										 update=":form:secciones" />
+					</div>
+					<div class="pull-right">
+						<p:commandButton value="Continuar"
+										 styleClass="btn btn-primary btn-rounded"
+										 action="#{ResumenRS.aceptar()}"
+										 onclick="PF('bloqueoPantalla').show();pollGuardadorRS.stop();"
+										 oncomplete="PF('bloqueoPantalla').hide()"
+										 update=":form:secciones :form:modalErroresPadron" />
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	  	<p:dialog id="modalErroresPadron" 
+	  			  widgetVar="ModalErroresPadron" 
+	  			  modal="true" 
+	  			  width="480"
+				  styleClass="modal-area"
+				  draggable="false">
+				
+				<div class="title-area">
+					<strong><h:outputText value="Confirmar" /></strong>
+				</div>
+				<div class="description-area arriba-10">
+					<span>
+					Sr. Contribuyente: 
+					<br/>
+					De acuerdo con los datos declarados, su padrón no está en condiciones de tributar por el Régimen Simplificado por los siguientes motivos:
+					</span>
+					<p:dataList var="error" value="#{ResumenRS.errores}" styleClass="arriba-10">
+						<h:outputText value="#{error.descripcion}"/>
+					</p:dataList>
+				</div>
+				<div class="buttom-area arriba-10">
+					<p:commandButton id="btnModalCancelar"
+									 value="Cancelar"
+									 styleClass="btn btn-default btn-rounded btn-outline"
+									 onclick="PF('ModalErroresPadron').hide();" 
+									 update="modalErroresPadron"  />
+					<p:tooltip styleClass="tooltip" id="toolBtnModalCancelar" for="btnModalCancelar" value="Cancelar" />
+
+					<p:commandButton id="btnModalAceptar" 
+									 value="Aceptar"
+									 action="#{ResumenRS.rechazarPadron()}" 
+									 styleClass="btn btn-primary btn-rounded pull-right"
+									 onclick="PF('bloqueoPantalla').show();"
+									 oncomplete="PF('bloqueoPantalla').hide();PF('ModalErroresPadron').hide();"
+									 update="modalErroresPadron"/>
+					<p:tooltip styleClass="tooltip" id="toolBtnModalAceptar" for="btnModalAceptar" value="Aceptar" />
+				</div>
+		</p:dialog>
+	
+	</ui:composition>
+</html>

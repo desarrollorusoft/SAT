@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/home-cuentas.css" />
+			<h:outputStylesheet library="css" name="adaptacion/subsidio.css" />
+		</f:facet>
+		<div class="col-md-12">
+			<div class="row mb-3">
+				<div class="col-xs-12">
+					<div class="contenido-seccion">
+						<div class="row">
+							<div class="col-md-8 col-sm-6 col-xs-12">
+								<span style="font-size:3rem;">Programa de Apoyo Económico<br/>a Comercios No Esenciales</span>
+							</div>
+							<div class="col-md-4 col-sm-6 col-xs-12">
+								<img alt="Logo Municipalidad" class="pull-right" src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/new_logo-header.jpg"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br/><br/>
+			<div class="row mb-3">
+				<div class="col-xs-12 b-r-md">
+					<div class="contenido-seccion text-center">
+						<p style="font-size: 3rem;"><span style="font-weight: bold">¡La informaci&oacute;n se envi&oacute; exitosamente!</span><br/>En breve nos contactaremos para el tr&aacute;mite.</p>
+						<br/><br/>
+						<div class="row">
+							<div class="col-xs-12">
+								<a href="#{SubsidioCompleto.tramite.urlPDF}" class="btn btn-primary btn-rounded pull-center" target="_blank">
+									<i class="fas fa-download"></i> Descargar
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:composition>
+</html>

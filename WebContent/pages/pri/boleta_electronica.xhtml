@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:c="http://java.sun.com/jstl/core">
+	  
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			
+			<ui:define name="titulo-pagina">Boleta Electr&oacute;nica</ui:define>
+			
+			<ui:define name="cuerpo">
+
+				<div class="col-md-6 no-padding">
+					<div class="col-md-12">
+						<div class="ibox float-e-margins">
+							<p:outputPanel id="cuentas">					
+								<div class="ibox-content">
+									
+									<h:panelGroup id="secciones">
+									    <ui:fragment rendered="#{!BoletaElectronica.habilitado}" >
+									   		<ui:include src="/tiles/be/be-bloqueado.xhtml" />
+									    </ui:fragment>
+									    
+									    <ui:fragment rendered="#{BoletaElectronica.habilitado}" >
+									    	<ui:include src="/tiles/be/be-habilitado.xhtml" />
+									    </ui:fragment>
+									</h:panelGroup>
+									
+								</div>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 no-padding">
+					
+					<ui:include src="/tiles/home/banners.xhtml" />
+					<ui:include src="/tiles/home/alertas.xhtml" />
+					
+				</div>
+				
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

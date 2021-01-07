@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<ui:composition>
+		
+		<div id="scroll">
+			<hr/>
+			<h4 class="color-azul-primary">Adherir Cuenta</h4>
+			<div class="row scroll">
+				<div class="col-md-12 b-r">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="pull-left">Tributo</label> 
+							<h:selectOneMenu value="#{BELista.tipoSeleccionado}"
+											 styleClass="form-control m-b ng-untouched ng-pristine ng-valid">
+								<f:selectItem noSelectionOption="true" itemLabel="Seleccione..."/>
+								<f:selectItems value="#{BELista.tiposCuentaDisponibles}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nombre}" />
+								<p:ajax update="cuentasTributo" />
+							</h:selectOneMenu>
+						</div>
+						
+						<div class="col-md-5">
+							<label class="pull-left">Cuenta</label> 
+							<h:selectOneMenu id="cuentasTributo"
+											 value="#{BELista.datoCuentaSeleccionado}"
+											 styleClass="form-control m-b ng-untouched ng-pristine ng-valid">
+								<f:selectItems value="#{BELista.recuperarCuentasDisponibles()}" var="cuenta" itemValue="#{cuenta.datoCuenta}" itemLabel="#{cuenta.datoCuenta} - #{cuenta.descripcion}" />
+							</h:selectOneMenu>
+						</div>
+						
+						<div class="col-md-1">
+							<span>
+								<p:commandButton action="#{BELista.solicitudVinculacion()}"
+												 value=""
+												 styleClass="arriba-5 btn btn-primary fa fa-plus pull-right btn-circle no-padding sin-texto sin-correr">
+								</p:commandButton>
+							</span>
+						</div>
+					</div>
+					<p>Para adherir otra cuenta, realiz&aacute; previamente el tr&aacute;mite de adhesi&oacute;n a boleta electr&oacute;nica de la misma, en la Municipalidad, la delegaci&oacute;n de tu barrio o solicitalo por el canal "Contactanos" (men&uacute; lateral izquierdo).</p>
+					<p>Conoc&eacute; los requisitos descargando la gu&iacute;a de tr&aacute;mite.</p>
+					<br/>
+					<a href="https://www.vicentelopez.gov.ar/static-iipp/p/IIPP/guia/ABL/Guia_de_Tramite_ALCVP_y_SV_Adhesion_a_Boleta_Electronica.pdf" 
+					   class="arriba-5 btn ui-button btn-primary btn-outline btn-rounded" 
+					   target="_blank">
+					   Guía de Trámite
+				   </a>
+				</div>
+			</div>
+			
+			<ui:include src="/tiles/be/be-modal-adhesion.xhtml" />
+		</div>
+	</ui:composition>
+</html>

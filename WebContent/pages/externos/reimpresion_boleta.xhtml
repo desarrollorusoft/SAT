@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_externo_nuevo.xhtml">
+			
+			<ui:define name="titulo-pagina">Reimpresión de Boleta</ui:define>
+			
+			<ui:define name="titulo">Reimpresión de Boleta</ui:define>
+			
+			<ui:define name="contenido">
+				<f:facet name="last">
+					<h:outputStylesheet library="css/nuevos" name="reimpresion_boletas.css" />
+				</f:facet>
+				
+				<h:panelGroup id="secciones_reimpresion">
+				    <ui:fragment rendered="#{reimpresionBoletaBean.muestroIngreso}">
+				        <ui:include src="/pages/externos/tiles/ingreso_reimpresion_boleta.xhtml"/>
+				    </ui:fragment>
+				    
+				    <ui:fragment rendered="#{(!reimpresionBoletaBean.muestroIngreso)}">
+				        <ui:include src="/pages/externos/tiles/detalle_reimpresion_boleta.xhtml"/>
+				    </ui:fragment>				  
+				</h:panelGroup>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

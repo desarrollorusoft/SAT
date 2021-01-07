@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			
+			<p:dialog widgetVar="AlertaBoleta"
+					  id="alertaBoleta"
+					  header="Fecha de Pago" 
+					  modal="true"
+					  closable="true"
+					  hideEffect="fade"
+					  showEffect="fade"
+					  width="400" >
+					  
+			    <div class="form-group">
+		        	<p>Seleccione una fecha para generar el recibo correspondiente. Tenga en cuenta que al momento de seleccionar una fecha posterior se recalcularan los intereses a la fecha seleccionada.</p>
+		          	<div class="form-group">
+		            	<div>
+		              		<p:calendar value="#{ModalRecibo.fechaPago}"
+										pattern="dd/MM/yyyy"
+										readonlyInput="true"
+										mindate="#{ModalRecibo.fechaHoy}"
+										disabledWeekends="true"
+										locale="es"/>
+		            	</div>
+		          	</div>
+		        </div>
+		        <div class="modal-footer">
+		        	<p:commandButton value="Aceptar"
+								 	 actionListener="#{ModalRecibo.aceptarFecha()}"
+								 	 styleClass="btn btn-primary btn-rounded pull-right"
+								 	 onclick="PF('AlertaBoleta').hide();PF('bloqueoPantalla').show();"
+								 	 oncomplete="PF('bloqueoPantalla').hide()"
+								 	 update=":form:tabsCuentas:seccionPagos" />
+								 
+					<p:commandButton value="Cancelar" 
+									 styleClass="btn btn-default btn-rounded pull-left" 
+									 onclick="PF('AlertaBoleta').hide();"/>
+		      	</div>
+			</p:dialog>  
+			
+		</ui:composition>
+	</h:body>
+</html>

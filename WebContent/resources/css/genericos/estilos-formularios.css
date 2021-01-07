@@ -1,0 +1,18 @@
+.ng-invalid.ng-dirty:not( form ){
+  border-color:#ed5565;
+}
+
+.mensaje-error{
+  color:#ed5565;
+}
+
+.form-comun.form-control:focus{
+  box-shadow:none;
+  outline:none;
+}
+
+
+.input-group-btn > button{
+  border-bottom-left-radius:0;
+  border-top-left-radius:0;
+}

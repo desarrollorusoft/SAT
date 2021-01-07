@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jstl/core">
+<h:body>
+
+	<ui:composition template="/templates/comun_sat.xhtml">
+		<ui:define name="titulo-pagina">PLAN DE CUOTAS</ui:define>
+		
+		<ui:define name="tabla-cuentas">
+
+			<div class="contenedor-tabla-cuentas">
+			<h:panelGroup id="div-TablaCuentas">	
+				<p:dataTable disabledSelection="#{!ablPlanDePago.verCuentas}" var="cuenta" 
+							 id="tablaCuentas"
+							 value="#{ablPlanDePago.cuentaConPlanDePago}"
+							 rowKey="#{cuenta.hashCode()}"
+							 emptyMessage="No se encontraron cuentas"
+							 selection="#{ablPlanDePago.cuentaSeleccionada}" >
+					
+					<p:column selectionMode="single" style="width:38px"/>
+					
+					<p:column headerText="Cuenta" width="120">
+						<h:outputText value="#{cuenta.numero}" />
+					</p:column>
+
+					<p:column headerText="Titular" width="220">
+						<h:outputText value="#{cuenta.contribuyente.nombreApellido}" />
+					</p:column>
+
+					<p:column headerText="Domicilio">
+						<h:outputText value="#{cuenta.contribuyente.domicilio.toString()}" />
+					</p:column>
+					
+					<p:ajax event="rowSelectRadio"
+							listener="#{ablPlanDePago.cambiarCuenta()}"
+							onstart="PF('bloqueoPantalla').show()" 
+							oncomplete="PF('bloqueoPantalla').hide()"
+							update=":form:PlanesDePago :form:tiles :form:contenedor-cuenta-seleccionada"/>
+				</p:dataTable>
+				</h:panelGroup>	
+			</div>
+		</ui:define>
+		
+		<ui:define name="infoCuenta">
+		</ui:define>
+		
+		<ui:define name="contenido">
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="abl.css" />
+			</f:facet>
+			
+			Selecione Plan de Pago
+			
+			<p:dataTable var="plan" id="PlanesDePago"
+						 value="#{ablPlanDePago.planesDePagoAPagar}" 
+						 selectionMode="single"
+						 rowKey="#{plan}"
+						 emptyMessage="No se encontraron planes de pago"
+						 selection="#{ablPlanDePago.planDePagoSeleccionado}" 
+						 style="margin-bottom:20pt">
+
+				<p:column headerText="Nº Plan">
+					<h:outputText value="#{plan.nroPlan}" />
+					<br />
+				</p:column>
+
+				<p:column headerText="Solicitante">
+					<h:outputText value="#{plan.solicitante}" />
+					<br />
+				</p:column>
+				
+				<p:column headerText="Cant. Cuotas">
+					<h:outputText value="#{plan.cantCuotas}" />
+					<br />
+				</p:column>
+			
+				<p:ajax event="rowSelect" 
+						listener="#{ablPlanDePago.listarCuoutas()}" 
+						onstart="PF('bloqueoPantalla').show()" 
+						oncomplete="PF('bloqueoPantalla').hide()"
+						update=":form:tiles"/>
+			</p:dataTable>
+
+			<h:panelGroup id="tiles">
+				<ui:fragment rendered="#{ablPlanDePago.mostrarCuotas()}">
+					<ui:include src="/tiles/abl/tile_abl_pago_plan_de_pago.xhtml" />
+				</ui:fragment>
+				<ui:fragment rendered="#{ablPlanDePago.pagar}">
+					<ui:include src="/tiles/abl/tile_abl_pagar_plan_de_pago.xhtml" />
+				</ui:fragment>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

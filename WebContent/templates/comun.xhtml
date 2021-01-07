@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+      
+	<h:head>
+		<title>
+			SAT | <ui:insert name="titulo-pagina"></ui:insert>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/favicon.png"/>
+	    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+	    
+		<h:outputScript library="js" name="noEnter.js" />
+		<h:outputScript library="js" name="calendar_es.js" />
+		<h:outputScript library="js" name="inspinia/bootstrap.min.js" />
+		<h:outputScript library="js" name="inspinia/inspinia.js" />
+		<h:outputScript library="js" name="inspinia/pace.min.js" />
+		<h:outputScript library="js" name="inspinia/jquery.metisMenu.js" />
+		<h:outputScript library="js" name="popper/popper.min.js" />
+		<h:outputScript library="js" name="filtros/filtros.js" />
+		
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet"/>
+		<link rel="stylesheet" href="https://unpkg.com/ng2-toasty@4.0.0/style.css"/>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"/>
+
+		<ui:insert name="redireccionamiento"></ui:insert>
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+
+		<script type="text/javascript"> var _rl_cn = _rl_cn || 0,_rl_ptc = ("https:" == window.location.protocol ? "https" : "http"); window._rl_ids = window._rl_ids || []; window._rely = window._rely || []; _rl_ids.push({pid:702,src:0}); _rely.send = _rely.send?_rely.send:function() {}; (function() { var rl = document.createElement("script"); rl.type = "text/javascript"; rl.async = true; rl.src = _rl_ptc + "://api.retargetly.com/loader?id=" + _rl_ids[_rl_ids.length-1].pid; rl.id = "rely-api-"+(_rl_cn++); var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(rl, s); })(); </script>
+
+	</h:head>
+	<h:body styleClass="pace-done mini-navbar gray-bg">
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="inspinia/bootstrap.min.css" />
+			<h:outputStylesheet library="css" name="adaptacion/adaptacion.css" />
+			<h:outputStylesheet library="css" name="genericos/eliminar.css" />
+			<h:outputStylesheet library="css" name="genericos/estilos-formularios.css" />
+			<h:outputStylesheet library="css" name="inspinia/style.css" />
+			<!-- <h:outputStylesheet library="css/inspinia/font-awesome/css" name="font-awesome.css" /> -->
+			<h:outputStylesheet library="css" name="genericos/styles.css" />
+		</f:facet>
+		
+		<h:form id="form" enctype="multipart/form-data" onkeypress="return stopRKey(event);">
+		
+			<ui:include src="/templates/growls.xhtml"></ui:include>
+			
+			<div id="wrapper">
+				<!-- Aca va el contenido principal -->
+				<ui:insert name="detalle-contenido"></ui:insert>
+			</div>
+			
+			<p:blockUI widgetVar="bloqueoPantalla" block="form">
+				<h:graphicImage value="/resources/img/gif/load.gif" styleClass="imagen-loader"/>
+				
+				<div class="label-bloqueo">
+					<h:outputText value="Aguarde un momento por favor..." style="font-size: 15px;"/>
+				</div>
+			</p:blockUI>
+		</h:form>
+		
+		<style>
+			.mobile-msg {background: rgba(0,0,0,0.5);position: fixed;bottom: 0;left: 0;width: 100%;} .mobile-msg h3, .mobile-msg p, .mobile-msg .closer-mgs {color: #e7e7e7;}  .mobile-msg > div {padding: 10px 3px;width: 100%;}.closer-mgs {width: 100%;text-align: center;text-decoration: none;}.closer-mgs:hover {text-decoration: none;color: white;}.mobile-msg button {margin: auto;}.mobile-msg h3 {margin-top: 0;}.no-padding {padding:0 !Important;}
+		</style>
+		
+		<div id="mobile-message" class="mobile-msg" style="display:none;">
+			<div class="row">
+				<div class="col-xs-2 no-padding">
+					<div class="closer-mgs" onclick="closeMobileMgs()">X</div>
+				</div>
+				<div class="col-xs-7 no-padding">
+					<h3>&iexcl;Usa gratis el SAT M&oacute;vil!</h3>
+					<p>Una forma f&aacute;cil y r&aacute;pida de pagar tus cuentas.</p>
+				</div>
+				<div class="col-xs-3 no-padding">
+					<button class="btn btn-default pull-right" onclick="downloadApp()">Descargar</button>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			var isMobile = false;
+			var android;
+			if ( navigator.userAgent.match(/Android/i) ) {
+				isMobile = true;
+				android = true;
+				document.getElementById('mobile-message').style.display = 'block';
+			} else if ( navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) ) {
+				isMobile = true;
+				android = false;
+				document.getElementById('mobile-message').style.display = 'block';
+			} 
+			function downloadApp() {
+				if ( android ) { window.location.href = 'https://play.google.com/store/apps/details?id=ar.com.cognisys.mvl.sat.android'; } 
+				else { window.location.href = 'https://itunes.apple.com/ar/app/sat-m%C3%B3vil/id1168697918?mt=8'; }
+			}
+			function closeMobileMgs() {
+				document.getElementById('mobile-message').style.display = 'none';
+			}
+		</script>
+	</h:body>
+</html>

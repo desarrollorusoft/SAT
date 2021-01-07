@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="abl.css" />
+			</f:facet>
+	
+			<div class="contenedor-botonera-pagos-tile" style="margin-top:10px; float: right;">
+				<p:selectOneRadio value="#{ablBoletaDePagoGeneracionBean.medioPagoSeleccionado}" styleClass="rb-comun">
+					<f:selectItems value="#{ablBoletaDePagoGeneracionBean.listaMediosPago}"></f:selectItems>
+					<p:ajax update="alerta"></p:ajax>
+				</p:selectOneRadio>
+			</div>
+	
+			<div class="contenedor-botonera-tile" style="margin-top:10px">
+	
+				<p:commandButton value="VOLVER" 
+								 action="#{ablBoletaDePagoGeneracionBean.volver()}"
+								 rendered="#{ablBoletaDePagoBean.renderedPanel}"
+								 update=":form:panelesReciboPagoDiferido :form:div-TablaCuentas"
+								 style="margin-right: 15px;" 
+								 styleClass="boton-principal"/>
+	
+				<p:commandButton id="pagarPago"
+								 value="PAGAR" 
+								 onclick="PF('alerta').show()"
+								 style="margin-right: 10px;"
+								 styleClass="boton-principal"/>
+			</div>
+	
+			<p:confirmDialog id="mensaje" 
+							 widgetVar="confirmation"
+							 message="Tenga en cuenta que la demora en la acreditación de los pagos con tarjeta de crédito es de aproximadamente 30 días, si Ud. necesita un libre deuda para trámites, opte por otro medio de pago disponible."
+							 severity="alert" 
+							 global="true"
+							 width="400px" 
+							 styleClass="conf">
+	
+				<p:commandButton value="Ok" 
+								 action="#{ablBoletaDePagoGeneracionBean.pagar()}"
+								 oncomplete="PF('confirmation').hide();" 
+								 styleClass="ui-confirmdialog-yes" />
+	
+				<p:commandButton value="Cancelar"
+								 onclick="PF('confirmation').hide();document.body.style.cursor='default'" />
+			</p:confirmDialog>
+	
+			<p:confirmDialog message="#{ablBoletaDePagoGeneracionBean.mensajeAlerta}"
+							 id="alerta" 
+							 severity="alert" 
+							 global="true" 
+							 widgetVar="alerta"
+							 styleClass="conf">
+	
+				<p:commandButton value="Aceptar"
+								 rendered="#{ablBoletaDePagoGeneracionBean.eligioInterbanking() || ablBoletaDePagoGeneracionBean.eligioPagoMiCuentas() || ablBoletaDePagoGeneracionBean.eligioLinkPagos()}"
+								 action="#{ablBoletaDePagoGeneracionBean.pagar()}"
+								 oncomplete="PF('alerta').hide();" />
+	
+				<p:commandButton value="Aceptar"
+								 rendered="#{ablBoletaDePagoGeneracionBean.eligioTarjetasCredito()}"
+								 onclick="PF('confirmation').show();PF('alerta').hide();" />
+								 
+				<p:commandButton value="Cancelar" onclick="PF('alerta').hide();" />
+			</p:confirmDialog>
+	
+		</ui:composition>
+	</h:body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		<div class="container-fluid">
+			<div class="row contenedor-pasos">
+				<div class="col-xs-12">
+					<label>Servicios Varios</label>
+					<div class="row">
+						<div class="col-xs-12 izquierda-15 abajo-15">
+							<p:selectOneRadio value="#{ServiciosVarios.poseeSV}"
+											  styleClass="form-control">
+					            <f:selectItem itemLabel="Poseo" itemValue="true" />
+					            <f:selectItem itemLabel="No Poseo" itemValue="false" />
+					            <p:ajax update=":form:panelSv" listener="#{ServiciosVarios.actualizarPanel()}"></p:ajax>
+					        </p:selectOneRadio>
+						</div>
+						<p:outputPanel id="panelSv" layout="block">
+							<ui:fragment rendered="#{ServiciosVarios.poseeSV}">
+								<div class="col-sm-6 col-xs-12">
+									<label>Motores</label>
+									<p:spinner value="#{ServiciosVarios.serviciosVarios.motores}" 
+											   styleClass="form-control" 
+											   min="0" 
+											   max="999999999"
+											   onkeydown="return event.which === 8 || event.which === 46 || event.which === 47 || event.which === 48 || event.which === 49 || event.which === 50 || event.which === 51 || event.which === 52 || event.which === 53 || event.which === 54 || event.which === 55 || event.which === 56;" ></p:spinner>
+								</div>				
+								<div class="col-sm-6 col-xs-12">
+									<label>Calderas</label>
+									<p:spinner value="#{ServiciosVarios.serviciosVarios.calderas}" 
+											   styleClass="form-control" 
+											   min="0" 
+											   max="999999999"
+											   onkeydown="return event.which === 8 || event.which === 46 || event.which === 47 || event.which === 48 || event.which === 49 || event.which === 50 || event.which === 51 || event.which === 52 || event.which === 53 || event.which === 54 || event.which === 55 || event.which === 56;" ></p:spinner>
+								</div>				
+							</ui:fragment>
+						</p:outputPanel>
+					</div>
+				</div>
+				
+				<div class="col-xs-12 abajo-20 arriba-20">
+					<div class="pull-left">
+						<p:commandButton value="Volver"
+										 styleClass="btn btn-default btn-outline btn-rounded"
+										 action="#{ServiciosVarios.volver()}"
+										 update=":form:secciones" />
+					</div>
+					<div class="pull-right">
+						<p:commandButton value="Continuar"
+										 styleClass="btn btn-primary btn-rounded"
+										 action="#{ServiciosVarios.siguiente()}"
+										 update=":form:secciones" />
+					</div>
+				</div>
+			</div>
+		</div>		
+	</ui:composition>
+</html>

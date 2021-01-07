@@ -1,0 +1,256 @@
+button.sin-texto > span.ui-button-text.ui-c{
+    display:none
+}
+
+button.sin-texto{
+    border-radius:3px;
+}
+
+div.ui-tabs{
+    border:none;
+    padding:0;
+}
+
+
+div.ui-tabs-panels > div.ui-tabs-panel{
+    padding:0;
+}
+
+div.ui-tabs.ui-tabs-top > ul.ui-tabs-nav{
+    background:#fff;
+    padding-left:0;
+    border-bottom:2px solid rgba(0,0,0,0.16);
+    padding-bottom:1px;
+}
+
+ul.ui-tabs-nav > li.ui-tabs-selected {    
+    border-bottom: 1px solid #fff;
+    margin-bottom: -1px;
+}
+
+
+.flex{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+div.conf{
+    background:white;
+}
+
+button.ui-button.ui-button-text-only.boton-si{
+ 	padding: 6px 15px;
+}
+div.ui-dialog-buttonpane.ui-dialog-footer{
+    padding: 3px 5px;
+}
+
+i.icono-medio-pago{
+	font-size: 6em;
+    color: #444;
+    text-align: center;
+}
+
+i.icono-medio-pago, img.icono-medio-pago{
+	border:1px solid #ccc;
+	height: 90px;
+	width: 90px;
+	border-radius:5px
+}
+
+i.icono-medio-pago:hover, img.icono-medio-pago:hover{
+	background: #eee
+}
+
+.contenedor-medios-pago{
+	display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.ui-slider > span.ui-slider-handle{
+	border-radius: 10px;
+    padding: 10px;
+    outline: none;
+    left: 100%;
+    background: #2962FF;
+    border: 1px solid #2962FF;
+    top:-9px;
+}
+
+div.ui-slider{
+	background: #e0e0e0;
+    border-radius: 2px;
+    height: 5px;
+    top: 10px;
+}
+
+.card{
+	border:1px solid #ccc;
+	border-radius:4px;
+	min-height:170px;
+	display:flex;
+	align-items:space-around;
+	justify-content:space-between;
+	flex-direction:column;
+	transition:.4s;
+}
+
+.card:hover{
+	transform:scale(1.05);
+	backface-visibility: hidden;
+}
+
+.icono-grilla{
+	background: #ddd;
+    padding: 10px 0;
+    color: #2962FF;
+}
+
+.icono-grilla:before{
+	font-size:5em;
+
+}
+
+.alias-cuenta, .importe-cuenta{
+	font-weight:bold
+}
+
+.dato-cuenta{
+	font-size:0.85em;
+}
+
+button.boton-desvincular.btn-circle.btn-primary{
+	position:absolute;
+	right:2px;
+	top:-12px;
+	width:20px;
+	height:20px;
+	display:none;
+	background:rgba(41, 98, 255,0.85);
+	border-color:rgba(41, 98, 255,0.85);
+;
+
+}
+
+.card-cuenta:hover > button.boton-desvincular.btn-circle{
+	display:block;
+	z-index:9999;
+	
+}
+
+button.boton-desvincular.btn-circle:before{
+	top:-11px
+}
+
+.monto-deuda{
+	color:#2962FF;
+}
+
+
+.monto-vencer{
+	color:#444;
+}
+
+button.btn.btn-primary.boton-seleccionado{
+	background:#777;
+	border-color:#777;
+	box-shadow:inset 1px 1px 1px 3px rgba(0,0,0,.2);
+}
+button.btn.btn-primary.boton-seleccionado:hover{
+	background:#777;
+	border-color:#777;
+	box-shadow:inset 1px 1px 1px 3px rgba(0,0,0,.2);
+	cursor: context-menu;
+}
+
+.no-padding-izquierda {
+	padding-left:0;
+}
+
+.cards {
+	display:flex;
+	flex-direction:column;
+	align-items:stretch;
+	justify-content:stretch;
+}
+
+.icono-grilla{
+	width:100%;
+}
+
+button.alias-cuenta{
+	padding:5px;
+	background:transparent;
+	border:none;
+}
+
+button.alias-cuenta:hover {
+	background:#f7f7f7;
+}
+
+.card button.alias-cuenta:focus {
+	background:#eee;
+	border: 1px solid #eee;
+	outline:none;
+}
+
+.contenedor-datos{
+	flex:1;
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+}
+
+a:hover .dato-cuenta {
+	color:#777
+}
+
+.dato-cuenta:hover {
+	color:#777;
+}
+
+a.link-texto-negro {
+	cursor:default;
+}
+
+a:hover div.importe-cuenta {
+	background:initial;
+}
+
+.modalAlias{
+	text-align:center;
+}
+
+.container-flex{ 
+	padding:20px;
+}
+
+.modalAlias .ui-dialog-titlebar{
+	display: flex;
+    justify-content: center;
+}
+
+.modalAlias input.inputAlias {
+	background: transparent;
+	border:none;
+	border-bottom:1px solid #ccc;
+	text-align:center;
+	width:50%;
+	transition: border .4s, width .4s;
+}
+
+.modalAlias input.inputAlias:focus {
+	border-bottom:1px solid #2962FF;
+	width:65%;
+}
+
+span.ui-inputNum.form-control {
+	padding: 0;
+}
+span.ui-inputNum.form-control > .ui-inputfield.ui-inputtext {
+	background: white;
+	height: 100%;
+	width: 100%;
+}

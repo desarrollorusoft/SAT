@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		<div class="container-fluid">
+			<div class="row contenedor-pasos">
+				<div class="col-sm-6 col-xs-12">
+					<label>Cartelerías</label>
+					<div class="row">
+						<div class="col-xs-12 izquierda-15 abajo-15">
+							<p:selectOneRadio value="#{PyPOEP.poseeCarteleria}"
+											  styleClass="form-control"
+											  columns="2">
+					            <f:selectItem itemLabel="Poseo" itemValue="true"/>
+					            <f:selectItem itemLabel="No Poseo" itemValue="false" />
+					            <p:ajax update=":form:radioCarteleria" listener="#{PyPOEP.actualizarPanelCarteleria()}"></p:ajax>
+					        </p:selectOneRadio>
+						</div>
+				        <p:outputPanel id="radioCarteleria" layout="block">
+						    <ui:fragment rendered="#{PyPOEP.poseeCarteleria}">
+							    <div class="col-xs-12">
+							    
+							    	<div class="col-xs-5">
+							          <label>Tipo</label>
+							          <h:selectOneMenu value="#{PyPOEP.tipoCartelSeleccionado}" 
+							          				   styleClass="form-control"
+							          				   converter="#{PyPOEP.tipoCartelConverter}">
+								          	<f:selectItem itemValue="" itemLabel="Seleccione..."/>
+								          	<f:selectItems value="#{PyPOEP.tiposCarteleria}"
+								          				   var="tipo"
+								          				   itemValue="#{tipo}"
+								          				   itemLabel="#{tipo.nombre}"/>
+							          </h:selectOneMenu>
+							    	</div>
+							    	<div class="col-xs-3">
+							    		<label>Alto en mts.</label>
+							    		<br />
+							    		<pe:inputNumber value="#{PyPOEP.alto}" styleClass="input-select" decimalPlaces="2" symbol=" mts." symbolPosition="s" />
+							    	</div>      
+							    	<div class="col-xs-3">
+							    		<label>Ancho en mts.</label>
+							    		<br />
+							    		<pe:inputNumber value="#{PyPOEP.ancho}" styleClass="input-select" decimalPlaces="2" symbol=" mts." symbolPosition="s" />
+							    	</div> 
+							    	<div class="col-xs-3">
+							    		<br />
+							    		<label>Imagen de la cartelería</label>
+							    		<br />
+							    		<label for="form:upload_pyp_input" class="btn btn-primary btn-rounded">
+						                    <i class="fa fa-upload derecha-10"></i>
+						                    Adjuntar archivo
+					                  	</label>
+									   	<p:fileUpload id="upload_pyp" auto="true" fileUploadListener="#{PyPOEP.subirArchivos}" update=":form:labelImagenCartel" style="display:none;" />
+							    	</div>  
+							    	<div class="col-xs-8">
+							    		<br/><br/><br/>
+							    		<p:outputPanel id="labelImagenCartel">
+							    			<p:outputLabel rendered="#{PyPOEP.archivo != null}" value="#{PyPOEP.archivo.nombre}" />
+							    		</p:outputPanel>
+							    	</div>
+							    	<div class="col-xs-1 arriba-25">
+								    	<p:commandButton value=""
+								    					 styleClass="btn btn-primary fa fa-plus btn-circle sin-texto"
+								    					 action="#{PyPOEP.agregarNuevaCarteleria()}"
+								    					 update=":form:radioCarteleria"/>
+							    	</div>     
+							    </div>	
+								<br /><br />
+								<div class="col-xs-12 arriba-10">
+									<p:dataTable id="tablaCarteleria"
+												 value="#{PyPOEP.listaCarteleria}"
+												 var="carteleria"
+												 emptyMessage=""
+												 rowKey="#{carteleria.hashCode()}"
+												 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+												 
+										<p:column headerText="Tipo" width="60%">
+											<h:outputText value="#{carteleria.tipo.nombre}"/>
+										</p:column>
+										
+										<p:column headerText="Metros" width="20%">
+											<h:outputText value="#{carteleria.metros} m&sup2;"/>
+										</p:column>
+										
+										<p:column headerText="Imagen" width="10%">
+											<p:outputPanel rendered="#{carteleria.urlImagen != null}">
+												<a href="#{carteleria.urlImagen}" target="_blank" class="btn btn-default">
+													<i class="fa fa-image"></i>
+												</a>
+											</p:outputPanel>
+											<p:outputPanel rendered="#{carteleria.urlImagen == null}"> - </p:outputPanel>
+										</p:column>
+										
+										<p:column headerText="Acción" width="10%">
+											<p:commandButton actionListener="#{PyPOEP.eliminarCarteleria(carteleria)}"
+															 value=""
+															 styleClass="btn btn-outline-secondary btn-circle fa fa-times no-padding oculto sin-correr"
+															 update="tablaCarteleria"/>
+										</p:column>
+									</p:dataTable>
+								</div>	
+							</ui:fragment>			
+				        </p:outputPanel>
+					</div>
+				
+				</div>
+				<div class="col-sm-6 col-xs-12">
+					<label>Ocupación Espacios Públicos</label>
+					<div class="row">
+						<div class="col-xs-12 izquierda-15 abajo-15">
+							<p:selectOneRadio value="#{PyPOEP.poseeOep}"
+											  styleClass="form-control">
+					            <f:selectItem itemLabel="Poseo" itemValue="true" />
+					            <f:selectItem itemLabel="No Poseo" itemValue="false" />
+					            <p:ajax update=":form:panelOep" listener="#{PyPOEP.actualizarPanelOEP()}"></p:ajax>
+					        </p:selectOneRadio>
+						</div>
+						<p:outputPanel id="panelOep" layout="block">
+							<ui:fragment rendered="#{PyPOEP.poseeOep}">
+								<div class="col-xs-12">
+							    	<div class="col-xs-4">
+							          <label>Tipo</label>
+							          <h:selectOneMenu value="#{PyPOEP.tipoOEPSeleccionado}" styleClass="form-control">
+							          		<f:selectItem itemValue="" itemLabel="Seleccione..."/>
+							          		<f:selectItems value="#{PyPOEP.tiposOep}"
+								          				   var="tipo"
+								          				   itemValue="#{tipo}"
+								          				   itemLabel="#{tipo.name()}"/>
+							          	
+								          	<p:ajax event="change" update="labelOEP unidadesOEP"/>
+							          </h:selectOneMenu>
+							    	</div>
+							    	<div class="col-xs-3">
+							    		<p:outputPanel id="labelOEP">
+							    			<label><h:outputText value="#{PyPOEP.labelTipoOEP()}" /></label>
+							    		</p:outputPanel>
+							    		<pe:inputNumber id="unidadesOEP" styleClass="input-select" value="#{PyPOEP.valorOEP}" decimalPlaces="#{PyPOEP.posicionesDecimales()}"/>
+							    	</div>      
+							    	<div class="col-xs-1 arriba-25">
+							    	<p:commandButton value=""
+							    					 styleClass="btn btn-primary fa fa-plus btn-circle sin-texto"
+							    					 action="#{PyPOEP.agregarNuevaOep()}"
+							    					 update=":form:tablaOep"/>
+							    	</div>     
+						        </div>
+								<div class="col-xs-12">
+									<p:dataTable id="tablaOep"
+												 value="#{PyPOEP.listaOEP}"
+												 var="ocupacion"
+												 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+										<p:column headerText="Tipo">
+											<h:outputText value="#{ocupacion.tipo.name()}"/>
+										</p:column>
+										
+										<p:column headerText="Unidades">
+											<h:outputText value="#{ocupacion.valor}"/>
+										</p:column>
+										
+										<p:column headerText="Acción">
+											<p:commandButton actionListener="#{PyPOEP.eliminarOEP(ocupacion)}"
+															 value=""
+															 styleClass="btn btn-outline-secondary btn-circle fa fa-times no-padding oculto sin-correr"
+															 update="tablaOep"/>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</ui:fragment>					
+						</p:outputPanel>	
+					</div>
+				
+				</div>
+				<div class="col-xs-12 abajo-20">
+					<div class="pull-left">
+						<p:commandButton value="Volver"
+										 styleClass="btn btn-default btn-outline btn-rounded"
+										 action="#{PyPOEP.volver()}"
+										 update=":form:secciones" />
+					</div>
+					<div class="pull-right">
+						<p:commandButton value="Continuar"
+										 styleClass="btn btn-primary btn-rounded"
+										 action="#{PyPOEP.siguiente()}"
+										 update=":form:secciones" />
+					</div>
+				</div>
+			</div>
+		</div>		
+	</ui:composition>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:c="http://java.sun.com/jstl/core">
+	  
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			<ui:define name="titulo-pagina">Simulación de Plan de Pago</ui:define>
+	
+			<ui:define name="infoCuenta">
+			</ui:define>
+			
+			<ui:define name="tabla-cuentas">
+				<h:panelGroup id="div-TablaCuentas">
+					<div class="contenedor-tabla-cuentas">
+						<p:dataTable id="tablaCuentas" 
+									 var="cuenta" 
+									 value="#{comunBean.cuentas.listaCuentasABL}" 
+									 rowKey="#{cuenta.hashCode()}" 
+									 emptyMessage="No se encontraron cuentas"
+									 selection="#{ablSimulacionPlanPagoBean.cuentaSeleccionada}">
+							
+							<p:column selectionMode="single" style="width:38px"/>
+							
+							<p:column headerText="Cuenta" width="120">
+								<h:outputText value="#{cuenta.numero}" />
+							</p:column>
+	
+							<p:column headerText="Titular" width="220">
+								<h:outputText value="#{cuenta.contribuyente.nombreApellido}" />
+							</p:column>
+	
+							<p:column headerText="Domicilio">
+								<h:outputText value="#{cuenta.contribuyente.domicilio.toString()}" />
+							</p:column>
+							
+							<p:ajax event="rowSelectRadio" 
+									listener="#{ablSimulacionPlanPagoBean.cambioCuenta()}" 
+									onstart="PF('bloqueoPantalla').show()" 
+									oncomplete="PF('bloqueoPantalla').hide()"
+									update=":form:panelSimulacion :form:contenedor-cuenta-seleccionada"/>
+						</p:dataTable>
+					</div>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="contenido">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="simulacion.css" />
+				</f:facet>
+				
+				<h:panelGroup id="panelSimulacion">
+				    <ui:fragment rendered="#{(!ablSimulacionPlanPagoBean.tieneCuotas())}">
+				    	<div class="sin-cuotas">La cuenta no posee deuda que pueda ser financiada</div>
+				    </ui:fragment>
+				    
+				    <ui:fragment rendered="#{ablSimulacionPlanPagoBean.tieneCuotas()}">
+				        
+				        <ui:include src="/tiles/mensaje-simulacion-ppc.xhtml" />
+				        
+				        <div class="contenedor-tabla">
+							<p:dataTable id="listaDeuda"
+										 var="dupla"
+										 value="#{ablSimulacionPlanPagoBean.duplaCuotas.duplaCuotasAPagar}"
+										 emptyMessage="No se encontraron registros">
+										 
+								<p:column headerText="Tributo">
+									<h:outputText value="#{dupla.cuotaAbl.tasa}" rendered="#{dupla.tieneABL()}" />
+									<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+									<h:outputText value="#{dupla.cuotaProt.tasa}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+								</p:column>
+								
+								<p:column headerText="Periodo">
+									<h:outputText value="#{comunBean.ajustarPeriodo(dupla.periodo)}" />
+								</p:column>
+								
+								<p:column headerText="Capital">
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.capital)}" rendered="#{dupla.tieneABL()}" />
+									<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.capital)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+								</p:column>
+								
+								<p:column headerText="Recargo">
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.recargo)}" rendered="#{dupla.tieneABL()}" />
+									<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.recargo)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+								</p:column>
+								
+								<p:column headerText="Multa">
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.multa)}" rendered="#{dupla.tieneABL()}" />
+									<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.multa)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+								</p:column>
+								
+								<p:column headerText="Total">
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.total)}" rendered="#{dupla.tieneABL()}" />
+									<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+									<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.total)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+								</p:column>
+							</p:dataTable>
+						</div>
+						
+						<div class="contenedor-simulador derecha arriba-30">
+							<div class="renglon separador">
+								<div class="contenedor-datos-entrada izquierda">
+									<div class="contenedor-total-abonar izquierda">
+										Importe a abonar <h:outputText value="#{comunBean.formatearMoneda(ablSimulacionPlanPagoBean.importeTotal)}" styleClass="negrita"/>
+									</div>
+									<div class="contenedor-anticipo izquierda arriba-10">
+										<h:outputText value="Anticipo" styleClass="label-anticipo izquierda derecha-5" />
+											
+										<p:selectOneMenu value="#{ablSimulacionPlanPagoBean.anticipo}"
+														 styleClass="selection-anticipo izquierda derecha-20" >
+							
+											<f:selectItems value="#{ablSimulacionPlanPagoBean.listaAnticipos}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<p:commandButton value="Calcular" 
+												 action="#{ablSimulacionPlanPagoBean.calcular()}" 
+												 styleClass="boton-principal derecha"
+												 onclick="PF('bloqueoPantalla').show()"
+									 	 	     oncomplete="PF('bloqueoPantalla').hide()"
+									 	 	     update="panelResultado" />		
+							</div>
+							
+							<p:outputPanel id="panelResultado">
+								<p:outputPanel rendered="#{ablSimulacionPlanPagoBean.calculado}">
+									<div class="contendor-resultado">
+										<div class="renglon">
+											El porcentaje fue calculado al <h:outputText value="#{ablSimulacionPlanPagoBean.resultadoSimulacion.porcentajeCalculado}" styleClass="negrita"/> %
+										</div>
+										<div class="renglon">
+											El importe del anticipo es <h:outputText value="#{comunBean.formatearMoneda(ablSimulacionPlanPagoBean.resultadoSimulacion.importeAnticipo)}" styleClass="negrita"/>
+										</div>
+										<div class="renglon">
+											El importe del plan es <h:outputText value="#{comunBean.formatearMoneda(ablSimulacionPlanPagoBean.resultadoSimulacion.importePlan)}" styleClass="negrita"/>
+										</div>
+									</div>
+									
+									<p:dataTable id="tablaCuotas"
+												 value="#{ablSimulacionPlanPagoBean.resultadoSimulacion.listaPlanes}"
+												 var="plan" 
+												 rowKey="#{plan.hashCode()}"
+												 emptyMessage="No se recuperaron planes"
+												 styleClass="tabla-planes">
+										
+										<p:column headerText="NÚMERO DE CUOTAS">
+											<h:outputText value="#{plan.numeroCuotas}" />
+										</p:column>
+				
+										<p:column headerText="VALOR DE LA CUOTA">
+											<h:outputText value="#{comunBean.formatearMoneda(plan.importeCuota)}" />
+										</p:column>
+									</p:dataTable>
+								</p:outputPanel>
+								
+							</p:outputPanel>
+						</div>
+				    </ui:fragment>	
+				    			  
+				</h:panelGroup>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+</html>

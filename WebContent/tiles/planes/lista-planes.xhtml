@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:composition>
+	<!-- Inicio header seccion -->
+	<div class="row m-b-xs">
+		<div class="col-xs-12">
+			<div class="row">
+				<div class="col-xs-4">
+					<div>
+						<h4 class="color-azul-primary">Mis Planes de Pago</h4>
+					</div>
+				</div>
+				<div class="col-xs-4">
+					<div>
+						<button type="button"
+								onclick="$('html, body').animate({scrollTop: $('#scroll').offset().top}, 1500);"
+								class="btn ui-button btn-primary btn-outline btn-rounded"
+								style="font-size: .9em;display:block;margin:auto;">
+							<span class="texto-boton">Asociar Plan</span>
+						</button>
+					</div>
+				</div>
+				<div class="col-xs-4">
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fin header seccion -->
+	<p:outputPanel id="cambio-disposicion" layout="block">
+
+		<div class="row">
+			<div class="col-xs-12 m-t-md">
+				<div class="form-group">
+					<input id="filtroPlanes"
+						   class="form-control ng-untouched ng-pristine ng-valid"
+						   onkeyup="filtrarPlanes()" type="text"/>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<p:dataTable id="tablaPlanes"
+							 value="#{ListaPlanes.planes}"
+							 var="plan"
+							 emptyMessage="No hay planes"
+							 rowKey="#{plan.hashCode()}"
+							 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center tabla-filtrar-plan"
+							 scrollable="true"
+							 scrollHeight="476">
+
+					<p:column headerText="N° Plan" width="10%"> <!-- width="17%" -->
+						<h:outputText value="#{plan.nroPlan}"/>
+					</p:column>
+
+					<p:column headerText="Solicitante" width="35%"> <!-- width="41%" -->
+						<h:outputText value="#{plan.solicitante}"/>
+					</p:column>
+
+					<p:column headerText="Cuotas" width="10%">
+						<h:outputText value="#{plan.cantCuotas}"/>
+					</p:column>
+
+					<p:column headerText="Alias" width="25%">
+						<h:outputText value="#{plan.alias}"/>
+					</p:column>
+
+					<p:column headerText="Acción" width="15%">
+						<p:commandButton value=""
+										 actionListener="#{ListaPlanes.cargarModalAlias(plan)}"
+										 oncomplete="PF('ModalAlias').show()"
+										 update=":form"
+										 styleClass="btn btn-primary btn-circle fas fa-pencil-alt text-right"
+										 rendered="#{comunBean.esContribuyente()}">
+
+							<p:tooltip value="modificar alias"></p:tooltip>
+						</p:commandButton>
+
+						<p:commandButton value=""
+										 actionListener="#{ListaPlanes.desvincular(plan)}"
+										 styleClass="btn btn-primary btn-circle fa fa-times"
+										 rendered="#{comunBean.esContribuyente() and plan.asociado}"/>
+						<p:commandButton value=""
+										 actionListener="#{ListaPlanes.detalle(plan)}"
+										 styleClass="btn btn-primary btn-circle fa fa-info text-navy "
+										 update=":form:secciones"
+										 onclick="PF('bloqueoPantalla').show();"
+										 oncomplete="PF('bloqueoPantalla').hide()"/>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+	</p:outputPanel>	
+	
+	<p:confirmDialog widgetVar="AlertaDesvinculacion" 
+					 severity="alert"
+					 global="true" 
+					 message="¿Desea desvincular este plan?"
+					 styleClass="conf">
+		<div class="pull-right">
+			<p:commandButton value=" Sí "
+							 action="#{ListaPlanes.confirmarDesvinculacion()}"
+							 onclick="PF('AlertaDesvinculacion').hide();PF('bloqueoPantalla').show();"
+							 oncomplete="PF('bloqueoPantalla').hide()" 
+							 styleClass="btn btn-primary btn-rounded boton-si"
+							 update="cuentas" />
+		</div>	
+		<div class="pull-left">
+			<p:commandButton value="No" 
+							 styleClass="btn btn-default btn-outline btn-rounded"
+							 onclick="PF('AlertaDesvinculacion').hide();" />
+		</div>
+	</p:confirmDialog>
+
+    <ui:include src="/tiles/home/modal_alias.xhtml"/>
+</ui:composition>
+</html>

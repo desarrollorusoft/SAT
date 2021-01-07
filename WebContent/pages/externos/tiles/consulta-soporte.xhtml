@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/consulta-historial.css" />
+		</f:facet>
+		<div class="arriba-25">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="pull-left arriba-20 izquierda-15">
+						<p:commandButton value=""
+										 action="#{soporteConsultaBean.irALista()}"
+										 update=":form:panelSecciones"
+										 styleClass="btn btn-default btn-outline btn-circle fa fa-arrow-left"/>
+					</div>
+					<div class="pull-right arriba-20 derecha-15">
+						<p:commandButton value="Nueva Consulta"
+										 action="#{soporteConsultaBean.irAFormulario()}"
+										 rendered="#{!comunBean.esContribuyente()}"
+										 update=":form:panelSecciones"
+										 styleClass="btn btn-primary btn-rounded"/>
+					</div>
+				</div>
+			</div>
+				<div class="row">
+					<ui:fragment rendered="#{!fn:contains(request.requestURL, '/pri')}">
+						<div class="col-xs-12 abajo-15 arriba-20">
+							<div class="col-md-4 col-sm-6 col-xs-12 contenedor-plataforma">
+								<label>Nombre</label>
+								<br />
+								<h:outputText id="nombreSoporte" value="#{soporteConsultaBean.consulta.nombreCompleto}" />
+							</div>
+							<div class="col-md-2 col-sm-6 col-xs-12 contenedor-plataforma">
+								<label>CUIT/CUIL</label>
+								<br />
+								<h:outputText value="#{soporteConsultaBean.consulta.cuit}" />
+							</div>
+							<div class="col-md-2 col-sm-6 col-xs-12 contenedor-plataforma">
+								<label>Telefono</label>
+								<br />
+								<h:outputText value="#{soporteConsultaBean.consulta.telefono}" />
+							</div>
+							<div class="col-md-4 col-sm-6 col-xs-12 contenedor-plataforma">
+								<label>Correo </label>
+								<br />
+								<h:outputText value="#{soporteConsultaBean.consulta.correo}" styleClass="lower"/>
+							</div>
+						</div>	
+					</ui:fragment>	
+					<div class="box-body col-xs-12 no-padding">
+						<ui:include src="/pages/externos/tiles/chat-consultas.xhtml"/>
+					</div>
+					<div class="col-xs-12">
+
+					</div>
+				</div>
+		</div>
+	</ui:composition>
+</html>

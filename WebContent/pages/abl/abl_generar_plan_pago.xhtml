@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			<ui:define name="titulo-pagina">SIMULACIÓN DE PLANES</ui:define>
+			
+			<ui:define name="tabla-cuentas">
+						
+				<div class="contenedor-tabla-cuentas">
+					<p:dataTable var="cuenta" 
+								 id="tablaCuentas" 
+								 value="#{comunBean.cuentas.listaCuentasABL}"
+								 rowKey="#{cuenta.hashCode()}" 
+								 emptyMessage="No se encontraron cuentas"
+								 selection="#{ablGenerarPlanPagoBean.cuentaSeleccionada}">
+						
+						<p:column selectionMode="single" style="width:38px"/>
+						
+						<p:column headerText="Cuenta" width="120">
+							<h:outputText value="#{cuenta.numero}" />
+						</p:column>
+
+						<p:column headerText="Titular" width="220">
+							<h:outputText value="#{cuenta.contribuyente.nombreApellido}" />
+						</p:column>
+
+						<p:column headerText="Domicilio">
+							<h:outputText value="#{cuenta.contribuyente.domicilio.toString()}" />
+						</p:column>
+						
+						<p:ajax event="rowSelectRadio" 
+								listener="#{ablGenerarPlanPagoBean.cambioCuenta()}"
+								onstart="PF('bloqueoPantalla').show()"
+								oncomplete="PF('bloqueoPantalla').hide()"
+								update=":form:panelesPlanDePago :form:contenedor-cuenta-seleccionada"/>
+					</p:dataTable>
+				</div>
+			</ui:define>
+			
+			<ui:define name="infoCuenta">
+			</ui:define>
+			
+			<ui:define name="contenido">	
+				<h:panelGroup id="panelesPlanDePago">
+				    <ui:fragment rendered="#{ablGenerarPlanPagoBean.consulta}">
+				        <ui:include src="/tiles/abl/tile_abl_generar_plan_pago_consulta.xhtml"/>
+				    </ui:fragment>
+				    
+				    <ui:fragment rendered="#{!ablGenerarPlanPagoBean.consulta}">
+				        <ui:include src="/tiles/abl/tile_abl_generar_plan_pago_resultado.xhtml"/>
+				    </ui:fragment>
+				</h:panelGroup>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

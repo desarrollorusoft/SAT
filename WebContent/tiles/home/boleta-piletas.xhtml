@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<div class="row">
+			<div class="col-xs-12">		
+				<div class="animated fadeInDown arriba-15 ibox-content izquierda-15">
+					<h2 class="color-azul-primary">Datos</h2>
+					<div class="col-md-9 abajo-25 arriba-10">
+						<div class="col-md-3 col-sm-6 col-xs-12 abajo-25">
+							<span class="titulo"><h:outputText value="Nombre" /></span>
+							<br/>
+							<span><h:outputText value="#{BoletaPiletas.cuenta.nombre}" /></span>
+						</div>
+						<div class="col-md-3 col-sm-6 col-xs-12 abajo-25">
+							<span class="titulo"><h:outputText value="Apellido" /></span>
+							<br/>
+							<span><h:outputText value="#{BoletaPiletas.cuenta.apellido}" /></span>
+						</div>
+						<div class="col-md-3 col-sm-6 col-xs-12 abajo-25">
+							<span class="titulo"><h:outputText value="Sede" /></span>
+							<br/>
+							<span><h:outputText value="#{BoletaPiletas.cuenta.sede}" /></span>
+						</div>
+						<div class="col-md-3 col-sm-6 col-xs-12 abajo-25">
+							<span class="titulo"><h:outputText value="N° Socio" /></span>
+							<br/>
+							<span><h:outputText value="#{BoletaPiletas.cuenta.nroSocio}" /></span>
+						</div>
+					</div>
+					<div class="col-md-3 abajo-25">
+						<div class="col-md-2 col-sm-12 abajo-25 arriba-10">
+							<p:commandButton actionListener="#{BoletaPiletas.generarRecibo()}"
+										   onclick="PF('bloqueoPantalla').show()"
+										   oncomplete="PF('bloqueoPantalla').hide();"
+										   update="alertaBoleta" value="Generar Boleta" styleClass="btn btn-primary btn-rounded pull-left derecha-20">
+							</p:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:composition>
+</html>

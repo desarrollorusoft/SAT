@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		
+		<h:panelGroup id="secciones">
+		    <ui:fragment rendered="#{!PPCCuenta.muestroSimulacion()}" >
+		   		<span class="f-20-600">La cuenta no posee deuda que pueda ser financiada</span>
+		    </ui:fragment>
+		    <ui:fragment rendered="#{PPCCuenta.muestroSimulacion()}" >
+		    	
+		    	<!-- Contenido de Simulacion con Deuda -->
+		    	<div class="col-md-6 col-xs-12">
+		    		<div class="col-xs-12 abajo-20 recaudro-simple">
+		    			<ui:include src="/tiles/home/ppc/mensaje-simulacion-ppc.xhtml" />
+		    		</div>
+		    		<div>
+						<p:dataTable id="tablaDeudaSimulacion"
+									 value="#{SimulacionPPC.cuotasVencidas()}"
+									 var="cuota" 
+									 emptyMessage="No hay periodos vencidos"
+									 rowKey="#{cuota.hashCode()}"
+									 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+							
+							<p:column headerText="Periodo">
+								<h:outputText value="#{comunBean.ajustarPeriodo(cuota.periodo)}" />
+							</p:column>
+				
+							<p:column headerText="Capital">
+								<h:outputText value="#{comunBean.formatearMoneda(cuota.capital)}" />
+							</p:column>
+				
+							<p:column headerText="Recargo">
+								<h:outputText value="#{comunBean.formatearMoneda(cuota.recargo)}" />
+							</p:column>
+				
+							<p:column headerText="Multa">
+								<h:outputText value="#{comunBean.formatearMoneda(cuota.multa)}" />
+							</p:column>
+				
+							<p:column headerText="Total">
+								<h:outputText value="#{comunBean.formatearMoneda(cuota.total)}" />
+							</p:column>
+				
+							<p:column headerText="Vencimiento">
+								<h:outputText value="#{comunBean.ajustarFecha(cuota.fechaVencimiento)}" />
+							</p:column>
+						</p:dataTable>
+					</div>
+					<div>
+						<h3>Anticipo</h3>
+		   				<div class="col-xs-6 arriba-10">
+		   					<h:outputText id="output" value="Se entrega un anticipo de #{SimulacionPPC.number2} %" />
+		       				<h:inputHidden id="txt2" value="#{SimulacionPPC.anticipo}" />
+		   					<p:slider for="txt2" minValue="20" maxValue="50" step="10" display="output"  displayTemplate="Se entrega un anticipo de {value} %"/>
+		   				</div>
+		   				<p:commandButton value="Calcular"
+										 action="#{SimulacionPPC.calcular()}"
+										 onclick="PF('bloqueoPantalla').show()"
+										 oncomplete="PF('bloqueoPantalla').hide();"
+										 update=":form:tabsCuentas:tabsPPC:resultadoSimulacion"
+										 styleClass="btn btn-primary btn-rounded pull-right arriba-10"
+										 rendered="false" />
+		   			</div>
+				</div>
+				<div class="col-md-6 col-xs-12">
+					<p:outputPanel id="resultadoSimulacion">
+						
+						<p:outputPanel rendered="#{SimulacionPPC.calculado}">
+							<div class="contendor-resultado">
+								<div class="renglon">
+									El porcentaje fue calculado al <b><h:outputText value="#{SimulacionPPC.resultadoSimulacion.porcentajeCalculado}" styleClass="negrita"/> %</b>
+								</div>
+								<div class="renglon">
+									El importe del anticipo es <b><h:outputText value="#{comunBean.formatearMoneda(SimulacionPPC.resultadoSimulacion.importeAnticipo)}" styleClass="negrita"/></b>
+								</div>
+								<div class="renglon">
+									El importe del plan es <b><h:outputText value="#{comunBean.formatearMoneda(SimulacionPPC.resultadoSimulacion.importePlan)}" styleClass="negrita"/></b>
+								</div>
+								
+								<div class="renglon">
+									El número de la Solicitud es el <b><h:outputText value="#{SimulacionPPC.resultadoSimulacion.numeroSolicitud}" styleClass="negrita"/></b>
+								</div>
+							</div>
+							<br/>
+							<p:dataTable id="tablaCuotas"
+										 value="#{SimulacionPPC.resultadoSimulacion.listaPlanes}"
+										 var="plan" 
+										 rowKey="#{plan.hashCode()}"
+										 emptyMessage="No se recuperaron planes"
+										 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+								
+								<p:column headerText="Número de Cuotas">
+									<h:outputText value="#{plan.numeroCuotas}" />
+								</p:column>
+		
+								<p:column headerText="Valor de la Cuota">
+									<h:outputText value="#{comunBean.formatearMoneda(plan.importeCuota)}" />
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+						
+					</p:outputPanel>
+				</div>
+		    	
+		    	
+		    </ui:fragment>
+		</h:panelGroup>
+		
+	</ui:composition>
+</html>

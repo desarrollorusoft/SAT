@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			<ui:define name="titulo-pagina">TRÁMITES</ui:define>
+			
+			<ui:define name="tabla-cuentas">
+				<div class="contenedor-tramites">
+					<div class="contenedor-descripcion">
+						<ui:insert name="descripcion">Ingrese descripcion!</ui:insert>
+					</div>
+					
+					<div class="contenedor-formularios">
+						<ui:insert name="formularios">Ingrese formularios!</ui:insert>
+					</div>
+					
+					<div class="contenedor-cargas">
+						<ui:insert name="cargas">Ingrese cargas!</ui:insert>
+					</div>	
+				</div>
+			</ui:define>
+			
+			<ui:define name="infoCuenta">
+			</ui:define>
+			
+			<ui:define name="contenido">
+				<f:facet name="last">
+				</f:facet>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

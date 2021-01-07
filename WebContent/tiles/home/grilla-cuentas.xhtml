@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:composition>
+
+    <div class="row">
+        <div class="col-xs-12 m-t-md">
+            <div class="form-group">
+                <input id="filtroCuentasGrilla" class="form-control ng-untouched ng-pristine ng-valid"
+                       onkeyup="filtrarCuentasGrilla()" type="text"/>
+            </div>
+        </div>
+    </div>
+    <ui:repeat var="tipo" value="#{ListaCuentas.tiposCuenta}">
+        <h4 class="color-azul-primary">#{tipo.nombre}</h4>
+        <hr style="margin-top:5px"/>
+
+        <div class="row">
+            <br/>
+            <ui:repeat var="cuenta" value="#{ListaCuentas.recuperarCuentas(tipo)}">
+                <div class="col-md-4 col-sm-6 col-xs-12 text-center card-cuenta abajo-20">
+                    <p:commandButton value=""
+                                     actionListener="#{ListaCuentas.desvincular(cuenta)}"
+                                     styleClass="btn fa fa-times boton-desvincular btn-circle btn-primary"
+                                     rendered="#{comunBean.esContribuyente()}"/>
+
+                    <div class="card">
+                        <p:commandLink actionListener="#{ListaCuentas.detalle(cuenta)}"
+                                       update=":form:secciones"
+                                       onclick="PF('bloqueoPantalla').show();"
+                                       oncomplete="PF('bloqueoPantalla').hide()"
+                                       styleClass="link-texto-negro">
+                            <i class="icono-grilla #{ListaCuentas.iconoSolapa(tipo)}"></i>
+                        </p:commandLink>
+                        <div>
+                            <div class="alias-cuenta">
+                                #{cuenta.alias!=null and !cuenta.alias.isEmpty()? cuenta.alias:'Agregar Alias'}
+                            </div>
+                            <p:commandButton value=""
+                                             actionListener="#{ListaCuentas.cargarModalAlias(cuenta)}"
+                                             oncomplete="PF('ModalAlias').show()"
+                                             update=":form"
+                                             styleClass="btn btn-primary btn-circle fas fa-pencil-alt btn-modal"
+                                             rendered="#{comunBean.esContribuyente()}">
+
+                                <p:tooltip value="modificar alias"></p:tooltip>
+                            </p:commandButton>
+                        </div>
+                        <p:commandLink actionListener="#{ListaCuentas.detalle(cuenta)}"
+                                       update=":form:secciones"
+                                       onclick="PF('bloqueoPantalla').show();"
+                                       oncomplete="PF('bloqueoPantalla').hide()"
+                                       styleClass="contenedor-datos link-texto-negro">
+									<span class="dato-cuenta padding-5">
+										(#{cuenta.datoCuenta}) #{cuenta.descripcion}
+									</span>
+                            <p:outputPanel rendered="#{!cuenta.esPileta()}" styleClass="importe-cuenta padding-5">
+                                <h:outputText value="#{comunBean.formatearMoneda(cuenta.deuda)}"
+                                              styleClass="monto-deuda"/> / <h:outputText
+                                    value="#{comunBean.formatearMoneda(cuenta.aVencer)}" styleClass="monto-vencer"/>
+                            </p:outputPanel>
+                        </p:commandLink>
+                    </div>
+                </div>
+
+            </ui:repeat>
+        </div>
+
+    </ui:repeat>
+
+</ui:composition>
+</html>

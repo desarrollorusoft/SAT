@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+
+		<div class="row">
+			<p:outputPanel id="detallePlanPago">
+				<div class="col-xs-12">
+					<hr/>
+					<!-- Inicio periodos de deuda PPC -->
+					<div class="col-md-8 col-xs-12 m-t-md">
+						<div class="col-xs-12 no-padding">
+							<div class="col-xs-6 m-t-xs">
+								<div class="row">
+									<span class="pull-left f-16-600 color-azul-primary">Deuda</span>
+								</div>
+							</div>
+							<div class="col-xs-6 m-t-xs">
+								<div class="row">
+									<span class="pull-right f-16-600 "><b>#{comunBean.formatearMoneda(PagoPlan.totalDeuda)}</b></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 arriba-15">
+							<div class="row">
+								<p:dataTable id="tablaCuotasPPC"
+											 value="#{PagoPlan.listaCuotas}"
+											 var="cuota"
+											 emptyMessage="No hay cuotas"
+											 rowKey="#{cuota.hashCode()}"
+											 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center"
+											 rowStyleClass="#{cuota.pagar ? 'registro-seleccionado' : ''}">
+
+									<p:column style="width:16px;text-align:center" styleClass="seleccion-cuuota-plan">
+										<p:selectBooleanCheckbox value="#{cuota.pagar}">
+											<p:ajax listener="#{PagoPlan.actualizarTotal( cuota )}"
+													update="#{PagoPlan.updatePath}detallePlanPago" />
+										</p:selectBooleanCheckbox>
+									</p:column>
+
+									<p:column headerText="Cuota">
+										<h:outputText value="#{comunBean.ajustarPeriodo(cuota.numero)}" />
+									</p:column>
+
+									<p:column headerText="Capital">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.capital)}" />
+									</p:column>
+
+									<p:column headerText="Recargo">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.recargo)}" />
+									</p:column>
+
+									<p:column headerText="Multa">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.multa)}" />
+									</p:column>
+
+									<p:column headerText="Interés">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.interes)}" />
+									</p:column>
+
+									<p:column headerText="Total">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.total)}" />
+									</p:column>
+
+									<p:column headerText="Vencimiento">
+										<h:outputText value="#{comunBean.ajustarFecha(cuota.fechaVencimiento)}" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+					</div>
+					<!-- Fin periodos de deuda PPC -->
+
+					<!-- Inicio Total y Medios de Pago PPC -->
+					<div class="col-md-4 col-xs-12 no-padding-derecha m-t-md">
+						<h:panelGroup id="cartelDescuento">
+							<div class="col-xs-12 abajo-20 text-center recaudro-simple">
+								<span class="texto-cancelar">¡Si cancela el plan<br/>obtendrá un descuento de <b>#{comunBean.formatearMoneda(PagoPlan.descuentoMostrable)}</b>!</span>
+								<br/>
+								<p:commandLink actionListener="#{PagoPlan.cancelarDeuda()}"
+											   onclick="PF('bloqueoPantalla').show();"
+											   oncomplete="PF('bloqueoPantalla').hide()"
+											   update="tablaCuotasPPC seccionTotalPPC cartelDescuento"
+											   styleClass=""
+											   rendered="#{comunBean.esContribuyente() and !PagoPlan.seCancelaDeuda()}">
+									<span class="btn btn-primary btn-rounded ui-button arriba-10">Cancelar Plan</span>
+								</p:commandLink>
+
+								<p:commandLink actionListener="#{PagoPlan.limpiarDeuda()}"
+											   onclick="PF('bloqueoPantalla').show();"
+											   oncomplete="PF('bloqueoPantalla').hide()"
+											   update="tablaCuotasPPC seccionTotalPPC cartelDescuento"
+											   styleClass=""
+											   rendered="#{comunBean.esContribuyente() and PagoPlan.seCancelaDeuda()}">
+									<span class="btn btn-primary btn-rounded ui-button arriba-10">No quiero cancelar el plan</span>
+								</p:commandLink>
+							</div>
+						</h:panelGroup>
+
+						<p:outputPanel id="seccionTotalPPC">
+							<div class="col-xs-12 totalPago contenedor-deuda">
+								<span class="pull-left f-20-600 ">Total a Abonar</span>
+								<span class="pull-right f-20-600 ">
+									<b><p:outputLabel rendered="#{PagoPlan.seCancelaDeuda() and PagoPlan.totalDeuda != PagoPlan.plan.importeCancelacion}" value="#{comunBean.formatearMoneda(PagoPlan.totalDeuda)}" styleClass="f-12-600 tachado"/></b>
+									<b><h:outputText rendered="#{PagoPlan.seCancelaDeuda()}" value="#{comunBean.formatearMoneda(PagoPlan.plan.importeCancelacion)}" styleClass="monto-resaltdo"/></b>
+									<b><p:outputLabel rendered="#{!PagoPlan.seCancelaDeuda()}" value="#{comunBean.formatearMoneda(PagoPlan.total)}"/></b>
+								</span>
+							</div>
+						</p:outputPanel>
+
+						<div class="col-xs-12 arriba-15">
+							<span class="pull-left f-16-600 color-azul-primary">Medios de Pago</span>
+							<div class="row">
+								<div class="col-xs-12 no-padding-izquierda arriba-20">
+									<div class="contenedor-medios-pago">
+										<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+											<p:commandLink actionListener="#{PagoPlan.abrirModal('AlertaMercadoPago')}"
+														   rendered="#{comunBean.esContribuyente()}">
+												<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/mercadopago.png" class="img-fluid full-size icono-medio-pago" title="Mercado Pago" style="padding:5px;"></img>
+											</p:commandLink>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+											<p:commandLink 	actionListener="#{PagoPlan.abrirModal('AlertaTarjetaPPC')}"
+															rendered="#{comunBean.esContribuyente()}">
+												<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/tarjetas.png" class="img-fluid full-size icono-medio-pago" title="Tarjeta de Crédito"></img>
+											</p:commandLink>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+											<p:commandLink actionListener="#{PagoPlan.abrirModal('AlertaPMCPPC')}"
+															rendered="#{comunBean.esContribuyente()}" >
+												<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/pagomiscuentas.png" class="img-fluid full-size icono-medio-pago" title="Pago mis Cuentas"></img>
+											</p:commandLink>
+										</div>
+									</div>
+									<div class="contenedor-medios-pago m-t-md">
+										<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+											<p:commandLink actionListener="#{PagoPlan.abrirModal('AlertaLinkPPC')}"
+														   rendered="#{comunBean.esContribuyente()}">
+												<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/redlink.png" class="img-fluid full-size icono-medio-pago" title="Lonk Pago"></img>
+											</p:commandLink>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+											<p:commandLink actionListener="#{PagoPlan.abrirModal('AlertaInterbankingPPC')}"
+															rendered="#{comunBean.esContribuyente()}">
+												<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/interbanking.png" class="img-fluid full-size icono-medio-pago" title="Interbanking"></img>
+											</p:commandLink>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Fin Total y Medios de Pago PPC -->
+
+					<!-- Modal Tarjeta  -->
+					<p:confirmDialog widgetVar="AlertaTarjetaPPC"
+									 severity="alert"
+									 global="true"
+									 message="Tenga en cuenta que la demora en la acreditación de los pagos con Tarjeta de Crédito es de aproximadamente 30 días, si Ud. necesita un libre deuda para trámites, opte por otro medio de pago disponible. Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Tarjeta de Crédito Sistema de Pago Seguro Decidir"
+									 styleClass="conf"
+									 width="700">
+
+						<p:commandButton value="Aceptar"
+										 actionListener="#{PagoPlan.pagoTarjetaCredito()}"
+										 onclick="PF('AlertaTarjetaPPC').hide();PF('bloqueoPantalla').show();"
+										 oncomplete="PF('bloqueoPantalla').hide()"
+										 update="#{PagoPlan.updatePath}detallePlanPago"
+										 styleClass="btn btn-primary btn-rounded pull-right"/>
+
+						<p:commandButton value="Cancelar"
+										 onclick="PF('AlertaTarjetaPPC').hide();"
+										 styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+					</p:confirmDialog>
+
+					<p:confirmDialog widgetVar="AlertaLinkPPC"
+						 severity="alert"
+						 global="true"
+						 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Link Pagos"
+						 styleClass="conf">
+
+					<p:commandButton value="Aceptar"
+									 actionListener="#{PagoPlan.pagoLink()}"
+									 onclick="PF('AlertaLinkPPC').hide();PF('bloqueoPantalla').show();"
+									 oncomplete="PF('bloqueoPantalla').hide()"
+									 update="#{PagoPlan.updatePath}detallePlanPago"
+									 styleClass="btn btn-primary btn-rounded pull-right" />
+
+					<p:commandButton value="Cancelar" onclick="PF('AlertaLinkPPC').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+					</p:confirmDialog>
+
+					<p:confirmDialog widgetVar="AlertaPMCPPC"
+									 severity="alert"
+									 global="true"
+									 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Pago Mis Cuentas"
+									 styleClass="conf">
+
+						<p:commandButton value="Aceptar"
+										 actionListener="#{PagoPlan.pagoPMC()}"
+										 onclick="PF('AlertaPMCPPC').hide();PF('bloqueoPantalla').show();"
+										 oncomplete="PF('bloqueoPantalla').hide()"
+										 update="#{PagoPlan.updatePath}detallePlanPago"
+										 styleClass="btn btn-primary btn-rounded pull-right"/>
+
+						<p:commandButton value="Cancelar" onclick="PF('AlertaPMCPPC').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+					</p:confirmDialog>
+
+					<p:confirmDialog widgetVar="AlertaInterbankingPPC"
+									 severity="alert"
+									 global="true"
+									 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por InterBanking"
+									 styleClass="conf">
+
+						<p:commandButton value="Aceptar"
+										 actionListener="#{PagoPlan.pagoInterbanking()}"
+										 onclick="PF('AlertaInterbankingPPC').hide();PF('bloqueoPantalla').show();"
+										 oncomplete="PF('bloqueoPantalla').hide()"
+										 update="#{PagoPlan.updatePath}detallePlanPago"
+										 styleClass="btn btn-primary btn-rounded pull-right"/>
+
+						<p:commandButton value="Cancelar" onclick="PF('AlertaInterbankingPPC').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+					</p:confirmDialog>
+
+					<p:confirmDialog widgetVar="AlertaMercadoPago"
+									 severity="alert"
+									 global="true"
+									 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Mercado Pago"
+									 styleClass="conf">
+
+						<p:commandButton value="Aceptar"
+										 actionListener="#{PagoPlan.pagoMP()}"
+										 onclick="PF('AlertaMercadoPago').hide();PF('bloqueoPantalla').show();"
+										 oncomplete="PF('bloqueoPantalla').hide()"
+										 update="#{PagoPlan.updatePath}detallePlanPago"
+										 styleClass="btn btn-primary btn-rounded pull-right" />
+
+						<p:commandButton value="Cancelar" onclick="PF('AlertaMercadoPago').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+					</p:confirmDialog>
+				</div>
+
+			</p:outputPanel>
+		</div>
+
+	</ui:composition>
+</html>

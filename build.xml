@@ -1,0 +1,36 @@
+<!DOCTYPE xml>
+<project default="build">
+	<target name="clean">
+		<exec executable="cmd">
+			<arg line="/c mvn clean" />
+		</exec>
+	</target>
+
+	<target name="weblogic">
+		<exec executable="cmd">
+			<arg line="/c mvn package -P weblogic" />
+		</exec>
+	</target>
+
+	<target name="glassfish">
+		<exec executable="cmd">
+			<arg line="/c mvn package -P glassfish" />
+		</exec>
+	</target>
+
+	<target name="jboss">
+		<exec executable="cmd">
+			<arg line="/c mvn package -P jboss" />
+		</exec>
+	</target>
+
+	<target name="jetty">
+		<exec executable="cmd">
+			<arg line="/c mvn package -P jetty" />
+		</exec>
+	</target>
+
+	<target name="build" depends="clean,glassfish">
+		
+	</target>
+</project>

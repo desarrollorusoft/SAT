@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		
+		<div class="col-xs-12">
+        	<h2 class="color-azul-primary"><strong>Términos y Condiciones</strong></h2>
+        </div>
+        <div class="col-xs-12">
+		<iframe src="https://www.vicentelopez.gov.ar/static-iipp/p/SAT/pdfs/terminos_y_condiciones.pdf" style="height:500px;width:100%;margin-bottom:15px;">
+			No se pudo cargar el documento...
+		</iframe>
+		</div>
+		<div class="col-xs-12 arriba-30">
+          	<div class="col-xs-6">
+	            <div class="row">
+	            	<p:commandButton action="#{TerminosRegistro.volver()}"
+									 value=""
+									 styleClass="btn btn-primary btn-outline fa fa-arrow-left pull-left btn-circle no-padding"
+									 update=":form:secciones" />
+	            </div>
+          	</div>
+          	<div class="col-xs-6">
+	            <div class="row">
+	            	<p:commandButton action="#{TerminosRegistro.siguiente()}"
+									 value="Aceptar"
+									 styleClass="btn btn-primary btn-rounded pull-right"
+									 update=":form:secciones"
+									 onclick="PF('bloqueoPantalla').show();"
+								 	 oncomplete="PF('bloqueoPantalla').hide()"  />
+				</div>
+          	</div>
+        </div>
+		
+	</ui:composition>
+</html>

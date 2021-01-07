@@ -1,0 +1,71 @@
+span.fc-button.fc-button-prev > span.fc-icon-wrap > span.ui-icon,
+span.fc-button.fc-button-next > span.fc-icon-wrap > span.ui-icon {
+	font-family: "Font Awesome 5 Free";
+	font-size: 0.9em;
+	text-indent: initial;
+}
+span.fc-button.fc-button-prev > span.fc-icon-wrap > span.ui-icon.ui-icon-circle-triangle-w:before {
+	content: "\f060";
+	position: relative;
+	bottom: 2px;
+}
+span.fc-button.fc-button-next > span.fc-icon-wrap > span.ui-icon.ui-icon-circle-triangle-e:before {
+	content: "\f061";
+	position: relative;
+	bottom: 2px;
+}
+
+span.fc-button.fc-button-today {
+	display: inline-block;
+    padding: 6px 12px;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+	background: #ffffff;
+    border: 1px solid #2962FF;
+    color: #2962FF;
+    transition: .4s;
+    font-weight: 400;
+    margin-bottom: 0 !important;
+	border-radius: 50px;
+}
+span.fc-button.fc-button-today:hover {
+	background: #2962FF;
+	color: #ffffff;
+}
+span.fc-button.fc-button-today.ui-state-disabled,
+span.fc-button.fc-button-today.ui-state-disabled:hover {
+	color: #888;
+	background: #f7f7f7;
+	border-color: #ccc;
+}
+
+.calendar-alertas input{
+	height:35px;
+}
+
+.fc-event-inner span{
+	color:#2962FF;
+}
+
+span.fc-event-time{
+	display:none;
+}
+
+div.fc-event{
+	background:#fff;
+	border:1px solid #2962FF;
+	text-align:center;
+}
+span.fc-button-month, fc-button-agendaWeek,  {
+    padding-top: 3px;
+}

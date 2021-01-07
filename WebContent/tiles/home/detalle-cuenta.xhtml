@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/detalle-cuenta.css" />
+		</f:facet>
+		<div class="container-fluid contenedor detalle-cuenta">
+			<p:commandButton actionListener="#{DetalleCuenta.volverALista()}" 
+							 value=""
+							 styleClass="btn btn-primary btn-circle btn-outline fa fa-arrow-left pull-left" 
+							 update=":form:secciones"/>
+			
+  			<h2 class="color-azul-primary m-t-xs pull-right">#{DetalleCuenta.titulo}</h2>
+  			<div class="row">
+  				<div class="col-lg-12">
+  					<!-- Inicio Tabs de detalle de cuenta -->
+  					<p:tabView styleClass="panel-detalle-cuenta" id="tabsCuentas" >
+						<p:tab title="Estado de Cuenta" titleStyleClass="fa fa-chart-bar" id="TAB_ESTADO_CUENTA" rendered="#{DetalleCuenta.muestroEstadoDeuda()}">
+  							<ui:include src="/tiles/home/detalle-deuda.xhtml" />
+  						</p:tab>
+  						<p:tab title="Información" titleStyleClass="fa fa-info-circle" id="TAB_INFORMACION" rendered="#{DetalleCuenta.muestroInfo()}">
+  							<ui:include src="/tiles/home/info-cuenta.xhtml" />
+  						</p:tab>
+  						<p:tab title="Plan de Pago en Cuotas" titleStyleClass="fa fa-file" rendered="#{DetalleCuenta.muestroPPC()}">
+  							<ui:include src="/tiles/home/ppc.xhtml" />
+  						</p:tab>
+  						<p:tab title="DDJJ de RS" titleStyleClass="fa fa-file-text-o" rendered="#{DetalleCuenta.muestroDDJJ()}">
+  							<ui:include src="/tiles/home/ddjj-rs.xhtml" />
+  						</p:tab>
+  						
+  						<!-- Seccion de Piletas -->
+  						<p:tab title="Generar Boleta" titleStyleClass="fa fa-file-text-o" rendered="#{DetalleCuenta.muestroBoletaPiletas()}">
+  							<ui:include src="/tiles/home/boleta-piletas.xhtml" />
+  						</p:tab>
+  					</p:tabView>
+  					<!-- Fin Tabs de detalle de cuenta -->
+  				</div>
+  			</div>
+		</div>
+
+
+
+		<p:dialog header="IMPORTANTE" widgetVar="modalLibreDeuda" minHeight="40" styleClass="modal-libreDeuda">
+			<div class="">
+				<div class="col-xs-12">
+					<p class="modal-libreDeuda">
+						Si necesita un Certificado de Libre Deuda o tiene <br/>
+						que transferir su vehículo, no abone por este medio.<br/>
+						<br/>
+						Los únicos pagos que impactan en el momento, son <br/>
+						los realizados en las Delegaciones Municipales o en la Sede Municipal.
+					</p>
+				</div>
+				<p:commandButton id="btnModalCancelar"
+								 value="DE ACUERDO"
+								 styleClass="btn btn-primary btn-rounded btn-outline"
+								 onclick="PF('modalLibreDeuda').hide();"/>
+			</div>
+		</p:dialog>
+	</ui:composition>
+</html>

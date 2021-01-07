@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<p:outputPanel id="seccionBajaUsuario">
+			<div style="clear: both;">
+				<div class="col-md-6 no-padding">
+					<div class="col-md-12">
+						<p:commandButton id="botonBajaUsuarioRS"
+										 value="Deseo darme de baja"
+										 type="button"
+										 styleClass="btn btn-white"
+										 onclick="PF('ModalBajaRS').show()"
+										 rendered="#{comunBean.esContribuyente() and BajaUsuario.rs}"/>
+
+						<p:commandButton id="botonBajaUsuarioSinRS"
+										 value="Deseo darme de baja"
+										 type="button"
+										 styleClass="btn btn-white"
+										 onclick="PF('ModalMotivoBaja').show()"
+										 rendered="#{comunBean.esContribuyente() and !BajaUsuario.rs}"/>
+					</div>
+				</div>
+			</div>
+
+			<ui:include src="/tiles/perfil/modal-motivo-baja.xhtml" />
+			<ui:include src="/tiles/perfil/modal-baja-rs.xhtml" />
+
+		</p:outputPanel>
+	</ui:composition>
+</html>

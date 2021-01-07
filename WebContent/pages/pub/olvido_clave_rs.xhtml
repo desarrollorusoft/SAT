@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_publico.xhtml">
+			
+			<ui:define name="titulo-pagina">Olvido de Clave</ui:define>
+			
+			<ui:define name="contenido">
+				
+				<div class="middle-box animated fadeInDown">
+					<div>
+						<div class="contenedor">
+							<h3 class="pull-left color-azul-primary">Recupero de Contraseña</h3>
+							<br />
+							<br />
+							
+							<div class="cuerpo">
+								<div class="form-group">
+									<label>CUIT/CUIL</label>
+									<p:inputMask value="#{OlvidoClaveRS.cuit}" 
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="CUIT/CUIL" 
+												 mask="99-99999999-9"/>
+								</div>
+							</div>
+
+							<div class="botonera row">
+								<div class="col-xs-12">
+									<p:commandButton id="volverInicio"
+					            					 action="#{OlvidoClaveRS.volverAlLogin()}"
+													 value=""
+													 styleClass="btn btn-primary btn-outline fa fa-arrow-left pull-left btn-circle no-padding sin-correr" />
+									<p:tooltip styleClass="tooltip" for="volverInicio" value="Volver al Inicio" position="left"/>
+									
+									<p:commandButton id="recuperarClave"
+					            					 action="#{OlvidoClaveRS.recuperarClave()}"
+													 value="Recuperar Contraseña"
+													 styleClass="btn btn-primary pull-right btn-rounded"
+													 onclick="PF('bloqueoPantalla').show();"
+											 		 oncomplete="PF('bloqueoPantalla').hide()" />
+									<p:tooltip styleClass="tooltip" for="recuperarClave" value="Generar una nueva Contraseña" position="left"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		
+		<div class="col-xs-12 m-b-md">
+
+	        <div class="col-xs-12 text-left color-azul-primary">
+	        	<h2><strong>Registración</strong></h2>
+	        </div>
+			<div class="col-xs-12 text-left">
+				<hr />
+				<h4 class="color-azul-primary">Datos de la Actividad</h4>
+	
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>CUIT/CUIL*</label>
+							<p:inputMask value="#{DatosRegistroRS.cuit}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="CUIT/CUIL"
+										 mask="99-99999999-9">
+							</p:inputMask>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Correo Electrónico*</label> 
+							<p:inputText value="#{DatosRegistroRS.correoAct}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Correo" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Teléfono*</label> 
+							<p:inputMask value="#{DatosRegistroRS.telefonoAct}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Teléfono"
+										 mask="(999)-9999-9999" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Celular*</label>
+							<p:inputMask value="#{DatosRegistroRS.celularAct}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Celular"
+										 mask="(999)-9999-9999" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<!---->
+						<div class="form-group">
+							<label>Contraseña*</label>
+							<p:password value="#{DatosRegistroRS.clave}"
+										styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										placeholder="Contraseña" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<!---->
+						<div class="form-group">
+							<label>Repetir Contraseña*</label> 
+							<p:password value="#{DatosRegistroRS.claveRepetida}"
+										styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										placeholder="Reingrese la contraseña" />
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-xs-12 text-left">
+				<hr/>
+				<h4 class="color-azul-primary">Datos del Solicitante</h4>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Nombre*</label>
+							<p:inputText value="#{DatosRegistroRS.nombre}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Nombre" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Apellido*</label>
+							<p:inputText value="#{DatosRegistroRS.apellido}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Apellido" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>CUIT/CUIL*</label>
+							<p:inputMask value="#{DatosRegistroRS.cuitSol}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="CUIT/CUIL"
+										 mask="99-99999999-9">
+							</p:inputMask>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Correo Electrónico*</label>
+							<p:inputText value="#{DatosRegistroRS.correoSol}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Correo" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Teléfono*</label>
+							<p:inputMask value="#{DatosRegistroRS.telefonoSol}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Teléfono"
+									 	 mask="(999)-9999-9999" />
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Celular*</label>
+							<p:inputMask value="#{DatosRegistroRS.celularSol}"
+										 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+										 placeholder="Celular"
+										 mask="(999)-9999-9999" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Caracter</label> 
+							<h:selectOneMenu value="#{DatosRegistroRS.caracterSeleccionado}" 
+											 styleClass="form-control ng-pristine ng-invalid ng-touched">
+								<f:selectItem itemLabel="Seleccione" />
+								<f:selectItems value="#{DatosRegistroRS.listaCaracteres}" var="caracter"/>
+							</h:selectOneMenu>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-xs-12 m-t-md text-left">
+				<div class="col-xs-6 no-padding">
+					<p:commandButton value="Cancelar" 
+									 action="inicio_rs"
+									 styleClass="btn btn-sm btn-white btn-primary btn-outline btn-rounded" />
+				</div>
+				<div class="col-xs-6 text-right no-padding">
+					<p:commandButton value="Continuar" 
+									 action="#{DatosRegistroRS.siguiente()}"
+									 styleClass="btn btn-sm btn-primary m-b btn-rounded"
+									 update=":form:secciones" />
+				</div>
+			</div>
+	
+		</div>
+		
+	</ui:composition>
+</html>

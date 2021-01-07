@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<h:body>
+		<ui:composition>
+			<p:outputPanel rendered="#{!ablPlanDePago.deudaEnLegales}">
+			
+				<div class="label-destacado">
+					<h:outputText value="CANCELE SU DEUDA AL CONTADO Y ACCEDA A IMPORTANTES DESCUENTOS"/> 
+					<div class="contenedor-tabla">
+						<div class="contenedor-tabla-totales-contado">
+							<div style="text-align:center;">
+								<div class="tabla-contenido-cabecera columna-pago-contado" style="margin-left: 30px;"><h:outputText value="Capital" /></div>
+								<div class="tabla-contenido-cabecera columna-pago-contado"><h:outputText value="Multas" /></div>
+								<div class="tabla-contenido-cabecera columna-pago-contado"><h:outputText value="Recargos" /></div>
+								<div class="tabla-contenido-cabecera columna-pago-contado"><h:outputText value="Total a Pagar" /></div>
+								<div class="tabla-contenido-cabecera-pagar columna-pago-contado-mini"><h:outputText value="Contado" /></div>										
+								
+								<div class="tabla-contenido columna-pago-contado" style="background: white; color: black; margin-left: 30px;"><h:outputText value="#{comunBean.formatearMoneda(ablPlanDePago.cancelacionPlan.capital)}" /></div>
+								<div class="tabla-contenido columna-pago-contado" style="background: white; color: black;"><h:outputText value="#{comunBean.formatearMoneda(ablPlanDePago.cancelacionPlan.multa)}" /></div>
+								<div class="tabla-contenido columna-pago-contado" style="background: white; color: black;"><h:outputText value="#{comunBean.formatearMoneda(ablPlanDePago.cancelacionPlan.recargo)}"/></div>
+								<div class="tabla-contenido columna-pago-contado" style="background: white; color: black;"><h:outputText value="#{comunBean.formatearMoneda(ablPlanDePago.cancelacionPlan.total)}" /></div>
+								<div class="tabla-contenido-pagar columna-pago-contado-mini" style="background: white; color: black;">
+									<p:column headerText="Pagar">
+										<p:selectBooleanCheckbox value="#{ablPlanDePago.pagoContado}">
+									 		<p:ajax update=":form:CuotasPlanDePago" listener="#{ablPlanDePago.selectedPagoContado()}"/>
+										</p:selectBooleanCheckbox>
+									</p:column>
+								</div>
+							</div>
+						</div>					
+					</div>
+					<div style="text-align: center; font-size: 20px; font-family: Brandon Grotesque med;">
+						<h:outputText value="Descuento total obtenido "></h:outputText>
+						<h:outputText value="#{comunBean.formatearMoneda(ablPlanDePago.cancelacionPlan.recargo)}"></h:outputText>
+					</div>	
+				</div>
+			</p:outputPanel>
+			
+			<div class="contenedor-texto">
+				<p:outputLabel value="Seleccione las cuotas que desea abonar y haga click en " styleClass="titulo-tabla" />
+				<p:outputLabel style="font-style: oblique; font-weight: bold; color: black !important;" value="CONTINUAR "/>  
+			</div>
+			
+			<p:dataTable id="CuotasPlanDePago"
+						 value="#{ablPlanDePago.getCuotas()}" 
+						 var="cuota"
+						 style="float: left; width: 100%; margin-top:15px;">
+				
+				<p:column headerText="Cuotas">
+					<h:outputText value="#{cuota.cuotaPlan}" /><br />
+				</p:column>
+				<p:column headerText="Fecha Vencimiento">
+					<h:outputText value="#{comunBean.ajustarPeriodo(cuota.vencimiento)}" /><br />
+				</p:column>
+				<p:column headerText="Capital">
+					<h:outputText value="#{comunBean.formatearMoneda(cuota.capital)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Recargo">
+					<h:outputText value="#{comunBean.formatearMoneda(cuota.recargo)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Multa">
+					<h:outputText value="#{comunBean.formatearMoneda(cuota.multa)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Interes">
+					<h:outputText value="#{comunBean.formatearMoneda(cuota.interes)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Total">
+					<h:outputText value="#{comunBean.formatearMoneda(cuota.total)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Pagar">
+					<p:selectBooleanCheckbox value="#{cuota.pagar}" disabled="#{ablPlanDePago.pagoContado}"/>
+				</p:column>
+			</p:dataTable>
+
+			
+			<div class="contenedor-botonera" style="text-align: center">
+
+				<p:commandButton value="CONTINUAR"
+								 action="#{ablPlanDePago.continuar()}" 
+								 styleClass="boton-principal" 
+								 update=":form:tiles form:div-TablaCuentas" 
+								 onstart="PF('bloqueoPantalla').show()" 
+								 oncomplete="PF('bloqueoPantalla').hide()"/>
+			</div>
+		</ui:composition>
+</h:body>
+</html>

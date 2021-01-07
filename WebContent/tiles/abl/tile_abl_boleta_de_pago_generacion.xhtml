@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="abl.css" />
+				<h:outputStylesheet library="css" name="mvl.css" />
+			</f:facet>
+			
+			<div class="contenedor-tabla">
+				<p:dataTable var="dupla" 
+							 id="tablaPagoDiferidoRecibo"
+							 value="#{ablBoletaDePagoGeneracionBean.listaCuotas}"
+							 rowKey="#{dupla.hashCode()}"
+							 emptyMessage="No se encontraron recibos">
+	
+					<p:column headerText="Tributo">
+						<h:outputText value="#{dupla.cuotaAbl.tasa}" rendered="#{dupla.tieneABL()}" />
+						<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+						<h:outputText value="#{dupla.cuotaProt.tasa}" rendered="#{dupla.tieneProteccionCiudadana()}"  />
+					</p:column>
+					
+					<p:column headerText="Periodo">
+						<h:outputText value="#{comunBean.ajustarPeriodo(dupla.fechaVencimiento)}" />
+					</p:column>
+					
+					<p:column headerText="Capital">
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.capital)}" rendered="#{dupla.tieneABL()}" />
+						<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.capital)}" rendered="#{dupla.tieneProteccionCiudadana()}"  />
+					</p:column>
+					
+					<p:column headerText="Recargo">
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.recargo)}" rendered="#{dupla.tieneABL()}" />
+						<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.recargo)}" rendered="#{dupla.tieneProteccionCiudadana()}"  />
+					</p:column>
+					
+					<p:column headerText="Multa">
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.multa)}" rendered="#{dupla.tieneABL()}" />
+						<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.multa)}" rendered="#{dupla.tieneProteccionCiudadana()}"  />
+					</p:column>
+					
+					<p:column headerText="Total">
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.total)}" rendered="#{dupla.tieneABL()}" />
+						<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+						<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.total)}" rendered="#{dupla.tieneProteccionCiudadana()}"  />
+					</p:column>
+				</p:dataTable>
+			</div>
+	
+			<div class="contenedor-tabla-totales">
+				<div class="tabla-descripcion-vacio"></div>
+				
+				<div class="tabla-contenido-cabecera">
+					<h:outputText value="Totales Capital" />
+				</div>
+				<div class="tabla-contenido-cabecera">
+					<h:outputText value="Totales Recargo" />
+				</div>
+				<div class="tabla-contenido-cabecera">
+					<h:outputText value="Totales Multa" />
+				</div>
+				<div class="tabla-contenido-cabecera">
+					<h:outputText value="Totales" />
+				</div>
+	
+				<div class="tabla-descripcion">Total</div>
+				<div class="tabla-contenido">
+					<h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoBean.deudasRecalculado.totalApagar.capital)}" />
+				</div>
+				<div class="tabla-contenido">
+					<h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoBean.deudasRecalculado.totalApagar.recargo)}" />
+				</div>
+				<div class="tabla-contenido">
+					<h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoBean.deudasRecalculado.totalApagar.multa)}" />
+				</div>
+				<div class="tabla-contenido">
+					<h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoBean.deudasRecalculado.totalApagar.total)}" />
+				</div>
+			</div>
+	
+			<div class="contenedor-texto" style="text-align: right; margin-bottom: 0px;padding-top:20px;">
+				<div class="contendor-texto-opciones">Seleccione si desea <span class="negrita">Generar Recibo</span> o <span class="negrita">Pagar On-line</span></div>
+				
+				<p:selectOneMenu id="item"
+								 value="#{ablBoletaDePagoGeneracionBean.formaPagoSeleccionada}"
+								 styleClass="selection-comun"
+								 style="text-align:left; width: 167px" >
+	
+					<f:selectItems value="#{ablBoletaDePagoGeneracionBean.listaFormasPago}" />
+					<p:ajax update="panelesAccion" />
+				</p:selectOneMenu>
+			</div>
+	
+			<h:panelGroup id="panelesAccion">
+				<ui:fragment rendered="#{(ablBoletaDePagoGeneracionBean.quiereGenerarRecibo())}">
+					<ui:include src="/tiles/abl/tile_abl_boleta_de_pago_generarRecibo.xhtml" />
+				</ui:fragment>
+
+				<ui:fragment rendered="#{ablBoletaDePagoGeneracionBean.quiereGenerarPago()}">
+					<ui:include src="/tiles/abl/tile_abl_boleta_de_pago_PagarPeriodos.xhtml" />
+				</ui:fragment>
+			</h:panelGroup>
+	
+			<h:panelGroup id="modales">
+				<ui:fragment rendered="#{ablBoletaDePagoGeneracionBean.quiereGenerarRecibo()}">
+					<ui:include src="#{ablBoletaDePagoGeneracionBean.urlRecibo}" />
+				</ui:fragment>
+			</h:panelGroup>
+	
+		</ui:composition>
+	</h:body>
+</html>

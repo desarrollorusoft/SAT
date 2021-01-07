@@ -1,0 +1,76 @@
+span.form-control{
+    padding:0;
+}
+
+span.form-control > input{
+    width:100%;
+    height:100%;
+}
+
+.contenedor-pasos{
+	/* margin-top:30px; */
+	background: white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 0 rgba(0 , 0 ,0 ,0.16);
+    padding:10px;
+}
+
+div.ui-datatable table  tbody  tr.ui-datatable-selectable.ui-state-hover{
+	border: 1px solid rgb(221,221,221);
+	background:initial;
+}
+
+div.ui-datatable table  tbody  tr.ui-datatable-selectable.ui-state-hover > td {
+	border:none;
+}
+
+table.ui-selectoneradio{
+	border:none;
+}
+
+table.ui-selectoneradio td{
+	padding-left:15px;
+}
+
+.input-select > input{
+	height:35px;
+	max-width:120px;
+	
+}
+
+.ui-radiobutton-box.ui-state-active{
+	background:#2962FF;
+	border:3px solid #d7d7d7
+}
+
+a.ui-datepicker-prev, a.ui-datepicker-next {
+	display: block !important;
+	text-indent: initial;
+	font: normal normal normal 20px/1 "Font Awesome 5 Free";
+	margin-left: 3px;
+	top: 0;
+	padding-top: 2px;
+	padding-left: 3px;
+	background-color: transparent;
+	font-weight: bold;
+	color: #676a6c;
+}
+a.ui-datepicker-prev.ui-state-disabled, a.ui-datepicker-next.ui-state-disabled {
+	color: #ccc;
+}
+a.ui-datepicker-prev:hover, a.ui-datepicker-next:hover {
+	background-color: transparent;
+}
+a.ui-datepicker-next {
+	margin-right: -10px; 
+}
+a.ui-datepicker-prev:before {
+	content: "\f0a8";
+}
+a.ui-datepicker-next:before {
+	content: "\f0a9";
+}
+td.ui-datepicker-current-day > a.ui-state-active {
+	background-color: #2962FF;
+	color: white;
+}

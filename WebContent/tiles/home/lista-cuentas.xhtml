@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:composition>
+	<!-- Inicio header seccion -->
+	<div class="row m-b-xs">
+		<div class="col-xs-12 flex">
+			<div>
+				<h4 class="color-azul-primary">Mis Cuentas</h4>
+			</div>
+			<button type="button"
+				onclick="$('html, body').animate({scrollTop: $('#scroll').offset().top}, 1500);"
+				class="btn ui-button btn-primary btn-outline btn-rounded"
+				style="font-size: .9em;">
+				<span class="texto-boton">Asociar Cuenta</span>
+			</button>
+			<p:outputPanel id="panel-botonera" layout="block">
+				<p:commandButton value=""
+								 styleClass="btn btn-primary pull-right fa fa-bars shadow sin-texto #{ListaCuentas.tablaSeleccionada?'boton-seleccionado':''}" 
+								 actionListener="#{ListaCuentas.mostrarTabla()}"
+								 update=":form:panel-botonera :form:cambio-disposicion"/>
+				<p:commandButton value=""
+								 styleClass="btn btn-primary pull-right fa fa-th-large shadow sin-texto #{ListaCuentas.grillaSeleccionada?'boton-seleccionado':''}" 
+								 actionListener="#{ListaCuentas.mostrarGrilla()}"
+								 update=":form:panel-botonera :form:cambio-disposicion"/>
+			</p:outputPanel>
+		</div>
+	</div>
+	<!-- Fin header seccion -->
+	<p:outputPanel id="cambio-disposicion" layout="block">
+		<ui:fragment rendered="#{ListaCuentas.tablaSeleccionada}">
+			<ui:include src="/tiles/home/tabla-cuentas.xhtml"/>
+		</ui:fragment>
+		
+		<ui:fragment rendered="#{ListaCuentas.grillaSeleccionada}">
+			<ui:include src="/tiles/home/grilla-cuentas.xhtml"/>
+		</ui:fragment>
+	</p:outputPanel>	
+	
+	<p:confirmDialog widgetVar="AlertaDesvinculacion" 
+					 severity="alert"
+					 global="true" 
+					 message="¿Desea desvincular esta cuenta?"
+					 styleClass="conf">
+		<div class="pull-right">
+			<p:commandButton value=" Sí "
+							 action="#{ListaCuentas.confirmarDesvinculacion()}"
+							 onclick="PF('AlertaDesvinculacion').hide();PF('bloqueoPantalla').show();"
+							 oncomplete="PF('bloqueoPantalla').hide()" 
+							 styleClass="btn btn-primary btn-rounded boton-si"
+							 update="cuentas" />
+		</div>	
+		<div class="pull-left">
+			<p:commandButton value="No" 
+							 styleClass="btn btn-default btn-outline btn-rounded"
+							 onclick="PF('AlertaDesvinculacion').hide();" />
+		</div>
+	</p:confirmDialog>
+
+    <ui:include src="/tiles/home/modal_alias.xhtml"/>
+</ui:composition>
+</html>

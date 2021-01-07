@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			<ui:define name="titulo-pagina">BOLETA DE PAGO</ui:define>
+			
+			<ui:define name="tabla-cuentas">
+				<h:panelGroup id="div-TablaCuentas">
+					<div class="contenedor-tabla-cuentas">
+						<p:dataTable id="tablaCuentas" 
+									 var="cuenta" 
+									 value="#{comunBean.cuentas.listaCuentasABL}" 
+									 rowKey="#{cuenta.hashCode()}" 
+									 emptyMessage="No se encontraron cuentas"
+									 selection="#{ablBoletaDePagoBean.cuentaSeleccionada}"
+									 disabledSelection="#{!ablBoletaDePagoBean.consulta}">
+							
+							<p:column selectionMode="single" style="width:38px"/>
+							
+							<p:column headerText="Cuenta" width="120">
+								<h:outputText value="#{cuenta.numero}" />
+							</p:column>
+	
+							<p:column headerText="Titular" width="220">
+								<h:outputText value="#{cuenta.contribuyente.nombreApellido}" />
+							</p:column>
+	
+							<p:column headerText="Domicilio">
+								<h:outputText value="#{cuenta.contribuyente.domicilio.toString()}" />
+							</p:column>
+							
+							<p:ajax event="rowSelectRadio" 
+									listener="#{ablBoletaDePagoBean.cambioCuenta()}" 
+									onstart="PF('bloqueoPantalla').show()" 
+									oncomplete="PF('bloqueoPantalla').hide()"
+									update=":form:panelesReciboPagoDiferido :form:contenedor-cuenta-seleccionada"/>
+						</p:dataTable>
+					</div>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="infoCuenta">
+			</ui:define>
+			
+			<ui:define name="contenido">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="recibo-vencidas.css" />
+					<h:outputStylesheet library="css" name="recibos-a-vencer.css" />
+				</f:facet>
+				
+				<h:panelGroup id="panelesReciboPagoDiferido">
+				    <ui:fragment rendered="#{ablBoletaDePagoBean.consulta}">
+				        <ui:include src="/tiles/abl/tile_abl_boleta_de_pago_consulta.xhtml"/>
+				    </ui:fragment>
+				    
+				    <ui:fragment rendered="#{(!ablBoletaDePagoBean.consulta)}">
+				        <ui:include src="/tiles/abl/tile_abl_boleta_de_pago_generacion.xhtml"/>
+				    </ui:fragment>				  
+				</h:panelGroup>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

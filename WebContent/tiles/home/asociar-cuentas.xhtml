@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<div id="scroll">
+			<hr/>
+			<h4 class="color-azul-primary">Asociar Cuenta</h4>
+			<div class="row scroll">
+				<div class="col-md-6 b-r">
+					<div class="row">
+						<div class="col-md-12">
+							<label class="pull-left">Tributo</label> 
+							<h:selectOneMenu value="#{AsociarCuenta.tipoSeleccionado}"
+											 styleClass="form-control m-b ng-untouched ng-pristine ng-valid">
+								<f:selectItems value="#{AsociarCuenta.tiposCuenta}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nombre}" />
+								<p:ajax update="camposAsociarCuenta" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div style="margin-top: 40px;" class="ng-untouched ng-pristine ng-invalid">
+						<p:outputPanel id="camposAsociarCuenta">
+							<div class="row">
+								<div class="#{AsociarCuenta.muestroDV() or AsociarCuenta.muestroTipoDocumento() ? 'col-md-6' : 'col-md-12'}">
+									<label class="pull-left"><h:outputText value="#{AsociarCuenta.labelDenominacion}" /></label> 
+									<p:inputText rendered="#{!AsociarCuenta.muestroTipoDocumento()}" value="#{AsociarCuenta.padron}" disabled="#{AsociarCuenta.esComercio()}" styleClass="form-control ng-untouched ng-pristine ng-invalid"/>
+									<p:outputPanel rendered="#{AsociarCuenta.muestroTipoDocumento()}">
+										<h:selectOneMenu value="#{AsociarCuenta.tipoDocumento}"
+														 styleClass="form-control ng-pristine ng-valid ng-touched">
+											<f:selectItems value="#{AsociarCuenta.obtenerTiposDocumento()}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}"/>
+											<p:ajax event="change" update="camposAsociarCuenta"/>
+										</h:selectOneMenu>
+									</p:outputPanel>
+								</div>
+								<p:outputPanel rendered="#{AsociarCuenta.muestroDV()}">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>DC</label>
+											<div class="input-group">
+												<h:inputText value="#{AsociarCuenta.digitoVerificador}" 
+															 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+															 maxlength="2"/>
+											</div>
+										</div>
+									</div>
+								</p:outputPanel>
+								<p:outputPanel rendered="#{AsociarCuenta.muestroTipoDocumento()}">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Nro. Documento</label>
+											<div class="input-group">
+												<h:inputText value="#{AsociarCuenta.nroDocumento}"
+															 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+															 maxlength="10"/>
+											</div>
+										</div>
+									</div>
+								</p:outputPanel>
+								<span>
+									<p:commandButton action="#{AsociarCuenta.buscarCuenta()}"
+													 value=""
+													 styleClass="arriba-5 btn btn-primary fa fa-search pull-right btn-circle no-padding sin-texto sin-correr"
+													 update="datosAsociarCuenta">
+									</p:commandButton>
+								</span>
+							</div>
+						</p:outputPanel>
+					</div>
+				</div>
+				<!-- Inicio Resultado busqueda -->
+				<div class="col-md-6">
+					<p:outputPanel id="datosAsociarCuenta">
+						<p:outputPanel rendered="#{AsociarCuenta.muestroResultado()}">
+							<div class="row">
+								<div class="col-md-12">
+									<h5>Contribuyente</h5>
+									<p class="resultadoFiltro"><h:outputText value="#{AsociarCuenta.contribuyente}" /></p>
+								</div>
+							</div>
+							<p:outputPanel rendered="#{!AsociarCuenta.cuentaBuscadaEsPileta()}" styleClass="row">
+								<div class="col-md-12">
+									<h5>Descripción</h5>
+									<p class="resultadoFiltro"><h:outputText value="#{AsociarCuenta.descripcion}" /></p>
+								</div>
+							</p:outputPanel>
+							<div class="ng-untouched ng-pristine ng-valid">
+								<div class="form-group">
+									<label>Alias</label>
+									<div class="input-group">
+										<h:inputText value="#{AsociarCuenta.alias}" styleClass="form-control ng-untouched ng-pristine ng-valid" />
+										<span>
+											<p:commandButton value=""
+															 actionListener="#{AsociarCuenta.asociarCuenta()}" 
+															 styleClass="arriba-5 btn btn-primary fa fa-plus pull-right btn-circle no-padding sin-texto sin-correr"
+															 update="datosAsociarCuenta cuentas"
+															 onclick="PF('bloqueoPantalla').show();"
+															 oncomplete="PF('bloqueoPantalla').hide()"
+													   		 rendered="#{comunBean.esContribuyente()}" />
+											<p:commandButton value=""
+															 actionListener="#{AsociarCuenta.reiniciar()}" 
+															 styleClass="arriba-5 btn btn-primary fa fa-trash pull-right btn-circle no-padding sin-texto sin-correr"
+															 update="datosAsociarCuenta" />
+										</span>
+									</div>
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:outputPanel>
+				</div>
+			<!-- Fin Resultado busqueda -->
+			</div>
+		</div>
+</ui:composition>
+</html>

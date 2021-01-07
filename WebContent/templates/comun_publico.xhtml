@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+      
+	<h:body>
+		<ui:composition template="/templates/comun.xhtml">
+			
+			<ui:define name="detalle-contenido">
+				<f:facet name="last">
+				</f:facet>
+
+				<ui:include src="/tiles/publico/header-publico.xhtml" />
+
+				<div class="container">
+					<ui:insert name="contenido"></ui:insert>
+				</div>
+			</ui:define>
+				
+		</ui:composition>
+	</h:body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		<div id="scroll">
+			<hr/>
+			<h4 class="color-azul-primary">Asociar Plan</h4>
+			<div class="row scroll">
+				<div class="col-md-6 b-r">
+					<div style="margin-top: 10px;" class="ng-untouched ng-pristine ng-invalid">
+						<p:outputPanel id="camposAsociarPlan">
+							<div class="row">
+								<div class="col-xs-9">
+									<label class="">N° Plan</label>
+										<pe:inputNumber value="#{AsociarPlan.numeroPlan}"
+														maxlength="8"
+														thousandSeparator=""
+														decimalPlaces="0"
+														styleClass="form-control ng-untouched ng-pristine ng-invalid" />
+								</div>
+								<div class="col-sx-3" style="padding-left: 0">
+									<span>
+										<p:commandButton action="#{AsociarPlan.buscar()}"
+														 value=""
+														 styleClass="arriba-5 btn btn-primary fa fa-search pull-right btn-circle no-padding sin-texto sin-correr"
+														 update="datosAsociarPlan"
+														 style="top:15px;right:8px;">
+										</p:commandButton>
+									</span>
+								</div>
+							</div>
+						</p:outputPanel>
+					</div>
+				</div>
+
+				<!-- Inicio Resultado busqueda -->
+				<div class="col-md-6">
+					<p:outputPanel id="datosAsociarPlan">
+						<p:outputPanel rendered="#{AsociarPlan.encontrado}">
+							<div class="row">
+								<div class="col-md-12">
+									<h5>Solicitante</h5>
+									<p class="resultadoFiltro"><h:outputText value="#{AsociarPlan.planEncontrado.solicitante}" /></p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<h5>Cuotas</h5>
+									<p class="resultadoFiltro"><h:outputText value="#{AsociarPlan.planEncontrado.cantCuotas}" /></p>
+								</div>
+							</div>
+							<div class="ng-untouched ng-pristine ng-valid">
+								<div class="form-group">
+									<label>Alias</label>
+									<div class="input-group">
+										<h:inputText value="#{AsociarPlan.alias}" styleClass="form-control ng-untouched ng-pristine ng-valid" />
+										<span>
+											<p:commandButton value=""
+															 actionListener="#{AsociarPlan.asociarPlan()}"
+															 styleClass="arriba-5 btn btn-primary fa fa-plus pull-right btn-circle no-padding sin-texto sin-correr"
+															 update="datosAsociarPlan camposAsociarPlan tablaPlanes"
+															 onclick="PF('bloqueoPantalla').show();"
+															 oncomplete="PF('bloqueoPantalla').hide()"
+													   		 disabled="#{!comunBean.esContribuyente()}" />
+											<p:commandButton value=""
+															 actionListener="#{AsociarPlan.reiniciar()}"
+															 styleClass="arriba-5 btn btn-primary fa fa-trash pull-right btn-circle no-padding sin-texto sin-correr"
+															 update="datosAsociarPlan" />
+										</span>
+									</div>
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:outputPanel>
+				</div>
+			<!-- Fin Resultado busqueda -->
+			</div>
+		</div>
+</ui:composition>
+</html>

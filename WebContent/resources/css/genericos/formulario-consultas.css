@@ -1,0 +1,207 @@
+.top-3 {
+  margin-top: 3px;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  height: 14em;
+  border: 1px solid rgba( 0, 0, 0, 0.16 );
+  border-radius: 10px;
+  font-weight: 400;
+}
+
+.top-10 {
+  margin-top: 10px;
+}
+
+.left-10 {
+  margin-left: 10px;
+}
+
+.bottom-20 {
+  margin-bottom: 20px;
+}
+
+textarea {
+  outline: none;
+}
+
+.main-container {
+  background: white;
+  padding-bottom: 10px;
+}
+
+.container-formulario, .container-plataforma {
+  background: white;
+  border-radius: 3px;
+  padding-bottom: 10px;
+  box-shadow: 5px 5px 10px 0 rgba(0 , 0 ,0 ,0.16);
+}
+
+.container-plataforma{
+	min-height: calc( 96vh - 95px );
+	margin-bottom: 4vh
+}
+
+.contenedor-rbtn {
+    position: relative;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Hide the browser's default radio button */
+.contenedor-rbtn input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 12px;
+    width: 12px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.contenedor-rbtn:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.contenedor-rbtn input:checked ~ .checkmark {
+    background-color: #2962FF;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.contenedor-rbtn input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.contenedor-rbtn .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+
+.oculto{
+  display: none;
+}
+
+label.btn.btn-primary{
+  transition:0.4s;
+}
+
+label.btn-primary:hover,label.btn-primary:focus{
+  background: #011762;
+  border: 1px solid #011762;
+  color:#ffffff;
+}
+
+ul.adjuntos li.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+}
+
+.listAdjuntos {
+  max-height: 166px;
+  overflow-y: auto;
+  overflow-x: none;
+}
+
+.descarga{
+  display: flex;
+  white-space: normal;
+  font-size: 1em;
+}
+
+.descarga i {
+  font-size: 1.2em;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.ui-fileupload{
+	display:none;
+}
+
+.ui-datalist div{
+	border:none;
+}
+
+.ui-datalist ul{
+	list-style-type:none;
+}
+
+.ui-inputmask:hover{
+	background:initial;
+}
+
+textarea:hover{
+	background:white;
+}
+
+input.ui-inputmask, .ui-inputmask::placeholder{
+	font-weight:400;
+}
+
+.radioButtonSpace table tbody td {
+	padding-right:10px;
+}
+
+.radio-button{
+	margin-top: -8px;
+}
+
+
+.radio-button label {
+	margin:0;
+}
+
+.textarea{
+	min-height:150px;
+}
+
+.flex{
+	font-size:1.7em;
+}
+
+
+.flex{
+	height: calc( 100vh - 140px );
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+}
+
+div.noHeader.ui-datatable table thead tr {
+    display: none;
+}
+div.ui-datatable.no-border table,
+div.ui-datatable.no-border table tbody,
+div.ui-datatable.no-border table tbody tr,
+div.ui-datatable.no-border table tbody tr td {
+	border: 0;
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/home-cuentas.css" />
+			<h:outputStylesheet library="css" name="adaptacion/subsidio.css" />
+		</f:facet>
+		<div class="col-md-12 upper">
+			<div class="row mb-3">
+				<div class="col-xs-12">
+					<div class="contenido-seccion">
+						<div class="row">
+							<div class="col-md-8 col-sm-6 col-xs-12">
+								<span style="font-size:3rem;">Programa de Apoyo Económico<br/>a Comercios No Esenciales</span>
+							</div>
+							<div class="col-md-4 col-sm-6 col-xs-12">
+								<img alt="Logo Municipalidad" class="pull-right" src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/new_logo-header.jpg"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<div class="row mb-3">
+				<div class="col-md-12 mb-1">
+					<div class="titulo-seccion">CONDICIONES Y DOCUMENTACIÓN A PRESENTAR</div>
+				</div>
+				<br/>
+				<div class="col-xs-12">
+					<div class="contenido-seccion">
+						<b class="titulo-gris">CONDICIONES:</b>
+						<ul>
+							<li>Poseer habilitación o trámite de habilitación en curso</li>
+							<li>Contribuyentes de Régimen Simplificado: Realizar Declaración Jurada 2020 y pago de la cuota 1</li>
+							<li>Contribuyentes de Régimen General: Realizar Declaraciones Juradas y pago de los períodos 1 y 2/2020</li>
+							<li>Encuadrar en todos los términos del Decreto 2303/2020 y su Decreto Reglamentario</li>
+						</ul>
+						<br/>
+						<b class="titulo-gris">DOCUMENTACION A PRESENTAR:</b>
+						<ul>
+							<li>Personas humanas: Documento Nacional de Identidad del titular del comercio</li>
+							<li>Sociedades:  Estatutos, contrato social y DNI según corresponda</li>
+							<li>Certificación bancaria del CBU o Costancia de CBU obtenido desde el homebanking</li>
+							<li><a href="https://www.vicentelopez.gov.ar/static-iipp/p/SAT/archivos/DDJJ/ae/Autorizacion_Acreditacion_Bancaria.docx" target="_blank">Formulario de autorización de acreditación en cuenta bancaria (escaneado con la correspondiente firma)</a></li>
+							<li>Contrato de Locación (sólo en caso de ser inquilino)</li>
+							<li>Comprobantes de gastos vinculados con el giro de la actividad comercial, con fecha posterior al 20 de marzo del corriente año </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<br/><br/>
+			<div class="row mb-3">
+				<div class="col-md-12 mb-1 b-r-md">
+					<div class="titulo-seccion">DATOS DEL SOLICITANTE DEL BENEFICIO</div>
+				</div>
+				<br/>
+				<div class="col-xs-12 b-r-md">
+					<div class="contenido-seccion">
+						<div class="row">
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="Nombre y Apellido *" for="nombre"/>
+									<p:inputText id="nombre"
+												 value="#{SubsidioCargar.tramite.representante}"
+												 styleClass="form-control"
+												 placeholder="Ingrese su nombre completo"/>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="CUIT *" for="cuit"/>
+									<p:inputMask id="cuit"
+												 value="#{SubsidioCargar.tramite.cuit}"
+												 mask="99-99999999-9"
+												 placeholder="Ingrese su CUIT"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid">
+									</p:inputMask>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="DNI *" for="dni"/>
+									<p:inputText id="dni"
+												 value="#{SubsidioCargar.tramite.dni}"
+												 styleClass="form-control"
+												 placeholder="Ingrese su DNI"
+												 maxlength="8"/>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="CBU *" for="cbu"/>
+									<p:inputText id="cbu"
+												 value="#{SubsidioCargar.tramite.cbu}"
+												 styleClass="form-control"
+												 maxlength="22"
+												 placeholder="Ingrese su CBU"/>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="Teléfono fijo" for="tel"/>
+									<p:inputMask id="tel"
+												 value="#{SubsidioCargar.tramite.telefono}"
+												 mask="(999)-9999-9999"
+												 placeholder="Ingrese su teléfono"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid">
+									</p:inputMask>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="Banco *" for="banco"/>
+									<p:inputText id="banco"
+												 value="#{SubsidioCargar.tramite.banco}"
+												 styleClass="form-control"
+												 placeholder="Ingrese el nombre de su banco"/>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-12">
+								<div class="form-group">
+									<p:outputLabel value="Teléfono Móvil" for="cel"/>
+									<p:inputMask id="cel"
+												 value="#{SubsidioCargar.tramite.celular}"
+												 mask="(999)-9999-9999"
+												 placeholder="Ingrese su celular"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid">
+									</p:inputMask>
+								</div>
+							</div>
+						</div>
+						<br/>
+						<div class="row">
+							<div class="col-xs-12">
+								<h3 style="color:#2962FF">Domicilio Fiscal Electrónico</h3>
+								<p>Consignar, con carácter de Declaración Jurada, casilla de correo electrónico vigente a efectos de constituir domicilio fiscal electrónico en los términos del Artículo 81 Inc. F) de la Ordenanza Fiscal 26387 y modificatorias. Las citaciones, notificaciones, comunicaciones en general e intimaciones de pago que allí se practiquen gozarán de plena validez y eficacia jurídica, y producirán plenos efectos en el ámbito administrativo y judicial.</p>
+								<div class="form-group">
+									<p:outputLabel value="Correo Electrónico *" for="correo"/>
+									<p:inputText id="correo"
+												 value="#{SubsidioCargar.tramite.correo}"
+												 styleClass="form-control correo-dfe"
+												 placeholder="Ingrese su correo"/>
+								</div>
+								<div class="form-group">
+									<p:selectBooleanCheckbox value="#{SubsidioCargar.tramite.dfe}" id="dfe" styleClass="check-dfe"/>
+									<p:outputLabel value="Acepto utilizar este correo como Domicilio Fiscal Electrónico" for="dfe"/>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<br/><br/>
+
+
+			<p:tabView id="tabsCuentas"
+					   value="#{SubsidioCargar.tramite.datos}"
+					   var="datos"
+					   onTabChange="#{SubsidioCargar.cambiarDatos()}">
+				<p:tab title="#{datos.cuenta}"
+					   titleStyleClass="#{SubsidioCargar.iconoSolapa(datos)}">
+					<div class="row mb-3">
+						<div class="col-md-12 mb-1 b-r-md">
+							<div class="titulo-seccion">DATOS DE LA HABILITACIÓN DEL COMERCIO</div>
+						</div>
+						<div class="col-xs-12 b-r-md">
+							<div class="contenido-seccion">
+								<div class="row">
+									<div class="col-md-6 col-xs-12">
+										<b><label>Razón Social</label></b><br/>
+										<h:outputLabel value="#{datos.razonSocial}"></h:outputLabel><br/><br/>
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<b><label>Rubro</label></b><br/>
+										<h:outputLabel value="#{datos.rubro}"></h:outputLabel><br/><br/>
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<b><label>Titular</label></b><br/>
+										<h:outputLabel value="#{SubsidioCargar.tramite.titular}"></h:outputLabel><br/><br/>
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<b><label>Domicilio</label></b><br/>
+										<h:outputLabel value="#{datos.domicilio}"></h:outputLabel><br/><br/>
+									</div>
+								</div>
+								<hr/><br/>
+								<div class="form-group">
+									<p:outputLabel value="Nombre de Fantasía *" for="nombreFantasia"/>
+									<p:inputText id="nombreFantasia"
+												 value="#{datos.nombreFantasia}"
+												 styleClass="form-control"
+												 placeholder="Ingrese el nombre de fantasia"/>
+								</div>
+								<p:outputLabel value="Expediente de Habilitación N° *" for="expediente"/>
+								<div class="form-inline">
+
+									<div class="form-group">
+										<p:outputLabel value="4119/" for="expediente"/>
+
+										<p:inputMask id="expediente"
+													 value="#{datos.expediente}"
+													 mask="999999/9999"
+													 placeholder="Ejemplo: 000152/2020"
+													 styleClass="form-control ng-untouched ng-pristine ng-invalid expediente">
+										</p:inputMask>
+
+										<p>El expediente está compuesto por un numero fijo (4119), luego le sigue el <b>número</b> y por ultimo el año. En caso de que el <b>número</b> tenga menos de 6 dígitos, completar con ceros (0) a izquierda</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br/>
+					<div class="row mb-3">
+						<div class="col-md-12 mb-1 b-r-md">
+							<div class="titulo-seccion">DATOS DEL INMUEBLE DONDE FUNCIONA EL COMERCIO</div>
+						</div>
+						<br/>
+						<div class="col-xs-12 b-r-md">
+							<div class="contenido-seccion">
+								<p:selectOneRadio id="radioPropietario" value="#{datos.propietario}"
+												  styleClass="form-control"
+												  columns="2" >
+									<f:selectItem itemLabel="Propietario" itemValue="true"/>
+									<f:selectItem itemLabel="Inquilino" itemValue="false" />
+									<p:ajax event="change" update=":form:tabsCuentas"></p:ajax>
+								</p:selectOneRadio>
+								<p:outputPanel id="contratoFechas" rendered="#{!datos.propietario}">
+									<hr/><br/>
+									<b><p:outputLabel value="Vigencia del Contrato de Locación"/></b>
+									<div class="form-inline">
+										<div class="form-group">
+											<p:outputLabel value="Desde" for="contratoDesde"/>
+											<p:calendar value="#{datos.inicioContrato}"
+														id="contratoDesde"
+														styleClass="form-control"
+														pattern="dd/MM/yyyy"
+														mask="true"
+														locale="es"
+														maxdate="#{datos.finContrato}"/>
+
+										</div>
+										<div class="form-group">
+											<p:outputLabel value="Hasta" for="contratoHasta"/>
+											<p:calendar value="#{datos.finContrato}"
+														id="contratoHasta"
+														styleClass="form-control"
+														pattern="dd/MM/yyyy"
+														mask="true"
+														locale="es"/>
+										</div>
+									</div>
+								</p:outputPanel>
+								<hr/><br/>
+								<div class="form-group">
+									<b><p:outputLabel value="Cuenta ALCVP y SV (ABL)" for="cuentaABL"/></b>
+									<pe:inputNumber value="#{datos.cuentaAbl}"
+													id="cuentaABL"
+													maxlength="6"
+													thousandSeparator=""
+													decimalPlaces="0"
+													styleClass="form-control" />
+								</div>
+								<p:outputPanel rendered="#{!datos.propietario}">
+									<p:outputLabel value="¿Es responsable del pago del tributo de A.L C.V.P y S.V?"/>
+									<p:selectOneRadio id="radioAbl" value="#{datos.responsableAbl}"
+													  styleClass="form-control"
+													  columns="1" >
+										<f:selectItem itemLabel="Si" itemValue="true"/>
+										<f:selectItem itemLabel="No" itemValue="false" />
+									</p:selectOneRadio>
+								</p:outputPanel>
+							</div>
+						</div>
+						<br/><br/>
+						<div class="col-xs-12 b-r-md">
+							<br/>
+							<div class="contenido-seccion">
+								<p>Adjuntar las siguientes imágenes (.jpg, .png): DNI, Contrato de Alquiler, Certificación Bancaria del CBU.</p>
+								<ul>
+									<li>Personas humanas: Documento Nacional de Identidad del titular del comercio</li>
+									<li>Sociedades:  Estatutos, contrato social y DNI según corresponda</li>
+									<li>Certificación bancaria del CBU o Costancia de CBU obtenido desde el homebanking</li>
+									<li><a href="https://www.vicentelopez.gov.ar/static-iipp/p/SAT/archivos/DDJJ/ae/Autorizacion_Acreditacion_Bancaria.docx" target="_blank">Formulario de autorización de acreditación en cuenta bancaria (escaneado con la correspondiente firma)</a></li>
+									<li>Contrato de Locación (sólo en caso de ser inquilino)</li>
+									<li>Comprobantes de gastos vinculados con el giro de la actividad comercial, con fecha posterior al 20 de marzo del corriente año </li>
+								</ul>
+								<br/>
+									<p:fileUpload multiple="false"
+												  auto="true"
+												  fileUploadListener="#{SubsidioCargar.subirArchivos}"
+												  update="listaAdjuntos"/>
+									<br />
+								<div class="row">
+									<div class="col-xs-12">
+										<p:outputPanel id="listaAdjuntos">
+											<ui:repeat value="#{datos.adjuntos}" var="adjunto" varStatus="i">
+												<div class="row" style="margin-bottom:0.4rem;">
+													<div class="col-xs-12">
+														<a href="#{adjunto.url}" class="button-icon"><i class="fas fa-download"></i></a>
+														<p:commandButton value="" styleClass="fas fa-times button-icon" actionListener="#{datos.eliminarAdjunto(adjunto)}" update=":form:tabsCuentas"/>
+														<span class="text-file-attach">#{adjunto.nombre}</span>
+													</div>
+												</div>
+											</ui:repeat>
+										</p:outputPanel>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="row" style="margin-top:0.3rem;">
+						<div class="col-xs-12">
+							<p:commandButton value="Guardar"
+											 styleClass="btn btn-primary btn-rounded pull-right"
+											 actionListener="#{SubsidioCargar.validarCuenta(datos)}"
+											 onclick="PF('bloqueoPantalla').show();"
+											 oncomplete="PF('bloqueoPantalla').hide();"
+											 update="tabsCuentas"/>
+						</div>
+					</div>
+				</p:tab>
+			</p:tabView>
+			<br/><br/>
+			<div class="row mb-3">
+				<div class="col-md-12 mb-1 b-r-md">
+					<div class="titulo-seccion">CONFIRMACIÓN DE DATOS</div>
+				</div>
+				<br/>
+				<div class="col-xs-12 b-r-md">
+					<div class="contenido-seccion">
+						<p>
+							<small><b>DECLARO BAJO JURAMENTO</b> que los datos consignados en este formulario son correctos, y que he confeccionado esta declaración sin falsear ni omitir dato alguno, siendo fiel expresión de la verdad y que la documentación acreditada corresponde fielmente a la documentación original que obra en mi poder. En carácter de Declaración Jurada manifiesto conocer que el destino de los fondos otorgados por el Municipio deberá ajustarse a lo previsto en el Decreto 2303/2020 y su Decreto Reglamentario. Y en virtud de ello, declaro que los comprobantes acreditados por gastos incurridos a partir del 20 de marzo del corriente año son inherentes a la actividad comercial, objeto del presente Programa, sin perjuicio del deber de acreditación de comprobantes de pagos efectuados a partir de la efectiva disponibilidad de los fondos.</small>
+						</p>
+						<p:commandButton value="Confirmar"
+										 styleClass="btn btn-primary btn-rounded pull-center"
+										 actionListener="#{SubsidioCargar.validarTramite()}"
+										 onclick="PF('bloqueoPantalla').show();"
+										 oncomplete="PF('bloqueoPantalla').hide();"
+										 update="secciones"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<p:poll widgetVar="pollGuardadorSubsidio" async="true" interval="180" autoStart="true" listener="#{SubsidioCargar.guardar()}" />
+		
+	</ui:composition>
+</html>

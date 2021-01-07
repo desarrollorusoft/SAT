@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+      
+	<h:head>
+		<title>
+			<ui:insert name="titulo-pagina">MVL SAT</ui:insert>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/SAT/resources/img/iconos/favicon.ico"/>
+	    
+		<h:outputScript library="js" name="noEnter.js" />
+		<h:outputScript library="js" name="calendar_es.js" />
+		<h:outputScript library="js" name="modernizr-2.5.3.js" />
+		<h:outputScript library="js" name="jquery-barcode.js" />
+		<h:outputScript library="js" name="visualizaciones.js" />
+		<h:outputScript library="js" name="sub-menu.js" />
+		<h:outputScript library="js" name="jquery.jqprint-0.3.js" />
+		<h:outputScript library="js" name="sat2/bootstrap.min.js" />
+		
+		<ui:insert name="redireccionamiento"></ui:insert>
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />	
+	</h:head>
+	<h:body onload="cambiarSubMenuPagina('#{view.viewId}')">
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="sat2/bootstrap.min.css" />
+			<h:outputStylesheet library="css" name="sat2/styles.css" />
+		</f:facet>
+		
+		<h:form id="form" enctype="multipart/form-data" onkeypress="return stopRKey(event);">
+		
+			<ui:include src="/templates/growls.xhtml"></ui:include>
+			
+			<div class="contenedor-general">
+				
+				<div class="contenedor-cabecera">
+					<div class="contenedor-seccion-cabecera">
+						<div class="contenedor-logo-mvl">
+							<h:graphicImage value="/resources/img/iconos/vivamosVL.jpg" alt="logo-mvl" class="logo-mvl"/>
+						</div>
+						<div class="contenedor-titulo-pagina">
+							<div class="cabecera-titulo-sat">
+								<h:outputLabel value="Sistema de Autogestión Tributaria"/>
+							</div>
+							<div class="cabecera-titulo-mvl">
+								<h:outputLabel value="Municipalidad de Vicente López"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Esto es el menu de opciones de la pagina de la municipalidad -->
+				<div class="contenedor-session-menu-mvl">
+					
+					<ui:include src="/tiles/menu-opciones-mvl.xhtml" />
+					
+				</div>
+				
+				<!-- Aca va el contenido principal -->
+				<div class="contenedor-detalle">
+					<div class="contenedor-seccion-detalle">
+						<div class="contenedor-subtitulo">
+							<ui:insert name="titulo-pagina"></ui:insert>
+						</div>
+						
+						<ui:insert name="detalle-contenido"></ui:insert>
+					
+					</div>
+				</div>
+				
+				<!-- Esto es el menu de opciones de la pagina de la municipalidad -->
+				<div class="contenedor-seccion-pie-menu">
+				
+					<ui:include src="/tiles/menu-opciones-mvl.xhtml" />
+				
+				</div>
+				
+				<div class="contenedor-seccion-pie-pagina">
+					Este sitio requiere Chrome, Firefox, Safari o IE9+ para ser visto.<br />
+					Algunos archivos requieren Adobe Acrobat para ser leidos.<br />
+					<br />
+					Sistema de Autogestión Tributaria de la Municipalidad de Vicente López. © 2014 Todos los Derechos reservados.<br />
+				</div>
+			</div>
+			
+			<ui:include src="/tiles/aviso-salida-sat.xhtml" />
+	    	<ui:include src="/tiles/modales/modalRedireccionEditarPerfil.xhtml" />
+			
+			<p:blockUI widgetVar="bloqueoPantalla" block="form">
+				<h:graphicImage value="/resources/img/gif/loader.gif" styleClass="imagen-loader"/>
+				
+				<div class="label-bloqueo">
+					<h:outputText value="Aguarde un momento por favor..." style="font-size: 15px;"/>
+				</div>
+			</p:blockUI>
+		</h:form>
+	</h:body>
+</html>

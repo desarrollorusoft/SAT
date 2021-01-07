@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/alerta.css" />
+		</f:facet>
+		
+		<p:outputPanel id="seccionCalendario">
+		
+			<div class="col-md-12">
+				<div class="ibox-content">		
+					<p:schedule id="scheduleLocale" value="#{Alertas.calendario}" locale="es" />
+					<hr/>
+					<h4 class="color-azul-primary">Alertas</h4>
+					<div>
+						<p:dataTable value="#{Alertas.listaAlertas}"
+									 var="alerta"
+									 emptyMessage="No hay alertas cargadas"
+									 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+							
+							<p:column headerText="Fecha">
+								<h:outputText value="#{alerta.fechaInicio}" />
+							</p:column>
+							
+							<p:column headerText="Descripción">
+								<h:outputText value="#{alerta.descripcion}" />
+							</p:column>
+							
+							<p:column headerText="Acción">
+								<p:commandButton value=""
+												 action="#{Alertas.eliminarAlerta(alerta)}"
+												 styleClass="btn btn-primary btn-circle text-navy fa fa-times"
+												 update=":form:seccionCalendario"
+												 onclick="PF('bloqueoPantalla').show()"
+												 oncomplete="PF('bloqueoPantalla').hide();"  />
+							</p:column>
+							
+						</p:dataTable>
+					</div>
+					<div class="user-button">
+						<div class="ng-untouched ng-pristine ng-invalid">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Fecha*</label>
+										<p:calendar value="#{Alertas.fecha}"
+													styleClass="calendar-alertas"
+													pattern="dd/MM/yyyy"
+													readonlyInput="true"
+													mindate="#{Alertas.hoy}"
+												 	locale="es" />
+									</div>
+								</div>
+								<div class="col-md-8">
+									<div class="form-group">
+										<label>Descripción</label> 
+										<p:inputText value="#{Alertas.descripcion}" 
+													 styleClass="form-control m-b-xs ng-untouched ng-pristine ng-invalid" 
+													 maxlength="30"/>
+										<p:commandButton id="botonAgregarAlerta"
+														 value=""
+														 action="#{Alertas.agregarAlterta()}"
+														 styleClass="btn btn-primary btn-circle fa fa-check text-navy pull-right"
+														 update=":form:seccionCalendario"
+														 onclick="PF('bloqueoPantalla').show()"
+														 oncomplete="PF('bloqueoPantalla').hide();"
+														 rendered="#{comunBean.esContribuyente()}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</p:outputPanel>
+	</ui:composition>
+</html>

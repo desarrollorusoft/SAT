@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		
+		<div class="col-md-6 col-sx-12">
+			<h4 class="a-vencer"><span class="izquierda">A Vencer</span> <span class="derecha"><h:outputText value="#{comunBean.formatearMoneda(detalleReimpresionBoletaBean.cuenta.deudas.totalCoutasAVencer.total)}" /></span></h4>
+			<p:dataTable id="tablaAVencerAbl"
+						 value="#{detalleReimpresionBoletaBean.obtenerDeudaAbl().listaDuplaAVencer}"
+						 var="dupla"
+						 emptyMessage="No hay periodos a vencer"
+						 rowKey="#{dupla.hashCode()}" 
+						 rendered="#{detalleReimpresionBoletaBean.esAbl()}">
+				
+				<p:column headerText="Periodo" width="70">
+					<h:outputText value="#{comunBean.ajustarPeriodo(dupla.periodo)}" />
+				</p:column>
+				
+				<p:column headerText="Vencimiento">
+					<h:outputText value="#{comunBean.ajustarFecha(dupla.fechaVencimiento)}" />
+				</p:column>
+				
+				<p:column headerText="Capital">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.totalCapital)}"/>
+				</p:column>
+				
+				<p:column headerText="Recargo">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.totalRecargo)}"/>
+				</p:column>
+				
+				<p:column headerText="Multa">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.totalMulta)}"/>
+				</p:column>
+				
+				<p:column headerText="Total">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.duplaTotal)}"/>
+				</p:column>
+				
+				<p:column headerText="Pagar" width="50">
+					<p:selectBooleanCheckbox value="#{dupla.pagar}">
+						<p:ajax listener="#{detalleReimpresionBoletaBean.actualizarParcialDupla(dupla)}" update=":form:panelesMontoParcial" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+			</p:dataTable>
+		</div>
+		<div class="col-md-6 col-sx-12">
+			<h4 class="deuda"><span class="izquierda">Deuda</span><span class="derecha"><h:outputText value="#{comunBean.formatearMoneda(detalleReimpresionBoletaBean.cuenta.deudas.totalCoutasVencidas.total)}" /></span></h4>
+			<p:dataTable id="tablaDeudasAbl"
+						 value="#{detalleReimpresionBoletaBean.obtenerDeudaAbl().listaDuplasVencidas}"
+						 var="dupla"
+						 emptyMessage="No hay periodos vencidos"
+						 rowKey="#{dupla.hashCode()}" 
+						 rowStyleClass="#{detalleReimpresionBoletaBean.estaEnMora(dupla) ? 'periodo-mora' : ''}"
+						 rendered="#{detalleReimpresionBoletaBean.esAbl()}">
+				
+				<p:column headerText="Periodo" width="70">
+					<h:outputText value="#{comunBean.ajustarPeriodo(dupla.periodo)}" />
+				</p:column>
+				
+				<p:column headerText="Vencimiento">
+					<h:outputText value="#{comunBean.ajustarFecha(dupla.fechaVencimiento)}" />
+				</p:column>
+				
+				<p:column headerText="Capital">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.totalCapital)}"/>
+				</p:column>
+				
+				<p:column headerText="Recargo">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.totalRecargo)}"/>
+				</p:column>
+				
+				<p:column headerText="Multa">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.totalMulta)}"/>
+				</p:column>
+				
+				<p:column headerText="Total">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.duplaTotal)}"/>
+				</p:column>
+				
+				<p:column headerText="Pagar" width="70">
+					<ui:fragment rendered="#{detalleReimpresionBoletaBean.noEsAbonableDupla(dupla)}">
+				    	<span class="label-estado">Ejecuci&oacute;n Hipotecaria</span>
+				    </ui:fragment>
+				    <ui:fragment rendered="#{detalleReimpresionBoletaBean.esAbonableDupla(dupla)}">
+				        <p:selectBooleanCheckbox value="#{dupla.pagar}">
+							<p:ajax listener="#{detalleReimpresionBoletaBean.actualizarParcialDupla(dupla)}" update=":form:panelesMontoParcial :form:tablaDeudasAbl :form:checkSeleccionAbl" />
+						</p:selectBooleanCheckbox>
+				    </ui:fragment>
+				</p:column>
+			</p:dataTable>
+			<div class="col-xs-12">
+				<p:outputPanel id="marcoDeudaAbl" rendered="#{detalleReimpresionBoletaBean.cuenta.deudaLegales}">
+					<div class="marco-deuda-legal">
+					
+						<div class="label-destacado" style="text-align: center; font-size: 20px; font-family: Brandon Grotesque med; background-color:#F11212; margin:0">
+							<h:outputText value="Usted posee deudas en Legales"/>
+							<div style="text-align: center; font-size: 16px; font-family: Brandon Grotesque med;">
+								<h:outputText value="La cuenta tiene periodos al cobro por vía judicial. Para conocer el detalle diríjase a la oficina de APREMIOS"></h:outputText>
+							</div>
+						</div>
+					
+					</div>
+				</p:outputPanel>
+				<p:outputPanel id="marcoDescuentoAbl" rendered="#{detalleReimpresionBoletaBean.muestroPanelDescuentos()}">
+					<div class="marco-descuento">
+						<div class="col-xs-11">
+							<h:outputText value="Cancele su Deuda al Contado y Acceda a Importantes Descuentos!"/> 
+						</div>
+						<div class="col-xs-1 text-center">
+							<p:selectBooleanCheckbox id="checkSeleccionAbl" value="#{detalleReimpresionBoletaBean.seleccionCompleta}" styleClass="margen-arriba-3">
+								<p:ajax listener="#{detalleReimpresionBoletaBean.cambiarSeleccionDupla()}" update=":form:panelesMontoParcial :form:tablaDeudasAbl " />
+							</p:selectBooleanCheckbox>
+						</div>
+					</div>
+				</p:outputPanel>
+			</div>
+		</div>
+		
+	</ui:composition>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		<div class="container-fluid">
+			<div class="contenedor-pasos">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-sm-3 col-xs-12">
+							<label>Fecha de habilitación *<br/><small>(Comercio)</small></label>
+							<p:calendar value="#{DatosActividad.versionEnCurso.fechaHabilitacion}"
+										styleClass="form-control"
+										pattern="dd/MM/yyyy"
+										mask="true"
+										locale="es"
+										maxdate="#{DatosActividad.obtenerFechaDeHoy()}"/>
+						</div>
+						<div class="col-sm-3 col-xs-12">
+							<label>Cantidad de Personas *<br/><small>(Títulares + Relación de dependencia)</small></label>
+							<p:spinner value="#{DatosActividad.versionEnCurso.cantidadPersonas}" 
+									   styleClass="form-control" 
+									   min="0" 
+									   max="999999999"
+									   onkeydown="return event.which === 8 || event.which === 46 || event.which === 47 || event.which === 48 || event.which === 49 || event.which === 50 || event.which === 51 || event.which === 52 || event.which === 53 || event.which === 54 || event.which === 55 || event.which === 56;" ></p:spinner>
+						</div>
+						<div class="col-sm-3 col-xs-12">
+							<label>Facturaci&oacute;n Anual *<br/><small>(Correspondiente al año #{DatosActividad.anoFacturacion()})</small></label>
+							<pe:inputNumber value="#{DatosActividad.versionEnCurso.facturacion}" 
+											styleClass="form-control" 
+											decimalPlaces="2"
+											symbol="$ "
+											symbolPosition="p" />
+						</div>
+						<div class="col-sm-3 col-xs-12">
+							<label>Nro. Cuenta A.L.C.V.P. y S.V. y C.P.C. *<br/><small>(Correspondiente al domicilio del local)</small></label>			 		
+							<div class="row">
+				                <div class="col-xs-11">	
+				                	<pe:inputNumber value="#{DatosActividad.versionEnCurso.cuentaABL}" 
+				                					maxlength="6" 
+				                					thousandSeparator=""
+				                					decimalPlaces="0"
+											 	 	styleClass="form-control" />
+				                </div>
+				                <div class="col-xs-1 no-padding-izquierda">
+				                	<p:commandButton value=""
+				                					 actionListener="#{DatosActividad.validarCuentaAbl()}"
+				                					 styleClass="btn btn-primary btn-circle fa fa-search"
+				                					 onclick="PF('bloqueoPantalla').show();"
+													 oncomplete="PF('bloqueoPantalla').hide()"/>
+				                </div>
+				             </div>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-sm-6 col-xs-12">
+							<label>Actividad Principal *</label>			
+							<h:selectOneMenu value="#{DatosActividad.actividades.actividadPrincipal}"
+											 styleClass="form-control"
+											 converter="#{DatosActividad.datoActividadConverter}">
+								<f:selectItem itemValue="" itemLabel="Seleccione..."/>
+								<f:selectItems  value="#{DatosActividad.listaActividades}"
+												var="actividad"
+												itemValue="#{actividad}"
+												itemLabel="#{actividad.nombre}"/>			 			 
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-6 col-xs-12">
+							<label>Actividades Secundarias</label>
+						    <p:dataTable value="#{DatosActividad.listaActividades}"
+						    			 var="actividad" 
+						    			 emptyMessage="No se pudieron recuperar las actividades"
+						    			 rowKey="#{actividad.hashCode()}" 
+						    			 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center"
+										 selection="#{DatosActividad.actividades.otrasActividades}"
+										 scrollable="true"
+										 scrollHeight="250"
+										 converter="#{DatosActividad.datoActividadConverter}">
+						    	
+						        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						        
+						        <p:column headerText="">
+						            <h:outputText value="#{actividad.nombre}" />
+						        </p:column>
+						       
+						    </p:dataTable>			
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 abajo-20">
+						<div class="pull-left">
+							<p:commandButton value="Volver"
+											 styleClass="btn btn-rounded"
+											 action="#{DatosActividad.volverAPadrones()}"
+											 update=":form:secciones" />
+						</div>
+						<div class="pull-right">
+							<p:commandButton value="Continuar"
+											 styleClass="btn btn-primary btn-rounded"
+											 action="#{DatosActividad.siguiente()}"
+											 update=":form:secciones" />
+						</div>
+					</div>
+				</div>	
+			</div>	
+		</div>
+	</ui:composition>
+</html>

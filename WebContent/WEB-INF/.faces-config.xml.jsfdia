@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inicio::#pages#pub#login.xhtml"
+    NAME="output" PATH="/pages/pub/login.xhtml"
+    TARGET="rules:#pages#pub#login.xhtml" TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inicio_rs::#pages#pub#login_rs.xhtml"
+    NAME="output1" PATH="/pages/pub/login_rs.xhtml"
+    TARGET="rules:#pages#pub#login_rs.xhtml" TITLE="inicio_rs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="registro::#pages#pub#registro.xhtml"
+    NAME="output5" PATH="/pages/pub/registro.xhtml"
+    TARGET="rules:#pages#pub#registro.xhtml" TITLE="registro" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="registro_rs::#pages#pub#registro_rs.xhtml"
+    NAME="output2" PATH="/pages/pub/registro_rs.xhtml"
+    TARGET="rules:#pages#pub#registro_rs.xhtml" TITLE="registro_rs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="olvido_clave::#pages#pub#olvido_clave.xhtml"
+    NAME="output6" PATH="/pages/pub/olvido_clave.xhtml"
+    TARGET="rules:#pages#pub#olvido_clave.xhtml" TITLE="olvido_clave" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="olvido_clave_rs::#pages#pub#olvido_clave_rs.xhtml"
+    NAME="output3" PATH="/pages/pub/olvido_clave_rs.xhtml"
+    TARGET="rules:#pages#pub#olvido_clave_rs.xhtml"
+    TITLE="olvido_clave_rs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cambio_clave_temporal::#pages#pub#cambio_clave_temporal.xhtml"
+    NAME="output4" PATH="/pages/pub/cambio_clave_temporal.xhtml"
+    TARGET="rules:#pages#pub#cambio_clave_temporal.xhtml"
+    TITLE="cambio_clave_temporal" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="carga_nivel3::#pages#pre#carga_nivel3.xhtml"
+    NAME="output7" PATH="/pages/pre/carga_nivel3.xhtml"
+    TARGET="rules:#pages#pre#carga_nivel3.xhtml" TITLE="carga_nivel3" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="no_activo_cuenta::#pages#pub#activacion.xhtml" NAME="output8"
+    PATH="/pages/pub/activacion.xhtml"
+    TARGET="rules:#pages#pub#activacion.xhtml" TITLE="no_activo_cuenta" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="generar_codigo::#pages#pub#generar_codigo.xhtml" NAME="output9"
+    PATH="/pages/pub/generar_codigo.xhtml"
+    TARGET="rules:#pages#pub#generar_codigo.xhtml"
+    TITLE="generar_codigo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inc_correo::#pages#pub#inc_correo.xhtml"
+    NAME="output11" PATH="/pages/pub/inc_correo.xhtml"
+    TARGET="rules:#pages#pub#inc_correo.xhtml" TITLE="inc_correo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#pri#home.xhtml" NAME="output12"
+    PATH="/pages/pri/home.xhtml" TARGET="rules:#pages#pri#home.xhtml"
+    TITLE="home" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="consultas::#pages#pri#consultas.xhtml"
+    NAME="output13" PATH="/pages/pri/consultas.xhtml"
+    TARGET="rules:#pages#pri#consultas.xhtml" TITLE="consultas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="rs::#pages#pri#rs.xhtml" NAME="output14"
+    PATH="/pages/pri/rs.xhtml" TARGET="rules:#pages#pri#rs.xhtml"
+    TITLE="rs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="rs_padron::#pages#pri#rs_padron.xhtml"
+    NAME="output15" PATH="/pages/pri/rs_padron.xhtml"
+    TARGET="rules:#pages#pri#rs_padron.xhtml" TITLE="rs_padron" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="confirmar_rs::#pages#pri#confirmar_rs.xhtml"
+    NAME="output16" PATH="/pages/pri/confirmar_rs.xhtml"
+    TARGET="rules:#pages#pri#confirmar_rs.xhtml" TITLE="confirmar_rs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="editar_perfil::#pages#pri#editar_perfil.xhtml" NAME="output17"
+    PATH="/pages/pri/editar_perfil.xhtml"
+    TARGET="rules:#pages#pri#editar_perfil.xhtml" TITLE="editar_perfil" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="datos-rs::#pages#pri#datos-rs.xhtml"
+    NAME="output18" PATH="/pages/pri/datos-rs.xhtml"
+    TARGET="rules:#pages#pri#datos-rs.xhtml" TITLE="datos-rs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="actualizacion_datos::#pages#pri#actualizacion-datos.xhtml"
+    NAME="output19" PATH="/pages/pri/actualizacion-datos.xhtml"
+    TARGET="rules:#pages#pri#actualizacion-datos.xhtml"
+    TITLE="actualizacion_datos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="boleta_electronica::#pages#pri#boleta_electronica.xhtml"
+    NAME="output20" PATH="/pages/pri/boleta_electronica.xhtml"
+    TARGET="rules:#pages#pri#boleta_electronica.xhtml"
+    TITLE="boleta_electronica" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="sesion_expirada::#pages#sesion_expirada.xhtml" NAME="output21"
+    PATH="/pages/sesion_expirada.xhtml"
+    TARGET="rules:#pages#sesion_expirada.xhtml" TITLE="sesion_expirada" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="preguntas_frecuentes::#pages#externos#preguntas_frecuentes.xhtml"
+    NAME="output34" PATH="/pages/externos/preguntas_frecuentes.xhtml"
+    TARGET="rules:#pages#externos#preguntas_frecuentes.xhtml"
+    TITLE="preguntas_frecuentes" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="guia_tramites::#pages#externos#guia_tramites.xhtml"
+    NAME="output35" PATH="/pages/externos/guia_tramites.xhtml"
+    TARGET="rules:#pages#externos#guia_tramites.xhtml"
+    TITLE="guia_tramites" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="reimpresion_boleta::#pages#externos#reimpresion_boleta.xhtml"
+    NAME="output36" PATH="/pages/externos/reimpresion_boleta.xhtml"
+    TARGET="rules:#pages#externos#reimpresion_boleta.xhtml"
+    TITLE="reimpresion_boleta" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="formulario_consultas::#pages#externos#formulario_consultas.xhtml"
+    NAME="output37" PATH="/pages/externos/formulario_consultas.xhtml"
+    TARGET="rules:#pages#externos#formulario_consultas.xhtml"
+    TITLE="formulario_consultas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="about::#pages#about.xhtml" NAME="output38"
+    PATH="/pages/about.xhtml" TARGET="rules:#pages#about.xhtml"
+    TITLE="about" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#pub#activacion.xhtml"
+  PATH="/pages/pub/activacion.xhtml" SHAPE="304,1393,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#login_rs.xhtml"
+  PATH="/pages/pub/login_rs.xhtml" SHAPE="304,945,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#olvido_clave.xhtml"
+  PATH="/pages/pub/olvido_clave.xhtml" SHAPE="304,1761,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#login.xhtml"
+  PATH="/pages/pub/login.xhtml" SHAPE="304,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#externos#formulario_consultas.xhtml"
+  PATH="/pages/externos/formulario_consultas.xhtml" SHAPE="304,1425,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#registro.xhtml"
+  PATH="/pages/pub/registro.xhtml" SHAPE="304,1425,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#home.xhtml"
+  PATH="/pages/pri/home.xhtml" SHAPE="304,1425,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#generar_codigo.xhtml"
+  PATH="/pages/pub/generar_codigo.xhtml" SHAPE="304,881,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#externos#guia_tramites.xhtml"
+  PATH="/pages/externos/guia_tramites.xhtml" SHAPE="304,1329,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#externos#reimpresion_boleta.xhtml"
+  PATH="/pages/externos/reimpresion_boleta.xhtml" SHAPE="304,1361,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#sesion_expirada.xhtml"
+  PATH="/pages/sesion_expirada.xhtml" SHAPE="288,241,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#externos#preguntas_frecuentes.xhtml"
+  PATH="/pages/externos/preguntas_frecuentes.xhtml" SHAPE="304,1297,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#about.xhtml" PATH="/pages/about.xhtml"
+  SHAPE="304,1761,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#registro_rs.xhtml"
+  PATH="/pages/pub/registro_rs.xhtml" SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#rs.xhtml"
+  PATH="/pages/pri/rs.xhtml" SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#rs_padron.xhtml"
+  PATH="/pages/pri/rs_padron.xhtml" SHAPE="304,849,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#consultas.xhtml"
+  PATH="/pages/pri/consultas.xhtml" SHAPE="304,881,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#editar_perfil.xhtml"
+  PATH="/pages/pri/editar_perfil.xhtml" SHAPE="304,913,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#olvido_clave_rs.xhtml"
+  PATH="/pages/pub/olvido_clave_rs.xhtml" SHAPE="304,945,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#inc_correo.xhtml"
+  PATH="/pages/pub/inc_correo.xhtml" SHAPE="304,753,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#datos-rs.xhtml"
+  PATH="/pages/pri/datos-rs.xhtml" SHAPE="304,753,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#boleta_electronica.xhtml"
+  PATH="/pages/pri/boleta_electronica.xhtml" SHAPE="304,785,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pre#carga_nivel3.xhtml"
+  PATH="/pages/pre/carga_nivel3.xhtml" SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pub#cambio_clave_temporal.xhtml"
+  PATH="/pages/pub/cambio_clave_temporal.xhtml" SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#confirmar_rs.xhtml"
+  PATH="/pages/pri/confirmar_rs.xhtml" SHAPE="304,881,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#pri#actualizacion-datos.xhtml"
+  PATH="/pages/pri/actualizacion-datos.xhtml" SHAPE="304,945,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

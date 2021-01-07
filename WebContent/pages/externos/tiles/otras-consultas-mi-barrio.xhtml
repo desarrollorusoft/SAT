@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      <ui:composition>			
+		<div class="consultas-container">
+			<div class="comun-text consulta-text">
+				<p>Otras Consultas</p>
+			</div> 
+		</div>
+		<div class="formulario-container">
+			<div class="row">
+				<div class="col-sm-12">
+					<h:commandLink styleClass="btn-ingresar" 
+					               action="#{otrasConsultasMiBarrioBean.irMiBarrio()}"
+					               target="_blank">
+						<div class="mi-barrio-container">
+							<div class="numero-container">
+								<div class="numero">
+									<p><i class="boton-fa fa fa-phone"/> 147</p>
+								</div>
+							</div>
+							<div class="mi-barrio-middle">
+								<div class="mi-barrio">
+									<p class="mi-barrio-title"><b>MI BARRIO</b></p>
+									<p class="mi-barrio-sub-title"><b>VICENTE LÓPEZ</b></p>
+								</div>
+							</div>
+							<div class="ingresa-container">
+								<div class="ingresa">
+									<p>INGRESÁ</p>
+								</div>
+							</div>
+						</div>
+					</h:commandLink>
+				</div>
+			</div>
+		</div>
+	</ui:composition>
+</html>			

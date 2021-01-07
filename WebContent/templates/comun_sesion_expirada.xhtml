@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+      
+	<h:head>
+		<title>
+			<ui:insert name="titulo-pagina">MVL</ui:insert>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/resources/img/iconos/favicon.ico"/>
+	    
+		<h:outputScript library="js" name="noEnter.js" />
+		<h:outputScript library="js" name="calendar_es.js" />
+		<h:outputScript library="js" name="modernizr-2.5.3.js" />
+		<h:outputScript library="js" name="jquery-barcode.js" />
+		<h:outputScript library="js" name="visualizaciones.js" />
+		<h:outputScript library="js" name="sub-menu.js" />
+		
+		<ui:insert name="redireccionamiento"></ui:insert>
+	</h:head>
+	<h:body onload="cambiarSubMenuPagina('#{view.viewId}')">
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="comun.css" />
+		</f:facet>
+		
+		<h:form id="form" enctype="multipart/form-data" onkeypress="return stopRKey(event);">
+		
+			<ui:include src="/templates/growls.xhtml"></ui:include>
+			
+			<div class="contenedor-completo">
+			
+				<div class="contenedor-general">
+					
+					<div class="contenedor-seccion-cabecera">
+						<div class="contenedor-logo-mvl">
+							<h:graphicImage value="/resources/img/iconos/vivamosVL.jpg" alt="logo-mvl" class="logo-mvl"/>
+						</div>
+						<div class="contenedor-titulo-pagina">
+							<h:outputText value="Sistema de Autogestion Tributaria" />
+						</div>
+					</div>
+					
+					<div class="contenedor-contenido">
+						<p:outputPanel id="contenidoTotal" style="float: left; width: 100%">
+						
+							<ui:insert name="contenido">
+								<h2>Se ha superado el tiempo de espera permitido y por motivo de seguridad se le ha cerrado su sesión de usuario. Para seguir utilizando la aplicación debe ingresar nuevamente.</h2>
+							</ui:insert>	
+							
+							<p:blockUI widgetVar="bloqueoPantallaContenido" block="contenidoTotal">
+								<h:graphicImage value="/resources/img/gif/loader.gif" styleClass="imagen-loader"/>
+								
+								<div class="label-bloqueo">
+									<h:outputText value="Aguarde un momento por favor..." style="font-size: 15px; font-family: 'Brandon Grotesque med'"/>
+								</div>
+							</p:blockUI>
+												
+						</p:outputPanel>
+					</div>
+				</div>
+			</div>
+
+			<p:blockUI widgetVar="bloqueoPantalla" block="form">
+				<h:graphicImage value="/resources/img/gif/loeader.gif" styleClass="imagen-loader"/>
+				
+				<div class="label-bloqueo">
+					<h:outputText value="Aguarde un momento por favor..." style="font-size: 15px; font-family: 'Brandon Grotesque med'"/>
+				</div>
+			</p:blockUI>
+		</h:form>
+	</h:body>
+</html>

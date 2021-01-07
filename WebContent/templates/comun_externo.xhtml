@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<h:head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><ui:insert name="titulo-pagina">MVL SAT</ui:insert></title>
+		<link rel="shortcut icon" type="image/x-icon" href="/SAT/resources/img/iconos/favicon.ico" />
+	
+		<h:outputScript library="js" name="noEnter.js" />
+		<h:outputScript library="js" name="modernizr-2.5.3.js" />
+		
+		<style type="text/css">
+			.sat {
+				color: #aeca37 !important;
+				text-align: center !important;
+				padding-left: 0 !important;
+				background: none !important;
+			}
+		</style>
+	</h:head>
+	<h:body styleClass="bodyint">
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="foundation.css" />
+			<h:outputStylesheet library="css" name="mvl.css" />
+			<h:outputStylesheet library="css" name="lightbox.css" />
+		</f:facet>
+	
+		<h:form id="form" enctype="multipart/form-data" onkeypress="return stopRKey(event);">
+	
+			<ui:include src="/templates/growls.xhtml"></ui:include>
+	
+			<div class="row">
+				<div class="large-12 medium-12 small-12">
+					<div class="large-6 medium-6 small-6 column">
+						<a href="https://www.vicentelopez.gov.ar/" target="_blank">
+							<h:graphicImage value="/resources/img/iconos/new_logo-header.jpg" alt="Municipalidad de Vicente Lopez"/>
+						</a>
+					</div>
+					<div class="large-6 medium-6 small-6 column text-right">
+						<h:graphicImage value="/resources/img/iconos/new_lema-header-sat.jpg"/>
+					</div>
+				</div>
+			</div>
+			<!-- MENU -->
+			<div class="row">
+				<div class="small-12 large-12 columns">
+					<div class="menu text-center">
+						<a href="https://www.vicentelopez.gov.ar/" target="_blank" class="inicio">INICIO</a> | 
+						<a href="https://www.vicentelopez.gov.ar/vicente-lopez" target="_blank" class="normativa">Vicente Lopez</a> | 
+						<a href="https://www.vicentelopez.gov.ar/intendente-vicente-lopez" target="_blank" class="presupuesto">El Municipio</a> | 
+						<a href="http://www.forosvecinales.org/" target="_blank" class="rendicion">Foros Vecinales</a> | 
+						<a href="http://www.desarrolloeconomico.com.ar/" target="_blank" class="proveedores">Desarrollo Econ&oacute;mico</a> | 
+						<a href="http://www.mvl.gov.ar/web_empleados/login.aspx" target="_blank" class="compras">Empleado Municipal</a>
+					</div>
+				</div>
+			</div>
+			<!-- contenido -->
+	
+			<div class="row">
+				<div class="large-12 medium-12 columns contenedorinterno" style="background: #ffffff url(../../resources/img/iconos/back-raya-home.png) repeat-x !important;">
+					<div class="large-9 medium-16 small-12 columns">
+						<div class="cajatitint">
+							<h4 class="tit sat">Sistema de Autogesti&oacute;n Tributaria</h4>
+							<div class="large-12">&nbsp;</div>
+							<h4 class="tit"><ui:insert name="titulo">titulo</ui:insert></h4>
+						</div>
+						<ui:insert name="contenido"></ui:insert>
+					</div>
+					
+					<!-- SIDEBAR -->
+					<h5 class="tithome" style="text-align: right; margin-right: 40px; color: #333333; background: none !important; font-size: .8em !important;">
+						<a href="#" onclick="history.go(-1);return false;" style="color: #333333;">Volver</a>
+					</h5>
+
+					<div class="large-4 hide-for-medium hide-for-small columns sidebar"
+						style="width: 230px; background: #ACCA38 !important; margin-top: 3px !important; padding-top: 0 !important; border: 0 none !important; margin-top: .5rem !Important;">
+	
+						<div>
+							<div class="cajatitside" >
+								<a href="https://www.vicentelopez.gov.ar/SAT/pages/interfaz/regimen-simplificado.html" target="_blank">
+									<h:graphicImage value="/resources/img/iconos/rs.png" class="banner"/>
+								</a>
+							</div>
+							
+							<div class="tel text-center">
+								<a href="/pages/interfaz/img/Sat_Movil_Volante.jpg" data-lightbox="image-1" data-title="SAT Móvil">
+									<h:graphicImage value="/pages/interfaz/img/Boton_Sat_Movil.png" 
+													styleClass="banner" 
+													alt="SAT Móvil" 
+									 				style="width: 162px;margin:20px 10px 12px 10px;" />
+								</a>
+							</div>
+							<div class="tel text-center">
+								<a href="https://www.vicentelopez.gov.ar/SAT/" target="_blank">
+									<h:graphicImage value="/resources/img/iconos/SAT.png" styleClass="banner" />
+								</a>
+							</div>
+							<div class="tel text-center">
+								<a href="https://www.vicentelopez.gov.ar/informacion_fiscal/">
+									<h:graphicImage value="/resources/img/iconos/Transparencia_Fiscal.png" styleClass="banner" />
+								</a>
+							</div>
+							<div class="tel text-center">
+								<a href="https://www.vicentelopez.gov.ar/cvl/" target="_blank">
+									<h:graphicImage value="/resources/img/iconos/clave_fiscal.png" styleClass="banner" />
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="zocalobanner">
+				<div class="row">
+					<div class="large-12 column text-center">
+						<a href="https://www.vicentelopez.gov.ar/" target="_blank">Inicio</a> - 
+						<a href="https://www.vicentelopez.gov.ar/vicente-lopez" target="_blank">Vicente Lopez</a> - 
+						<a href="https://www.vicentelopez.gov.ar/intendente-vicente-lopez" target="_blank">El Municipio</a> - 
+						<a href="http://www.forosvecinales.org/" target="_blank">Foros Vecinales</a> - 
+						<a href="http://www.desarrolloeconomico.com.ar/" target="_blank">Desarrollo Económico</a> - 
+						<a href="http://www.mvl.gov.ar/web_empleados/login.aspx" target="_blank">Empleado Municipal</a>
+					</div>
+				</div>
+			</div>
+
+			<div id="footer">
+				<div class="row">
+					<div class="large-12 column">
+						<div class="large-12 medium-12 small-12 column text-center footertext">
+							Este sitio requiere Chrome, Firefox, Safari o IE9+ para ser visto.<br/>
+							Algunos archivos requieren &nbsp;
+							<a href="http://get.adobe.com/reader/" target="_blank">
+								<h:graphicImage value="/resources/img/iconos/acrobat_icon.png" width="15" height="15" />
+								Adobe Acrobat
+							</a> para ser leidos.
+							<br/><br/> 
+							Sitio de Información Fiscal de la Municipalidad de Vicente López. © 2014 Todos los Derechos reservados.
+						</div>
+					</div>
+				</div>
+				<!-- JS -->
+				<h:outputScript library="js" name="jquery-1.7.1.min.js" />
+				<h:outputScript library="js" name="acordeones.js" />
+				<h:outputScript library="js" name="fastclick.js" />
+				<h:outputScript library="js" name="foundation.min.js" />
+				<h:outputScript library="js" name="lightbox-plus-jquery.min.js" />
+				<script>
+				  $(document).foundation();
+				</script>
+	
+			</div>
+		</h:form>
+	</h:body>
+</html>

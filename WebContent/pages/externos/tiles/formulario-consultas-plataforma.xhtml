@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition>
+    <div class="informacion-container arriba-25">
+        <div class="container row contenedor-formulario-interno">
+            <div class="col-xs-12">
+                <div class="tributo-container arriba-25">
+                    <h3 class="color-azul-primary">
+                        <strong>Realizá tu consulta</strong>
+                    </h3>
+                </div>
+                <div class="row">
+                    <ui:include src="/pages/externos/tiles/formulario-consultas.xhtml"/>
+                    
+                    <div class="col-xs-12 button-footer">
+                        <div class="pull-left">
+                            <p:commandButton value=""
+                                             styleClass="btn btn-default btn-outline btn-circle fa fa-arrow-left sin-texto"
+                                             action="#{formularioPlataformaBean.volver()}"
+                                             update=":form"/></div>
+                        <div class="pull-right">
+                            <p:commandButton id="botonEnviarFormulario"
+                                             value="ENVIAR"
+                                             styleClass="btn btn-primary btn-rounded"
+                                             action="#{formularioPlataformaBean.enviar()}"
+                                             update=":form"
+                                             rendered="#{comunBean.esContribuyente()}"
+                                             onclick="PF('bloqueoPantalla').show();"
+                                             oncomplete="PF('bloqueoPantalla').hide()"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>

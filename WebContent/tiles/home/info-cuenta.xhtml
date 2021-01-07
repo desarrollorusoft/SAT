@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<div class="row">
+			<div class="col-xs-12">		
+				<div class="col-md-6">
+					<div class="animated fadeInDown arriba-15 ibox-content no-padding">
+						<h2 class="color-azul-primary">Datos</h2>
+						<div class="row">
+						<div class="col-md-4 col-sm-6 col-xs-12 abajo-25">
+					                <span class="titulo"><h:outputText value="Alias" /></span>
+					                <br/><br/>
+					                <p:inputText value="#{InformacionCuenta.cuenta.alias}" styleClass="form-control input-alias-info">
+					                	<p:ajax event="blur" listener="#{InformacionCuenta.actualizarCuenta()}"/>
+					                </p:inputText>
+					            </div>
+							<ui:repeat value="#{InformacionCuenta.mapa.lista}" var="dato">
+								<div class="col-md-4 col-sm-6 col-xs-12 abajo-25">
+					                <span class="titulo"><h:outputText value="#{dato.clave}" /></span>
+					                <br/><br/>
+					                <span><h:outputText value="#{dato.valor}" /></span>
+					            </div>
+							</ui:repeat>				
+						</div>	
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="ibox-content no-padding  animated fadeInDown arriba-15">
+						<h2 class="pull-left color-azul-primary">Consultas y Reclamos</h2>
+						<p:commandButton value=""
+										 styleClass="sin-texto btn btn-primary pull-right fa fa-plus btn-circle no-padding sin-correr"
+										 actionListener="#{InformacionCuenta.nuevaConsulta()}"
+									   	 rendered="#{comunBean.esContribuyente()}"/>
+						<br />
+						<br />
+						<br />
+						<p:dataTable value="#{InformacionCuenta.listaConsultas}"
+									 var="consulta"
+									 emptyMessage="No hay consultas realizadas para esta Cuenta"
+									 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center"
+									 rowKey="#{consulta.hashCode()}"
+									 scrollable="true"
+									 scrollHeight="300">
+							
+							<p:column headerText="Número">
+								<h:outputText value="#{consulta.id}" />
+							</p:column>
+							
+							<p:column headerText="Tipo">
+								<h:outputText value="#{consulta.tipoConsulta}" />
+							</p:column>
+							
+							<p:column headerText="Categoría">
+								<h:outputText value="#{consulta.categoria.nombre}" />
+							</p:column>
+							
+							<p:column headerText="Estado">
+								<h:outputText value="#{consulta.estado}" />
+							</p:column>
+							
+							<p:column headerText="Acción">
+								<p:commandButton value=""
+												 styleClass="btn btn-primary btn-circle fa fa-info sin-texto"
+												 actionListener="#{InformacionCuenta.mostrarConsulta(consulta)}"/>
+								</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</ui:composition>
+</html>

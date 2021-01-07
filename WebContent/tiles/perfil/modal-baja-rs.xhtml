@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+
+		<p:dialog widgetVar="ModalBajaRS"
+				  id="modalBajaRS"
+				  header="Baja de Usuario"
+				  modal="true"
+				  closable="false"
+				  hideEffect="fade"
+				  showEffect="fade"
+				  width="400"
+				  styleClass="modal-motivos-baja" >
+
+			<div class="container-flex">
+				<p><b>La baja de usuario no puede ser realizada.</b><br/>
+					Ud. posee al menos una cuenta de comercio asociada.</p>
+			</div>
+			<div class="modal-footer">
+				<p:commandButton value="Cerrar"
+								 styleClass="btn btn-default btn-rounded pull-left"
+								 onclick="PF('ModalBajaRS').hide();"/>
+			</div>
+		</p:dialog>
+
+	</ui:composition>
+</html>

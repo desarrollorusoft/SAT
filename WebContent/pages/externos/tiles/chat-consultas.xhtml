@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition>
+		<f:facet name = "last">
+		</f:facet>
+	<p:outputPanel id="panelChat" layout="block">
+		<ui:fragment rendered="#{chatBean.consulta.cerrada}">
+			<div class="col-xs-12">
+				<label class="label-consulta arriba-25 izquierda-15">Su consulta esta cerrada, si desea reabrirla, haga click 
+					<p:commandLink styleClass="link"
+								   onclick="PF('ModalConfirmar').show();"
+								   uodate=":form:panelChat">
+								   aqui
+					</p:commandLink> 
+				</label>
+			</div>
+		</ui:fragment>
+		<div class="col-xs-12 arriba-25">
+			<div class="col-md-8 col-xs-12">
+				<div class="chat-discussion">
+	
+					<ui:repeat var="mensaje"
+						value="#{chatBean.consulta.listaConsultasAsociadas}">
+						<p:outputPanel layout="block" styleClass="chat-message #{mensaje.delConsultante?'left':'right'}">
+							<div class="message">
+								<a class="message-author"> 
+								<h:outputText value="#{mensaje.usuario}" rendered="#{mensaje.interno}"/>
+								<h:outputText value="#{chatBean.consulta.nombreCompleto}" rendered="#{mensaje.delConsultante}"/>
+								</a> <span class="message-date"> <h:outputText
+										value="#{comunBean.ajustarFechaHora( mensaje.fechaConsulta )}" /></span> <span
+									class="message-content"> <h:outputText
+										value="#{mensaje.nuevaConsulta}" />
+								</span>
+							</div>
+						</p:outputPanel>
+					</ui:repeat>
+	
+				</div>
+				<div class="row m-t-xs">
+					<div class="col-md-12 m-b-md">
+						<div class="chat-message-form">
+							<p:outputPanel layout="block" styleClass="form-group"
+								rendered="#{chatBean.consulta.abierta}" style="margin-top:-33px;">
+								<div class="row">
+									<div
+										class="col-sm-12 col-xs-8 input-consulta">
+										<p:inputTextarea value="#{chatBean.nuevaConsulta.nuevaConsulta}"
+														 placeholder="Nueva Consulta..." 
+														 styleClass="form-control nueva-consulta"/>
+									</div>
+									<div class="boton-enviar">
+										<p:commandButton value=""
+														 action="#{chatBean.enviarConsulta()}"
+														 styleClass="btn btn-primary btn-circle fa fa-paper-plane sin-texto boton-enviar"
+														 update=":form:panelChat"
+														 onclick="PF('bloqueoPantalla').show();"
+													 	 oncomplete="PF('bloqueoPantalla').hide()" />
+									</div>
+								</div>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-12">
+				<ui:fragment rendered="#{chatBean.consulta.abierta}">
+					<div class="col-xs-12 text-center">
+					  <label for="form:upload_chat_input" class="btn btn-primary btn-rounded">
+	                    <i class="fa fa-upload derecha-10"></i>
+	                    Adjuntar archivo
+	                  </label>
+					   <p:fileUpload id="upload_chat" auto="true" fileUploadListener="#{chatBean.subirArchivos}" label="" update=":form:listaArchivosSubidos"/>
+					</div> 
+					
+				</ui:fragment>
+				<div class="col-sm-12 file-upload-container arriba-20 text-center">
+					<p:dataTable id="listaArchivosSubidos"
+								 value="#{chatBean.consulta.listaArchivos}"
+								 var="archivo" 
+								 emptyMessage="Sin archivos adjuntos"
+								 styleClass="lista-archivos-subir noHeader no-border">
+								 
+						<p:column style="width:45px;text-align:center">
+							<a href="#{archivo.ruta}"  
+							   target="blank" 
+			                   class="btn btn-primary fa fa-download btn-circle">
+			                </a>
+						</p:column>
+						
+						<p:column>
+							<span class="texto-descarga"><h:outputText value="#{archivo.nombre}"/></span>
+						</p:column>
+				 	</p:dataTable>
+				</div>
+			</div>
+
+				<p:dialog id="modalConfirmar" 
+				  widgetVar="ModalConfirmar" 
+				  modal="true" 
+				  closable="true"
+				  resizable="false"
+				  width="500"
+				  draggable="false"
+				  styleClass="modal-area">
+					<div class="title-area">
+						<h3 class="color-azul-primary">Reapertura de consulta</h3>
+						<hr style="margin-top:5px;" class="abajo-20"/>
+					</div>
+					<div class="description-area">
+						<h4>Ingrese el motivo de reapertura aquí</h4>
+						<p:inputTextarea value="#{chatBean.motivo}"
+									styleClass="form-control textarea"
+									placeholder="Ingrese el motivo aqui..." />
+					</div>
+					<div class="bottom-area arriba-20">
+		  				<p:commandButton value="Cancelar"
+										 styleClass="btn btn-default btn-outline btn-rounded"
+										 onclick="PF('ModalConfirmar').hide();" 
+										 update=":form:panelChat"
+										 id="btnModalCancelar" />
+						<p:tooltip styleClass="tooltip" id="toolBtnModalCancelar" for="btnModalCancelar" value="Cancelar" />
+	
+						<p:commandButton value="Aceptar"
+										 action="#{chatBean.reabrirConsulta()}" 
+										 update=":form:panelChat"
+										 styleClass="btn btn-primary pull-right btn-rounded"
+										 id="btnModalAceptar"
+										 onclick="PF('bloqueoPantalla').show();"
+									 	 oncomplete="PF('bloqueoPantalla').hide();PF('ModalConfirmar').hide();" />
+						<p:tooltip styleClass="tooltip" id="toolBtnModalAceptar" for="btnModalAceptar" value="Aceptar" />
+					</div>
+			</p:dialog>	
+	
+		</div>
+	</p:outputPanel>
+	</ui:composition>
+</html>

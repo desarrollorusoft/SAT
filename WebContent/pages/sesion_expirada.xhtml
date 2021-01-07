@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<body>
+		<ui:composition template="/templates/comun.xhtml">
+			
+			<ui:define name="titulo-pagina">EXPIRO DE SESIÓN</ui:define>
+			
+			<ui:define name="redireccionamiento">
+				<meta http-equiv="refresh" content="5;url=../pages/pub/login.xhtml" />
+			</ui:define>
+			
+			<ui:define name="detalle-contenido">
+				<f:facet name="last">
+				</f:facet>
+				
+				<ui:include src="/tiles/publico/header-publico.xhtml" />
+				
+				<div class="container flex">
+					<div class="row text-center">
+						<h2 class="color-azul-primary">Su sesion ha expirado. Para seguir usando la aplicacion debe ingresar nuevamente.</h2>
+						<br/>
+						<br/>
+						
+						<div class="contenedor-botonera-separada">
+							<p:commandButton value="IR AL LOGIN" 
+											 action="#{comunBean.irALogin()}"
+											 styleClass="btn btn-primary btn-rounded"/>
+						</div>
+					</div>	
+				</div>
+				
+			</ui:define>
+		</ui:composition>
+	</body>
+</html>

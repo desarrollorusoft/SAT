@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			
+			<p:confirmDialog widgetVar="AlertaTarjeta"
+							 severity="alert" 
+							 global="true" 
+							 message="Tenga en cuenta que la demora en la acreditación de los pagos con Tarjeta de Crédito es de aproximadamente 30 días, si Ud. necesita un libre deuda para trámites, opte por otro medio de pago disponible. Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Tarjeta de Crédito Sistema de Pago Seguro Decidir"
+							 styleClass="conf"
+							 width="700">
+	
+				<p:commandButton value="Aceptar"
+								 actionListener="#{DetalleDeuda.pagoTarjetaCredito()}"
+								 onclick="PF('AlertaTarjeta').hide();PF('bloqueoPantalla').show();"
+								 oncomplete="PF('bloqueoPantalla').hide()"
+								 update=":form:tabsCuentas:seccionPagos" 
+								 styleClass="btn btn-primary btn-rounded pull-right"/>
+								 
+				<p:commandButton value="Cancelar" 
+								 onclick="PF('AlertaTarjeta').hide();" 
+								 styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+			</p:confirmDialog>
+			
+			<p:confirmDialog widgetVar="AlertaLink"
+							 severity="alert" 
+							 global="true" 
+							 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Link Pagos"
+							 styleClass="conf">
+	
+				<p:commandButton value="Aceptar"
+								 actionListener="#{DetalleDeuda.pagoLink()}"
+								 onclick="PF('AlertaLink').hide();PF('bloqueoPantalla').show();"
+								 oncomplete="PF('bloqueoPantalla').hide()"
+								 update=":form:tabsCuentas:seccionPagos"
+								 styleClass="btn btn-primary btn-rounded pull-right" />
+								 
+				<p:commandButton value="Cancelar" onclick="PF('AlertaLink').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+			</p:confirmDialog>
+
+			<p:confirmDialog widgetVar="AlertaMercadoPago"
+							 severity="alert"
+							 global="true"
+							 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Mercado Pago"
+							 styleClass="conf">
+
+				<p:commandButton value="Aceptar"
+								 actionListener="#{DetalleDeuda.pagoMP()}"
+								 onclick="PF('AlertaMercadoPago').hide();PF('bloqueoPantalla').show();"
+								 oncomplete="PF('bloqueoPantalla').hide()"
+								 update=":form:tabsCuentas:seccionPagos"
+								 styleClass="btn btn-primary btn-rounded pull-right" />
+
+				<p:commandButton value="Cancelar" onclick="PF('AlertaMercadoPago').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+			</p:confirmDialog>
+			
+			<p:confirmDialog widgetVar="AlertaPMC"
+							 severity="alert" 
+							 global="true" 
+							 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por Pago Mis Cuentas"
+							 styleClass="conf">
+	
+				<p:commandButton value="Aceptar"
+								 actionListener="#{DetalleDeuda.pagoPMC()}"
+								 onclick="PF('AlertaPMC').hide();PF('bloqueoPantalla').show();"
+								 oncomplete="PF('bloqueoPantalla').hide()"
+								 update=":form:tabsCuentas:seccionPagos" 
+								 styleClass="btn btn-primary btn-rounded pull-right"/>
+								 
+				<p:commandButton value="Cancelar" onclick="PF('AlertaPMC').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+			</p:confirmDialog>
+			
+			<p:confirmDialog widgetVar="AlertaInterbanking"
+							 severity="alert" 
+							 global="true" 
+							 message="Para efectuar el pago, Ud. será redireccionado al sitio de Pago por InterBanking"
+							 styleClass="conf">
+	
+				<p:commandButton value="Aceptar"
+								 actionListener="#{DetalleDeuda.pagoInterbanking()}"
+								 onclick="PF('AlertaInterbanking').hide();PF('bloqueoPantalla').show();"
+								 oncomplete="PF('bloqueoPantalla').hide()"
+								 update=":form:tabsCuentas:seccionPagos" 
+								 styleClass="btn btn-primary btn-rounded pull-right"/>
+								 
+				<p:commandButton value="Cancelar" onclick="PF('AlertaInterbanking').hide();" styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+			</p:confirmDialog>
+			
+		</ui:composition>
+	</h:body>
+</html>

@@ -1,0 +1,38 @@
+.general{
+  background: white;
+  border-radius: 3px;
+  padding-bottom: 10px;
+  -webkit-box-shadow: 5px 5px 10px 0 rgba(0 , 0 ,0 ,0.16);
+  box-shadow: 5px 5px 10px 0 rgba(0 , 0 ,0 ,0.16);
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.main-container {
+  margin-top: 10px;
+}
+
+.main-container-30 {
+  margin-top: 30px;
+}
+
+.tabla-scroll tbody{
+  height: 450px;
+}
+.general{
+	background:white;
+}
+
+div.padding-15-costados{
+	padding:0 15px;
+}
+
+.lista-archivos-subir li{
+	padding: 18px 0;
+}

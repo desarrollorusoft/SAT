@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/comun_publico.xhtml">
+    <ui:define name="titulo-pagina">Formulario de Contacto</ui:define>
+    <ui:define name="subtitulo-pagina">para Tributos Municipales</ui:define>
+
+    <ui:define name="contenido">
+        <div class="informacion-container arriba-25">
+            <div class="container-formulario container row">
+                <div class="tributo-container arriba-25">
+                    <h3 class="color-azul-primary">
+                        <strong>Realizá tu consulta</strong>
+                    </h3>
+                </div>
+                <div class="row">            
+                        <ui:include src="/pages/externos/tiles/formulario-consultas.xhtml"/>
+                        
+                        <div class="col-xs-12 button-footer">
+                            <div class="pull-left">
+                                <p:commandButton id="btnVolver" value="" styleClass="btn btn-primary fa btn-circle fa-arrow-left botonVolver icon" action="#{formularioConsultasGeneralBean.volver()}"/>
+                            </div>
+                            <p:tooltip styleClass="tooltip" for="btnVolver" id="toolBtnVolver" value="Volver"/>
+                            <div class="pull-right">
+                                <p:commandButton id="botonEnviarFormulario"
+                                                 value="Enviar"
+                                                 styleClass="btn btn-primary btn-rounded botonEnviar icon"
+                                                 action="#{formularioConsultasGeneralBean.enviar()}"
+                                                 onclick="PF('bloqueoPantalla').show();"
+                                                 oncomplete="PF('bloqueoPantalla').hide()"/>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

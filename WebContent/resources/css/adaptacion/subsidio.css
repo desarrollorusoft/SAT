@@ -1,0 +1,227 @@
+.contenido-seccion {
+    background: white;
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.7rem;
+}
+.titulo-seccion {
+    background: #202020;
+    padding: 1.5rem;
+    color: white;
+    font-size: 1.6rem;
+    border-radius: 0.7rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.titulo-gris, .titulo-verde {
+    font-size: 1.35rem;
+}
+.titulo-gris {
+    color: #535353;
+}
+.titulo-verde {
+    color: #72BF44;
+}
+.btn-primary {
+    background: #72BF44;
+    color: #ffffff;
+}
+.contenido-seccion img {
+    height: 50px;
+}
+.ui-fileupload-content {
+    display: none;
+}
+.ui-radiobutton-box .ui-icon-bullet {
+    display: block !important;
+    text-indent: initial;
+    font: normal normal normal 10px/1 "Font Awesome 5 Free";
+    margin-left: -1px;
+    top: 0;
+    padding-top: 2px;
+    padding-left: 3px;
+    background-color: transparent;
+    font-weight: bold;
+    color: #2962FF;
+}
+.ui-radiobutton-box .ui-icon-bullet:before {
+    content: "\f111";
+}
+.ui-radiobutton-box.ui-state-active{
+    background:#2962FF;
+    border:3px solid #d7d7d7
+}
+
+a.ui-datepicker-prev, a.ui-datepicker-next {
+    display: block !important;
+    text-indent: initial;
+    font: normal normal normal 20px/1 "Font Awesome 5 Free";
+    margin-left: 3px;
+    top: 0;
+    padding-top: 2px;
+    padding-left: 3px;
+    background-color: transparent;
+    font-weight: bold;
+    color: #676a6c;
+}
+a.ui-datepicker-prev.ui-state-disabled, a.ui-datepicker-next.ui-state-disabled {
+    color: #ccc;
+}
+a.ui-datepicker-prev:hover, a.ui-datepicker-next:hover {
+    background-color: transparent;
+}
+a.ui-datepicker-next {
+    margin-right: -10px;
+}
+a.ui-datepicker-prev:before {
+    content: "\f0a8";
+}
+a.ui-datepicker-next:before {
+    content: "\f0a9";
+}
+td.ui-datepicker-current-day > a.ui-state-active {
+    background-color: #2962FF;
+    color: white;
+}
+.ui-tabs-panels {
+    padding: 1rem;
+    background: white;
+}
+.ui-tabs-panels .contenido-seccion {
+    border: 1px solid #676a6c;
+}
+.ui-selectoneradio.form-control {
+    border: 0;
+    padding: auto 0;
+}
+.ui-selectoneradio.form-control td>.ui-radiobutton.ui-widget:first-child {
+    margin-left: 15px;
+}
+.ui-inputfield .hasDatepicker {
+    padding: 0;
+}
+
+.ui-tabs-panels .titulo-seccion {
+    margin-bottom: 0;
+}
+.contenido-seccion > .form-group > input, .correo-dfe {
+    max-width: 300px;
+}
+.form-inline > .form-group > .form-control {
+    padding: 0;
+    margin-right: 15px;
+}
+.form-inline > .form-group > .form-control > input.hasDatepicker {
+    height: 100%;
+    background: white;
+}
+.ui-inputNum.form-control {
+    max-width: 300px;
+}
+.ui-button-icon-left.ui-icon.ui-c.ui-icon-plusthick {
+    display: block !important;
+    text-indent: initial;
+    font: normal normal normal 12px/1 "Font Awesome 5 Free";
+    margin-left: 3px;
+    padding-top: 2px;
+    padding-left: 3px;
+    background-color: transparent;
+    font-weight: bold;
+    color: #2962FF;
+}
+.ui-button-icon-left.ui-icon.ui-c.ui-icon-plusthick:before {
+    content: "\f093";
+}
+.ui-fileupload-buttonbar.ui-widget-header.ui-corner-top {
+    background: white;
+}
+.ui-fileupload-choose .ui-button-text.ui-c {
+    display: none;
+}
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-fileupload-choose.ui-fileupload-choose {
+    width: 120px;
+    height: 30px;
+    background-color: #2962FF;
+    color: white;
+    border: 0;
+    border-radius: .5rem;
+}
+.ui-fileupload-choose:after {
+    content: "ADJUNTAR";
+    margin-top: 7px;
+    display: block;
+    margin-left: 19px;
+}
+.ui-button-icon-left.ui-icon.ui-c.ui-icon-plusthick:before {
+    content: "\f093";
+    color: white;
+}
+a.button-icon, button.button-icon {
+    border: 1px solid #2962FF !Important;
+    display: inline-block;
+    width: 2.7rem;
+    height: 2.7rem;
+    padding: 0.6rem !Important;
+    border-radius: 5rem;
+    margin-right: .9rem;
+    color: #2962FF !Important;
+    background: white !Important;
+    transition: 0.3s;
+}
+button.button-icon {
+    margin-right: 1.2rem;
+    margin-top: 0.1rem;
+    line-height: 0 !Important;
+}
+a.button-icon:hover, button.button-icon:hover {
+    background-color: #2962FF !Important;
+    color: white !Important;
+}
+.text-file-attach {
+    font-size:1.5rem;
+    font-weight: bold;
+}
+
+.icon-warn:before, .icon-success:before {
+    margin-top: 1rem;
+    display: inline-block;
+    margin-right: 2rem;
+}
+.icon-warn {
+    color: #ffc107;
+}
+.icon-success {
+    color: #28a745;
+}
+.icon-primary {
+    color: #2962FF;
+}
+.icon-pasive {
+    color: #bbb;
+}
+ul.ui-tabs-nav > li.fas {
+    border-bottom: 2px solid #fff;
+    margin-bottom: -2px;
+    text-transform: initial;
+}
+.check-dfe {
+    margin-right: 0.5rem;
+
+}
+.check-dfe .ui-chkbox-box.ui-widget {
+    width: 1.9rem;
+    height: 1.9rem;
+    line-height: 1.3rem;
+}
+.check-dfe .ui-chkbox-box.ui-widget .ui-chkbox-icon.ui-icon.ui-icon-check.ui-c:before {
+    margin-left: .3rem;
+}
+.upper input {
+    text-transform: uppercase;
+}
+.expediente:before {
+    content: '4119';
+    color: red;
+    background: #4cae4c;
+}

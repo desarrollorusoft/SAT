@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+		 	<h:outputStylesheet library="css" name="adaptacion/side-bar.css" />
+		</f:facet>
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav metismenu" id="side-menu">
+					<li class="nav-header">
+						<div class="logo-element">SAT</div>
+					</li>
+					<li class="#{fn:contains(view.viewId, 'home') ? 'active' : '' }">
+						<h:commandLink id="irAHome" action="home" styleClass="link-side-menu" >
+							<i class="fa fa-list-alt"></i> 
+							<br />
+							<label class="label-abajo-titulo">HOME</label>
+							<span class="nav-label">
+							</span> <span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+
+					<li class="#{fn:contains(view.viewId, 'planes') ? 'active' : '' }">
+						<h:commandLink id="irAPPC" action="planes" styleClass="link-side-menu" value="PPC">
+							<label class="label-abajo-titulo">PLANES DE PAGO</label>
+							<span class="nav-label">
+							</span> <span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+
+
+					<li class="#{fn:contains(view.viewId, 'subsidio') ? 'active' : '' }">
+						<h:commandLink id="irASubsidio" action="subsidio" styleClass="link-side-menu" rendered="#{comunBean.correspondeSubsidio()}">
+							<i class="fas fa-handshake" style="margin: 3px;"></i>
+							<br />
+							<label class="label-abajo-titulo">APOYO ECONÓMICO</label>
+							<span class="nav-label">
+							</span> <span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+
+					<li class="#{fn:contains(view.viewId, '/consultas') ? 'active' : '' }">
+						<h:commandLink id="irAConsultas" action="consultas" styleClass="link-side-menu">
+							<i class="fa fa-address-card"></i>
+							<label class="label-abajo-titulo">CONTACTANOS</label> 
+							
+							<span class="nav-label"></span> 
+							<span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+					<li class="#{fn:contains(view.viewId, '/rs') ? 'active' : '' }">
+						<h:commandLink id="irARS" action="#{comunBean.navegarA_RS()}" value="RS" rendered="#{comunBean.correspondeRS()}" styleClass="link-side-menu" style="padding:0;">
+							<label class="label-abajo-titulo">REGIMEN SIMPLIFICADO</label>
+							<span class="nav-label"></span> 
+							<span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+					<li class="#{fn:contains(view.viewId, 'boleta_electronica') ? 'active' : '' }">
+						<h:commandLink id="irABoletaElectronica" action="boleta_electronica" styleClass="link-side-menu">
+							<i class="fa fa-envelope" style="margin: 3px;"></i>
+							<br />
+							<label class="label-abajo-titulo">BOLETA ELECTRÓNICA</label>
+							<span class="nav-label"></span> 
+							<span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+					<li class="#{fn:contains(view.viewId, 'perfil') ? 'active' : '' }">
+						<h:commandLink id="irAPerfil" action="editar_perfil" styleClass="link-side-menu">
+							<i class="fa fa-user" style="margin: 3px;"></i>
+							<br />
+							<label class="label-abajo-titulo">PERFIL</label> 
+							<span class="nav-label"></span> 
+							<span class="label label-primary pull-right"></span>
+						</h:commandLink>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	
+	</ui:composition>
+</html>

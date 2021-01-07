@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_publico.xhtml">
+			
+			<ui:define name="titulo-pagina">Olvido de Clave</ui:define>
+			
+			<ui:define name="contenido">
+				
+				<div class="middle-box animated fadeInDown">
+					<div>
+						<div class="contenedor">
+							<h3 class="pull-left color-azul-primary">Recupero de Contraseña</h3>
+							<br />
+							<br />
+							
+							<div class="cuerpo">
+								<div class="form-group">
+									<label class="pull-left">CUIT/CUIL</label>
+									<p:inputMask value="#{OlvidoClave.cuit}" styleClass="form-control" mask="99-99999999-9" placeholder="CUIT/CUIL" />
+								</div>
+							</div>
+
+							<div class="botonera row">
+								<div class="col-xs-12">
+									<p:commandButton id="volverInicio"
+					            					 action="inicio"
+													 value=""
+													 styleClass="btn btn-primary btn-outline fa fa-arrow-left pull-left btn-circle no-padding sin-correr" />
+									<p:tooltip styleClass="tooltip" for="volverInicio" value="Volver al Inicio" position="left"/>
+									
+									<p:commandButton id="recuperarClave"
+					            					 action="#{OlvidoClave.recuperarClave()}"
+													 value="Recuperar Contraseña"
+													 styleClass="btn btn-primary pull-right btn-rounded"
+													 onclick="PF('bloqueoPantalla').show();"
+											 		 oncomplete="PF('bloqueoPantalla').hide()"/>
+									<p:tooltip styleClass="tooltip" for="recuperarClave" value="Generar una nueva Contraseña" position="left"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			
+				<p:confirmDialog widgetVar="IrACargaCuit"
+								 severity="alert" 
+								 global="true" 
+								 message="La nueva contraseña ha sido enviada por correo electrónico. Por otro lado, detectamos que su usuario no tiene cargado su CUIT, para ingresar a la plataforma debe cargarlo, para dirigirse a la pantalla de carga de CUIT haga click en aceptar. (Recuerde que su nueva contraseña la encuentra en su cuenta de correo)"
+								 styleClass="conf"
+								 width="500">
+		
+					<p:commandButton value="Aceptar"
+									 actionListener="#{OlvidoClave.irACargaCuit()}"
+									 styleClass="btn btn-primary btn-rounded pull-right"/>
+									 
+					<p:commandButton value="Cancelar" 
+									 onclick="PF('IrACargaCuit').hide();" 
+									 styleClass="btn btn-default btn-outline btn-rounded pull-left"/>
+	 			</p:confirmDialog>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

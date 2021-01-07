@@ -1,0 +1,250 @@
+div.ibox-content{
+	border:none;	
+}
+
+div.ui-tabs >ul.ui-tabs-nav >li.ui-tabs-selected{
+	border-bottom: 2px solid #fff;
+    margin-bottom: -2px;
+}
+
+div.ui-tabs.ui-tabs-top > ul.ui-tabs-nav{
+	border-bottom-width:1px;
+}
+
+div.ui-tabs > ul.ui-tabs-nav > li:not(.ui-tabs-selected){
+	border:none;
+}
+
+div.ui-tabs > ul.ui-tabs-nav > li{
+	text-transform:initial;
+}
+
+div.panel-detalle-cuenta .ui-tabs-panel{
+	border-left:1px solid rgba(0,0,0,0.16);
+	border-right:1px solid rgba(0,0,0,0.16);
+	border-bottom:1px solid rgba(0,0,0,0.16);
+}
+
+.contenedor.detalle-cuenta{
+	min-height: calc(100vh - 160px);
+}
+
+.ui-selection-column{
+    padding: 0 !important; 
+    width: 20px !important;
+}
+
+div.totalPago {
+	background-color: #f1f1f1;
+	padding: 0.5em;
+}
+tr.registro-mora {
+	background-color: #ffefce;
+}
+tr.registro-seleccionado {
+	background-color: rgba(0,0,0,0.04);
+}
+tr.registro-mora.registro-seleccionado {
+	background-color: #ffce70;
+}
+
+div.ibox-content.card {
+	background: #f7f7f7;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0.6px 0.6px 1px #ccc;
+    border-radius: 4px;
+	transition: 0.3s;
+}
+div.ibox-content.card:hover {
+	boder-color: #ccc;
+	background: rgba(0,0,0,0.05);
+}
+.tachado {
+	text-decoration: line-through;
+}
+.monto-resaltdo {
+	color: #2962FF;
+}
+
+.ui-commandlink:focus{
+	outline:none
+}
+
+.texto-cancelar{
+	font-size:1.54em
+}
+
+.progress.progress-mini{
+	background:#cecece;
+}
+
+.recaudro-simple {
+	border: 1px solid #ccc;
+	padding: 15px;
+	border-radius: 15px;
+}
+.recaudro-deuda {
+	border: 1px solid #cc4949;
+	padding: 15px;
+	border-radius: 15px;
+	background: #cc4949;
+	color: #f1f1f1;
+}
+.acomodo-seleccion {
+	position: absolute;
+	left: 2.7px;
+	top: 4.5px;
+}
+td.seleccion-cuuota-plan div.ui-chkbox-box {
+	border-radius: 15px !Important;
+}
+td.seleccion-cuuota-plan div.ui-chkbox-box.ui-state-active > span.ui-icon:before {
+	content: "\f111";
+	font-size: 0.6em;
+}
+
+a.ui-datepicker-prev, a.ui-datepicker-next {
+	display: block !important;
+	text-indent: initial;
+	font: normal normal normal 20px/1 "Font Awesome 5 Free";
+	margin-left: 3px;
+	top: 0;
+	padding-top: 2px;
+	padding-left: 3px;
+	background-color: transparent;
+	font-weight: bold;
+	color: #676a6c;
+}
+a.ui-datepicker-prev.ui-state-disabled, a.ui-datepicker-next.ui-state-disabled {
+	color: #ccc;
+}
+a.ui-datepicker-prev:hover, a.ui-datepicker-next:hover {
+	background-color: transparent;
+}
+a.ui-datepicker-next {
+	margin-right: -10px; 
+}
+a.ui-datepicker-prev:before {
+	content: "\f0a8";
+}
+a.ui-datepicker-next:before {
+	content: "\f0a9";
+}
+
+tr.registro-grisado {
+	background-color: rgba(99, 229, 29, 0.1);
+	color: #aaa;
+}
+
+button.ui-button.ui-button-text-only.btn-simil-check {
+	width: 17px;
+	height: 17px;
+	border-radius: 3px;
+	margin-left: 2px;
+}
+
+div.modal-libreDeuda {
+	width: 350px;
+	height: 250px;
+	background-color: white;
+	color: black;
+	border-radius: 15px;
+	border: 0;
+	padding: 1em;
+}
+div.modal-libreDeuda > div.ui-dialog-titlebar.ui-widget-header.ui-draggable-handle {
+	background-color: white;
+	font-size: 33px;
+	font-weight: 600;
+	text-transform: capitalize;
+	text-align: center;
+	margin: 0 !Important;
+}
+
+div.modal-libreDeuda > div.ui-dialog-titlebar.ui-widget-header.ui-draggable-handle span.ui-dialog-title {
+	float: initial;
+	margin: 0 !Important;
+}
+div.modal-libreDeuda > div.ui-dialog-titlebar {
+	padding-left: 0 !Important;
+	padding-right: 0 !Important;
+}
+
+div.modal-libreDeuda p.mensaje-bonificacion {
+	text-align: center;
+	font-size: 17px;
+}
+div.modal-libreDeuda span.mensaje-decreto > a {
+	color: white;
+	text-decoration: underline;
+}
+div.modal-libreDeuda span.mensaje-decreto > a:hover {
+	text-decoration: none;
+}
+div.modal-libreDeuda button.btn.btn-primary.btn-rounded {
+	border-color: white;
+	margin: auto;
+	display: block;
+	margin: auto;
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+div.modal-bonificacion {
+	width: 350px;
+	height: 250px;
+	background-color: #2962FF;
+	color: white;
+	border-radius: 15px;
+	border: 0; 
+	padding: 1em;
+}
+div.modal-bonificacion > div.ui-dialog-titlebar.ui-widget-header.ui-draggable-handle {
+	background-color: #2962FF;
+	font-size: 33px;
+	font-weight: 600;
+	text-transform: capitalize;
+	text-align: center;
+	margin: 0 !Important;
+}
+div.modal-bonificacion > div.ui-dialog-titlebar.ui-widget-header.ui-draggable-handle span.ui-dialog-title {
+	float: initial;
+	margin: 0 !Important;
+}
+div.modal-bonificacion > div.ui-dialog-titlebar {
+	padding-left: 0 !Important;
+	padding-right: 0 !Important;
+}
+
+div.modal-bonificacion p.mensaje-bonificacion {
+	text-align: center;
+	font-size: 17px;
+}
+div.modal-bonificacion span.mensaje-decreto > a {
+	color: white;
+	text-decoration: underline;
+}
+div.modal-bonificacion span.mensaje-decreto > a:hover {
+	text-decoration: none;
+}
+div.modal-bonificacion button.btn.btn-primary.btn-rounded {
+	border-color: white;
+	margin: auto;
+    display: block;
+	margin: auto;
+	display: block;
+}
+
+div.section-watermark {
+	
+}
+div.section-watermark > span.text-watermak {
+	
+}

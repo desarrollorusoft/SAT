@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <f:facet name="last">
+        <h:outputStylesheet library="css" name="/genericos/formulario-consultas.css"/>
+    </f:facet>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="Nombre *" for="nombre"/>
+
+            <h:inputText id="nombre"
+                         value="#{formularioConsultasBean.formulario.nombre}"
+                         styleClass="form-control"
+                         disabled="#{formularioConsultasBean.privada and formularioConsultasBean.tieneNombre()}"/>
+            <p:watermark for="nombre" value="Nombre..." id="wnombre"/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="Apellido *" for="apellido"/>
+
+            <h:inputText id="apellido"
+                         value="#{formularioConsultasBean.formulario.apellido}"
+                         styleClass="form-control"
+                         disabled="#{formularioConsultasBean.privada and formularioConsultasBean.tieneApellido()}"/>
+            <p:watermark for="apellido" value="Apellido..." id="wapellido"/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="Correo *" for="correo"/>
+            <h:inputText id="correo"
+                         value="#{formularioConsultasBean.formulario.correo}"
+                         styleClass="form-control"
+                         disabled="#{formularioConsultasBean.privada}"/>
+            <p:watermark for="correo" value="Correo..." id="wcorreo"/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+       		<h:panelGroup styleClass="radioButtonSpace">
+	            <h:selectOneRadio id="radioTelCel"
+	                              value="#{formularioConsultasBean.formulario.telefonoSeleccionado}"
+	                              layout="responsive"
+	                              columns="2"
+	                              styleClass="radio-button">
+	                <f:selectItem itemLabel="Telefono" itemValue="true"/>
+	                <f:selectItem itemLabel="Celular" itemValue="false"/>
+	            </h:selectOneRadio>
+            </h:panelGroup>
+            <label for="form:radioTelCel:1" class="radio"><span></span></label>
+            <label for="form:radioTelCel:0" class="radio"><span></span></label>
+            <label></label>
+            <p:inputMask id="telefono"
+                         value="#{formularioConsultasBean.formulario.telefono}"
+                         mask="(999)-9999-9999"
+                         styleClass="form-control"/>
+            <p:watermark for="telefono" value="Telefono..." id="wTelefono"/>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="Telefono 2" for="telefono2"/>
+            <p:inputMask id="telefono2"
+                         value="#{formularioConsultasBean.formulario.telefono2}"
+                         mask="(999)-9999-9999"
+                         styleClass="form-control"
+                         placeholder="Telefono..."/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="CUIT/CUIL *" for="cuit"/>
+            <p:inputMask id="cuit"
+                         value="#{formularioConsultasBean.formulario.cuit}"
+                         mask="99-99999999-9"
+                         styleClass="form-control"
+                         placeholder="CUIT..."
+                         disabled="#{formularioConsultasBean.privada}"/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="Tipo de Consulta *" for="tipoConsulta"/>
+            <h:selectOneMenu id="tipoConsulta"
+                             style="width:100%;"
+                             styleClass="form-control"
+                             value="#{formularioConsultasBean.formulario.idTipoConsulta}"
+            >
+                <f:selectItems value="#{formularioConsultasBean.tipoConsultas}" var="consulta" itemValue="#{consulta.id}" itemLabel="#{consulta.nombre}"/>
+            </h:selectOneMenu>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <p:outputLabel value="Categoría *" for="categoria"/>
+            <h:selectOneMenu id="categoria"
+                             style="width:100%;"
+                             styleClass="form-control"
+                             value="#{formularioConsultasBean.categoriaSeleccionada}"
+                             converter="#{formularioConsultasBean.converterCategoria}">
+                <f:selectItem
+                        itemValue=""
+                        itemLabel="Categorías..."/>
+                <f:selectItems
+                        value="#{formularioConsultasBean.categorias}"
+                        var="categoria"
+                        itemValue="#{categoria}"
+                        itemLabel="#{categoria.nombre}"/>
+                <p:ajax event="change" listener="#{formularioConsultasBean.seleccionarCategoria()}" update=":form:formulario"/>
+            </h:selectOneMenu>
+        </div>
+    </div>
+    <p:outputPanel id="formulario">
+        <p:outputPanel id="caracter" layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.hayCategoriaSeleccionada()}">
+            <div class="form-group">
+                <p:outputLabel value="Carácter *" for="comboCaracter"/>
+                <h:selectOneMenu value="#{formularioConsultasBean.caracterSeleccionado}"
+                                 id="comboCaracter"
+                                 style="width:100%;"
+                                 styleClass="form-control"
+                                 converter="#{formularioConsultasBean.converterCaracter}">
+                    <f:selectItem itemValue="" itemLabel="Carácter..."/>
+                    <f:selectItems value="#{formularioConsultasBean.caracteres}" var="caracter" itemValue="#{caracter}" itemLabel="#{caracter.nombre}"/>
+                </h:selectOneMenu>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.cuentaSeleccionado()}">
+            <div class="form-group">
+                <p:outputLabel value="#{formularioConsultasBean.esRequerido()?'CUENTA *':'CUENTA'}" for="cuenta"/>
+                <h:inputText id="cuenta" value="#{formularioConsultasBean.formulario.dato}" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.cuentaDominioSeleccionado()}">
+            <div class="form-group">
+                <p:outputLabel value="#{formularioConsultasBean.esRequerido()?'CUENTA/DOMINIO *':'CUENTA/DOMINIO'}" for="cuentaDominio"/>
+                <h:inputText id="cuentaDominio" value="#{formularioConsultasBean.formulario.dato}" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.dominioSeleccionado()}">
+            <div class="form-group">
+                <p:outputLabel value="Dominio *" for="dominio"/>
+                <h:inputText id="dominio" value="#{formularioConsultasBean.formulario.dato}" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.padronSeleccionado()}">
+            <div class="form-group">
+                <p:outputLabel value="Nº de Padron" for="padron"/>
+                <h:inputText id="padron" value="#{formularioConsultasBean.formulario.dato}" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.reySeleccionado()}">
+            <div class="form-group">
+                <p:outputLabel value="REY o Jurisdiccional *" for="rey"/>
+                <h:inputText id="rey" value="#{formularioConsultasBean.formulario.dato}" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.dniSeleccionado()}">
+            <div class="form-group">
+                <p:outputLabel value="DNI " for="dni"/>
+                <p:inputMask id="dni" value="#{formularioConsultasBean.formulario.dato}" mask="99.999.999" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+        <p:outputPanel layout="block" styleClass="col-sm-6" rendered="#{formularioConsultasBean.fiscalizacionSeleccionada()}">
+            <div class="form-group">
+                <p:outputLabel value="#{formularioConsultasBean.esRequerido()?'ID Fiscalización/ N° Fiscalización*':'ID Fiscalización/ N° Fiscalización'}" for="fiscalizacion"/>
+                <h:inputText id="fiscalizacion" value="#{formularioConsultasBean.formulario.dato}" styleClass="form-control"/>
+            </div>
+        </p:outputPanel>
+    </p:outputPanel>
+    <div class="col-xs-12 no-padding">
+        <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+                <p:outputLabel for="descripcion" value="Detallá tu Consulta"/>
+                <p:inputTextarea id="descripcion" value="#{formularioConsultasBean.formulario.descripcion}" style="width:100%;height:200px;" styleClass="form-control"/>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12 text-center">
+            <label for="form:subir_input" class="btn btn-primary btn-rounded">
+                <i class="fa fa-upload derecha-10"></i>
+                Adjuntar archivo
+            </label>
+            <p:fileUpload id="subir" auto="true" fileUploadListener="#{formularioConsultasBean.subirArchivos}" label="" update=":form:listaArchivosASubir"/>
+            <div class="col-sm-12 file-upload-container arriba-20">
+                <p:dataTable id="listaArchivosASubir"
+                             value="#{formularioConsultasBean.formulario.archivos}"
+                             var="archivo"
+                             emptyMessage="Sin archivos adjuntos"
+                             styleClass="lista-archivos-subir noHeader no-border">
+
+                    <p:column style="width:45px;text-align:center">
+                        <p:commandButton value=""
+                                         action="#{formularioConsultasBean.eliminar(archivo)}"
+                                         update="listaArchivosASubir"
+                                         styleClass="sin-texto btn btn-primary btn-circle fa fa-times"/>
+                    </p:column>
+
+                    <p:column>
+                        <span class="texto-descarga pull-left"><h:outputText value="#{archivo.archivo.nombre}"/></span>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</html>	

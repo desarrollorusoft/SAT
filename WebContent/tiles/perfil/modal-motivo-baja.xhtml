@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+
+		<p:dialog widgetVar="ModalMotivoBaja"
+				  id="modalMotivoBaja"
+				  header="Baja de Usuario"
+				  modal="true"
+				  closable="false"
+				  hideEffect="fade"
+				  showEffect="fade"
+				  width="500"
+				  styleClass="modal-motivos-baja">
+
+			<div class="container-flex">
+				<p class="text-center m-b-md">Ingrese a continuación el / los motivos por los<br/>
+					cuales desea darse de baja.<br/>
+					<b>Recuerde que no podrán darse de baja<br/>
+					los usuarios de Comercio e Industria.</b></p>
+
+				<div class="mt-2">
+					<ui:repeat value="#{ModalBajaUsuario.motivos}" var="motivo">
+						<p:selectBooleanCheckbox value="#{motivo.seleccionado}" itemLabel="#{motivo.descripcion}" style="margin-bottom: 0.9rem;"/><br/>
+					</ui:repeat>
+					<div class="form-inline m-b-md">
+						<p:selectBooleanCheckbox value="#{ModalBajaUsuario.otroMotivo.seleccionado}" itemLabel="Otro">
+							<p:ajax update="inputOtroMotivo" />
+						</p:selectBooleanCheckbox>
+						<p:inputText id="inputOtroMotivo" value="#{ModalBajaUsuario.nuevoMotivo}" styleClass="form-control ng-untouched ng-pristine ng-valid imput-otro-motivo-baja" />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<p:commandButton value="Enviar"
+								 id="botonConfirmacionAdhesionBE"
+								 actionListener="#{ModalBajaUsuario.confirmar()}"
+								 styleClass="btn btn-primary btn-rounded pull-right"
+								 onclick="PF('bloqueoPantalla').show();"
+								 onsuccess="PF('ModalMotivoBaja').hide();PF('bloqueoPantalla').hide();PF('ModalBajaOk').show();" />
+
+				<p:commandButton value="Cancelar"
+								 styleClass="btn btn-default btn-rounded pull-left"
+								 onclick="PF('ModalMotivoBaja').hide();"/>
+			</div>
+		</p:dialog>
+
+		<p:dialog widgetVar="ModalBajaOk"
+				  id="modalBajaOk"
+				  header="Baja de Usuario"
+				  modal="true"
+				  closable="false"
+				  hideEffect="fade"
+				  showEffect="fade"
+				  width="500"
+				  styleClass="modal-motivos-baja" >
+
+			<div class="container-flex">
+				<p>La baja de usuario se ha realizado exitosamente.</p>
+			</div>
+			<div class="modal-footer">
+				<p:commandButton value="Salir"
+								 id="botonSalirSistemaBaja"
+								 action="#{comunBean.cerrarSesion()}"
+								 styleClass="btn btn-primary btn-rounded pull-right" />
+			</div>
+		</p:dialog>
+
+	</ui:composition>
+</html>

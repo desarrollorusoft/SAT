@@ -1,0 +1,13 @@
+.header.publico.img-chica{
+  height: 55px;
+  width: auto;
+}
+
+label.header.publico {
+  font-size: 15px;
+  margin: 0;
+}
+
+label.arriba-5.header.publico {
+  margin-top: 5px;
+}

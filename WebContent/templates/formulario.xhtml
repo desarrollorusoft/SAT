@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+      <h:head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><ui:insert name="titulo-pagina">MVL SAT</ui:insert></title>
+		<link rel="shortcut icon" type="image/x-icon" href="/SAT/resources/img/iconos/favicon.ico" />
+	
+		<h:outputScript library="js" name="noEnter.js" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		
+	</h:head>
+	<h:body styleClass="bodyint">
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="font-OpenSans.css" />
+			<h:outputStylesheet library="css/bootstrap" name="bootstrap.min.css" />
+			<!-- <h:outputStylesheet library="css/bootstrap" name="font-awesome.css" /> -->
+			<h:outputStylesheet library="css/nuevos" name="estilos-nuevos.css" />
+		</f:facet>
+	
+		<h:form id="form" enctype="multipart/form-data" onkeypress="return stopRKey(event);">
+			<ui:include src="/templates/growls.xhtml"/>
+	
+			<div class="contenedor-cabecera">
+				<div class="container text-center">
+					<div class="contenedor-titulo-pagina">
+						<h:graphicImage value="/resources/img/iconos/logos.vl.png" alt="logo-mvl" class="logo-mvl"/>
+					</div>
+			 	</div>
+			</div>
+			
+			<div class="container-full central">
+				<ui:insert name="contenido"/>
+			</div>
+			
+			<p:blockUI widgetVar="bloqueoPantalla" block="form">
+				<h:graphicImage value="/resources/img/gif/loader.gif" styleClass="imagen-loader"/>
+				
+				<div class="label-bloqueo">
+					<h:outputText value="Aguarde un momento por favor..." style="font-size: 15px;"/>
+				</div>
+			</p:blockUI>
+		</h:form>
+	</h:body>
+</html>

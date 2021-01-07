@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="abl.css" />
+			</f:facet>
+			
+			<div class="contenedor-tabla">
+				
+				<div class="contenedor-titulo-tabla">
+					<h:outputLabel value="Anticipo" styleClass="titulo-tabla"/>
+				</div>
+				
+				<div class="contenedor-cuadro-datos">
+					<div class="contenedor-texto-cuadro-datos">
+						<h:outputLabel value="Porcentaje anticipo:" styleClass="texto-informativo"/>
+					</div>
+					<div class="contenedor-valor-cuadro-datos">
+						<h:outputLabel value="#{ablGenerarPlanPagoResultadoBean.planDePago.simulacionPlanDePago.porcentajeAnticipoFormateado}" styleClass="texto-informativo"/>
+					</div>
+					
+					<div class="contenedor-texto-cuadro-datos">
+						<h:outputLabel value="Importe del anticipo:" styleClass="texto-informativo"/>
+					</div>
+					<div class="contenedor-valor-cuadro-datos">
+						<h:outputLabel value="#{ablGenerarPlanPagoResultadoBean.planDePago.simulacionPlanDePago.importeAnticipoFormateado}" styleClass="texto-informativo"/>
+					</div>
+					
+					<div class="contenedor-texto-cuadro-datos">
+						<h:outputLabel value="Derechos de oficina:" styleClass="texto-informativo"/>
+					</div>
+					<div class="contenedor-valor-cuadro-datos">
+						<h:outputLabel value="#{ablGenerarPlanPagoResultadoBean.planDePago.simulacionPlanDePago.derechosAnticipo}" styleClass="texto-informativo"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="contenedor-tabla">
+				
+				<div class="contenedor-titulo-tabla">
+					<h:outputLabel value="Financiacion" styleClass="titulo-tabla"/>
+				</div>
+				
+				<div class="contenedor-texto-tabla">
+					<h:outputLabel value="El monto a financiar es igual al importe total de la deuda menos lo abonado en el anticipo. En esta parte de la página usted puede ver el monto a financiar, el interes de la financiación y el importe de las cuotas de acuerdo a la cantidad de la mismas que contenga el plan. El sistema de financiamiento es el frances." styleClass="texto-informativo"/>
+				</div>
+				
+				<div class="contenedor-cuadro-datos">
+					<div class="contenedor-texto-cuadro-datos">
+						<h:outputLabel value="Monto a financiar:" styleClass="texto-informativo"/>
+					</div>
+					<div class="contenedor-valor-cuadro-datos">
+						<h:outputLabel value="#{ablGenerarPlanPagoResultadoBean.planDePago.simulacionPlanDePago.montoFinanciacionFormateado}" styleClass="texto-informativo"/>
+					</div>
+					
+					<div class="contenedor-texto-cuadro-datos">
+						<h:outputLabel value="Interes financiero:" styleClass="texto-informativo"/>
+					</div>
+					<div class="contenedor-valor-cuadro-datos">
+						<h:outputLabel value="#{ablGenerarPlanPagoResultadoBean.planDePago.simulacionPlanDePago.interesFinanciacion}" styleClass="texto-informativo"/>
+					</div>
+				</div>
+				
+				<div class="contenedor-titulo-tabla">
+					<h:outputLabel value="Importe De Las Cuotas" styleClass="subtitulo-tabla"/>
+				</div>
+				
+				<div class="contenedor-tabla-totales">
+					<p:dataTable var="cuota"
+							     id="tablaCuotasFinanciadas"
+								 value="#{ablGenerarPlanPagoResultadoBean.planDePago.simulacionPlanDePago.listaCuotaFinanciacion}" 
+								 emptyMessage="No se encontraron cuotas.">
+							 
+					<p:column headerText="Cuotas">
+						<h:outputText value="#{cuota.cuotas}" />
+					</p:column>
+					
+					<p:column headerText="Importe">
+						<h:outputText value="#{comunBean.formatearMoneda(cuota.importe)}" />
+					</p:column>					
+				</p:dataTable>
+				</div>
+			</div>
+			
+			<div class="contenedor-botones">
+				<p:commandButton value="VOLVER" 
+								 action="#{ablGenerarPlanPagoResultadoBean.volver()}"
+					 	 	     update="panelesPlanDePago"/>
+			</div>
+			
+		</ui:composition>
+	</h:body>
+</html>

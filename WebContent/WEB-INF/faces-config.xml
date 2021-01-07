@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+
+	<navigation-rule>
+		<!-- Inicio de accesos publicos -->
+		<navigation-case>
+			<from-outcome>inicio</from-outcome>
+			<to-view-id>/pages/pub/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>inicio_rs</from-outcome>
+			<to-view-id>/pages/pub/login_rs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>registro</from-outcome>
+			<to-view-id>/pages/pub/registro.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>registro_rs</from-outcome>
+			<to-view-id>/pages/pub/registro_rs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>olvido_clave</from-outcome>
+			<to-view-id>/pages/pub/olvido_clave.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>olvido_clave_rs</from-outcome>
+			<to-view-id>/pages/pub/olvido_clave_rs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cambio_clave_temporal</from-outcome>
+			<to-view-id>/pages/pub/cambio_clave_temporal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>carga_nivel3</from-outcome>
+			<to-view-id>/pages/pre/carga_nivel3.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>no_activo_cuenta</from-outcome>
+			<to-view-id>/pages/pub/activacion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>generar_codigo</from-outcome>
+			<to-view-id>/pages/pub/generar_codigo.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>inc_correo</from-outcome>
+			<to-view-id>/pages/pub/inc_correo.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/pages/pri/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>planes</from-outcome>
+			<to-view-id>/pages/pri/planes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>subsidio</from-outcome>
+			<to-view-id>/pages/pri/subsidio.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>consultas</from-outcome>
+			<to-view-id>/pages/pri/consultas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>rs</from-outcome>
+			<to-view-id>/pages/pri/rs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>rs_padron</from-outcome>
+			<to-view-id>/pages/pri/rs_padron.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>confirmar_rs</from-outcome>
+			<to-view-id>/pages/pri/confirmar_rs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editar_perfil</from-outcome>
+			<to-view-id>/pages/pri/editar_perfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>datos-rs</from-outcome>
+			<to-view-id>/pages/pri/datos-rs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>actualizacion_datos</from-outcome>
+			<to-view-id>/pages/pri/actualizacion-datos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>boleta_electronica</from-outcome>
+			<to-view-id>/pages/pri/boleta_electronica.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>sesion_expirada</from-outcome>
+			<to-view-id>/pages/sesion_expirada.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>			
+		
+		<navigation-case>
+			<from-outcome>preguntas_frecuentes</from-outcome>
+			<to-view-id>/pages/externos/preguntas_frecuentes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>guia_tramites</from-outcome>
+			<to-view-id>/pages/externos/guia_tramites.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>reimpresion_boleta</from-outcome>
+			<to-view-id>/pages/externos/reimpresion_boleta.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>formulario_consultas</from-outcome>
+			<to-view-id>/pages/externos/formulario_consultas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>about</from-outcome>
+			<to-view-id>/pages/about.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<application>
+		<navigation-handler>ar.com.cognisys.sat.seguridad.SecureNavigationHandler</navigation-handler>
+	</application>
+
+	<factory>
+		<exception-handler-factory>ar.com.cognisys.sat.excepcion.handler.MVLExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+
+	<lifecycle>
+		<phase-listener>ar.com.cognisys.sat.seguridad.RequestInterceptor</phase-listener>
+	</lifecycle>
+</faces-config>

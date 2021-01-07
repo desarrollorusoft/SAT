@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_externo.xhtml">
+			
+			<ui:define name="titulo-pagina">Preguntas Frecuentes</ui:define>
+			
+			<ui:define name="titulo">Preguntas Frecuentes</ui:define>
+			
+			<ui:define name="contenido">
+				<f:facet name="last">
+				</f:facet>
+				
+				<dl class="accordion">
+					<ui:repeat value="#{preguntasFrecuentesBean.listaGrupos}" var="grupo" varStatus="status">
+						<dd>
+							<a href="#panel#{status.index}" style="text-transform: none !important; background-color:#666666 !important;">#{grupo.nombre}</a>
+							<div id="panel#{status.index}" class="content">
+								<ul style="margin-left: 0;">
+									<ui:repeat value="#{grupo.listaItems}" var="item">
+	              						<li style="list-style-type:none;">
+	              							<a href="#"><h:outputText value="#{item.titulo}" /></a>
+	              							<ul>
+	              								<li style="list-style-type:none;text-align:justify;">
+	              									<p style="font-size: 0.9rem;"><h:outputText value="#{item.descripcion}"/></p>
+              									</li>
+	              							</ul>
+	              						</li>
+	              					</ui:repeat>
+	              				</ul>
+							</div>
+						</dd>
+					</ui:repeat>
+				</dl>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<p:outputPanel id="seccionCambioClave">
+			<div class="col-md-6 no-padding">
+				<div class="col-md-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							<h3 class="color-azul-primary abajo-20">Cambiar Contraseña</h3>
+							<div class="ng-untouched ng-pristine ng-invalid">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Actual</label> 
+											<p:password value="#{CambioClave.claveActual}" styleClass="form-control ng-untouched ng-pristine ng-invalid"/>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-xs-12">
+										<div class="form-group">
+											<label>Nueva Contraseña</label> 
+											<p:password value="#{CambioClave.claveNueva}" styleClass="form-control ng-untouched ng-pristine ng-invalid"/>
+										</div>
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<div class="form-group">
+											<label>Reingrese Contraseña</label>
+											<p:password value="#{CambioClave.claveNuevaRepetida}" styleClass="form-control ng-untouched ng-pristine ng-invalid"/>
+										</div>
+									</div>
+								</div>
+								<br/>
+								<div class="row arriba-35">
+									<div class="col-xs-12">
+										<div class="col-xs-6">
+											<div class="row">
+												<p:commandButton id="botonBlanquearCambioClave"
+																 value=""
+																 action="#{CambioClave.refrescar()}"
+																 styleClass="btn btn-primary btn-circle fa fa-undo pull-left"
+																 update=":form:seccionCambioClave"
+																 rendered="#{comunBean.esContribuyente()}"/>
+											</div>
+										</div>
+										<div class="col-xs-6">
+											<div class="row">
+												<p:commandButton id="botonCambioClave"
+																 value="Guardar"
+																 action="#{CambioClave.cambiarClave()}"
+																 styleClass="btn btn-primary btn-rounded pull-right"
+																 update=":form:seccionCambioClave"
+																 rendered="#{comunBean.esContribuyente()}"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</p:outputPanel>
+	</ui:composition>
+</html>

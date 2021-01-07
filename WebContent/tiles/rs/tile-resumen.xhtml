@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/resumen-rs.css" />
+		</f:facet>
+		
+		<p:outputPanel id="datosDeclaracion" rendered="#{TileResumenRS.visible}">
+		
+			<p:tabView id="tabsVersiones" 
+					   value="#{TileResumenRS.listaResumenes}"
+					   var="resumen"
+					   styleClass="panel-detalle-versiones">
+					   
+				<p:tab title="#{resumen.nombre}">
+				
+					<div class="row">
+						<div class="col-xs-12">
+						    <hr/>
+						    <h3 class="color-azul-primary">Resumen de Declaración Jurada - #{resumen.version.ano}</h3>
+						    <h3><strong>#{resumen.padron.razonSocial}</strong> - PADRÓN Nº #{resumen.padron.numero}</h3>
+					  	</div>
+					
+					 	<div class="col-xs-12">
+						    <hr/>
+						    <h4 class="color-azul-primary">Datos de la Actividad</h4>
+						    <div class="row">
+						
+						    	<div class="col-sm-6 col-xs-12">
+							        <div class="form-group">
+							          	<label>Fecha de Habilitación</label>
+							          	<span class="full-width campo-resumen form-control">
+							            	#{comunBean.ajustarFecha(resumen.version.fechaHabilitacion)}
+							        	</span>
+							        </div>
+						      	</div>
+								
+						      	<div class="col-sm-6 col-xs-12">
+							        <div class="form-group">
+							          	<label>Facturación Anual #{resumen.anoFacturacion}*</label>
+							          	<span class="full-width campo-resumen form-control">
+							            	#{comunBean.formatearMoneda( resumen.version.facturacion ) }
+							          	</span>
+							        </div>
+						      	</div>
+						
+						      	<div class="col-sm-6 col-xs-12">
+							        <div class="form-group">
+							        	<label>Cantidad de Personas (Títulares + Relación de dependencia)</label>
+							          	<span class="full-width campo-resumen form-control">
+							            	#{ resumen.version.cantidadPersonas }
+							          	</span>
+							        </div>
+						      	</div>
+						
+						      	<ui:fragment rendered="#{resumen.tieneActividadPrincipal()}">
+							        <div class="col-sm-6 col-xs-12">
+							        	<div class="form-group" >
+							            	<label>Actividad Principal</label>
+								            <span class="full-width campo-resumen form-control">
+								            	#{ resumen.actividades.actividadPrincipal.nombre }
+								            </span>
+							          	</div>
+							        </div>
+						      	</ui:fragment>  
+						      	
+						      	<ui:fragment rendered="#{resumen.tieneActividadSecundaria()}">
+							        <div class="col-sm-6 col-xs-12">
+							          	<div class="form-group">
+								            <label>Otras Actividades</label>
+								            <div class="full-width campo-resumen form-control" style="background:rgb( 241, 242, 242 );border:none;padding:6px 2px;">#{ resumen.actividadesSecundarias() }</div>
+							        	</div>
+							        </div>
+						      	</ui:fragment>
+						     	<div class="col-sm-6 col-xs-12">
+							        <div class="form-group">
+							          	<label>Cuenta ABL Asociada</label>
+							          	<span class="full-width campo-resumen form-control">
+							            	#{ resumen.padronABL }
+							        	</span>
+							        </div>
+						      	</div>
+						    </div>
+					  	</div>
+					  	<ui:fragment rendered="#{resumen.tieneCartelerias()}">
+						    <div class="col-xs-12">
+						    	<hr/>
+						      	<h4 class="color-azul-primary"> Publicidad y Propaganda</h4>
+						      	<div class="row">
+						        	<div class="col-sm-6 col-xs-12">
+							            <div class="form-group">
+							              	<label>Tipo</label>
+							                <ui:repeat var="c" value="#{resumen.listaCarteleria}">
+							                  	<span class="form-control full-width abajo-5 campo-resumen">
+							                    	#{ c.tipo.nombre }
+							                  	</span>
+							                </ui:repeat>
+							            </div>
+						          	</div>
+						          	<div class="col-sm-5 col-xs-10">
+						            	<div class="form-group">
+							              	<label>Metros</label>
+							              	<ui:repeat var="c" value="#{resumen.listaCarteleria}">
+								                <span class="form-control full-width abajo-5 campo-resumen">
+								                	#{ c.metros } m²
+								                </span>
+							              	</ui:repeat>  
+						            	</div>
+						         	</div>
+						         	<div class="col-sm-1 col-xs-2">
+						            	<div class="form-group">
+							            	<ui:repeat var="c" value="#{resumen.listaCarteleria}">						            	
+							            		<p:outputPanel rendered="#{ c.urlImagen == null }">-</p:outputPanel>
+							            		<p:outputPanel rendered="#{ c.urlImagen != null }">
+							            			<a href="#{ c.urlImagen }" target="_blank" class="pull-right btn btn-default">
+							                    		<i class="fa fa-search"></i> Ver
+							                    	</a>
+							            		</p:outputPanel>
+							            	</ui:repeat>
+					            		</div>
+					            	</div>
+						      	</div>
+						    </div>
+					  	</ui:fragment>  
+					  	<ui:fragment rendered="#{resumen.tieneOep()}"> 					    
+							<div class="col-xs-12">
+						    	<h4 class="color-azul-primary"> Ocupación de Espacios Públicos</h4>
+								<div class="row">
+							    	<div class="col-sm-6 col-xs-12">
+							            <div class="form-group">
+							              	<label>Tipo</label>
+								            <ui:repeat var="oep" value="#{resumen.listaOEP}">
+								            	<span class="campo-resumen form-control full-width abajo-5" >
+								                	#{ oep.tipo.name() } 
+								              	</span>
+								            </ui:repeat>
+							        	</div>
+							        </div>
+							        <div class="col-sm-6 col-xs-12">
+							            <div class="form-group">
+							              	<label>Cantidad</label>
+							              
+								            <ui:repeat var="oep" value="#{resumen.listaOEP}">
+								                <span class="campo-resumen form-control full-width abajo-5" >
+								             		<span> #{ resumen.obtenerValor( oep ) } </span>
+								                </span>
+								            </ui:repeat>
+							            </div>
+							        </div>
+							    </div>
+						    </div>
+					  </ui:fragment>
+						<ui:fragment rendered="#{resumen.tieneSV()}">
+					 		<div class="col-xs-12">
+					      		<hr/>
+						      	<h4 class="color-azul-primary">Servicios Varios</h4>
+						      	<div class="row">
+							        <div class="col-sm-6 col-xs-12">
+							        	<div class="form-group">
+								            <label>Motores</label>
+								            <span class="full-width campo-resumen form-control">
+								            	#{ resumen.serviciosVarios.motores }
+								            </span>
+							          	</div>
+							        </div>
+							        <div class="col-sm-6 col-xs-12">
+							        	<div class="form-group">
+								            <label>Calderas</label>
+								            <span class="full-width campo-resumen form-control">
+								            	#{ resumen.serviciosVarios.calderas }
+								            </span>
+							         	</div>
+							        </div>
+						    	</div>
+					    	</div>
+						</ui:fragment>
+					</div>
+					
+				</p:tab>
+			</p:tabView>
+		</p:outputPanel>
+	</ui:composition>
+</html>

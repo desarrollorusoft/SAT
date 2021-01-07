@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:c="http://java.sun.com/jstl/core">
+	  
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			
+			<ui:define name="titulo-pagina">Régimen Simplificado</ui:define>
+			
+			<ui:define name="cuerpo">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="adaptacion/rs.css" />
+				</f:facet>
+				
+				<div>
+					<h3>Régimen Simplificado</h3>
+					<hr/>
+				</div>
+				<div class="container contenedor-padrones">
+					<p:outputPanel rendered="#{RS.bonificacionPendiente}">
+						<div class="row">
+							<div class="col-xs-12 cartel-bonificacion">
+								<b>ACCEDA A LA BONIFICACION DE LAS CUOTAS 7 a 12</b><br/>
+								Realice su Declaración Jurada de Régimen Simplificado antes del 31/07/19 y abone las cuotas del primer semestre para obtener el beneficio
+							</div>
+						</div>
+					</p:outputPanel>
+					<div class="row lista-padrones">
+						<p:outputPanel id="declaraciones">
+						<ui:repeat id="ddjj" var="declaracion" value="#{RS.comercio.listaDeclaraciones}">
+							<div class="col-xs-12 arriba-20 ddjj_anual ddjj_anual-#{declaracion.estado.name()}">
+								
+								<div class="col-xs-2 ddjj_anual-anio no-padding" style="margin-top:2em;">
+									<h3><h:outputText value="DDJJ #{declaracion.ano}" /></h3>
+									<h5><h:outputText value="#{RS.obtenerLeyenda( declaracion )}" /></h5>
+								</div>
+								<div class="col-xs-7 ddjj_anual-cuentas no-padding" >
+									<ui:repeat id="padrones" var="padron" value="#{declaracion.listaPadrones}">
+									
+										<div class="col-xs-3">
+											<div class="card card-#{declaracion.getLabelPadron( padron )}" >
+												<div class="card-icon">
+						   							<i class="#{RS.getIcono( declaracion, padron )}"></i>
+												</div>
+												
+												<h4><h:outputText value="Padrón #{padron.numero}" /></h4>
+												
+												<p:splitButton id="cuenta" 
+															   value="#{declaracion.getLabelPadron( padron )}"
+															   styleClass="ddjj_anual-cuenta">
+															   
+										            <p:menuitem value="Completar" 
+										            			action="#{RS.completar( declaracion, padron )}"
+										            			disabled="#{!declaracion.puedeCompletar( padron )}"
+										            			styleClass="fas fa-file-signature" />
+										            <p:menuitem value="Rectificar" 
+										            			action="#{RS.rectificar( declaracion, padron )}"
+										            			disabled="#{!declaracion.puedeRectificar( padron )}"
+										            			styleClass="fas fa-pencil-alt" />
+										            <p:menuitem value="Cancelar Rectificativa" 
+										            			action="#{RS.cancelarRectificativa( declaracion, padron )}"
+										            			rendered="#{declaracion.puedeCancelarRectificativa( padron )}"
+										            			styleClass="fas fa-times"
+										            			update=":form:declaraciones" />
+										            <p:separator />
+										            <p:menuitem value="Ver Detalle" 
+										            			actionListener="#{RS.verDetalle( padron )}"
+										            			rendered="#{padron.tieneVersiones()}"
+										            			styleClass="fas fa-search"
+										            			oncomplete="PF('ModalResumenPadron').show();"
+										            			update=":form:modalResumenPadron" />
+										        </p:splitButton>  
+									        </div>
+								        </div>
+									
+									</ui:repeat>
+								</div>
+								<div class="col-xs-3 ddjj_anual-confirmacion">
+									<h:panelGroup id="secciones" styleClass="row" rendered="#{declaracion.estaPendiente()}">
+										<ui:fragment rendered="#{!declaracion.puedeOperar()}">
+											<p>La DDJJ 2020 estará disponible a partir del 21/01.</p>
+										</ui:fragment>
+										<ui:fragment rendered="#{declaracion.puedeOperar()}">
+											<ui:fragment rendered="#{!declaracion.estaCompleta()}">
+												<p>Para confirmar la DDJJ, es necesario que complete cada uno de los padrones. Una vez que todos ellos esten completos, este mensaje desaparecerá y en su lugar se habilitará el botón para confirmar.</p>
+											</ui:fragment>
+											<ui:fragment rendered="#{declaracion.estaCompleta()}">
+												<p:commandButton value="CONFIRMAR DDJJ" 
+																 action="#{RS.verImportes( declaracion )}"
+																 styleClass="btn btn-primary pull-right"
+																 style="margin-top:2.5em;" />
+											</ui:fragment>
+										</ui:fragment>
+									</h:panelGroup>
+								</div>
+								
+							</div>
+						</ui:repeat>	
+						</p:outputPanel>				
+					</div>					
+				</div>
+				
+				<p:dialog id="modalResumenPadron" 
+						  widgetVar="ModalResumenPadron" 
+						  modal="true" 
+						  closable="true"
+						  resizable="false"
+						  width="90%"
+						  draggable="false"
+						  styleClass="modal-area">
+						  
+						<div class="title-area"></div>
+						<div class="description-area">
+							<p:scrollPanel mode="native"
+										   style="width:100%;max-height:80vh">
+								<div class="col-xs-12">
+									<ui:include src="/tiles/rs/tile-resumen.xhtml"/>
+								</div>			   
+							</p:scrollPanel>	
+						</div>
+						<div class="bottom-area arriba-20">
+							<p:commandButton value="Cerrar"
+											 styleClass="pull-right btn btn-primary btn-rounded btn-outline"
+											 onclick="PF('ModalResumenPadron').hide();"/>
+						</div>
+				</p:dialog>	
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

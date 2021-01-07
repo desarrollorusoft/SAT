@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:composition>
+		<f:facet name="last">
+			
+		</f:facet>
+		
+		<div class="formulario-central">
+			<div class="form-group">
+				<label>Tributo</label>
+				<h:selectOneMenu value="#{ingresoReimpresionBoletaBean.tipoCuentaSeleccionado}" 
+								 styleClass="form-control">
+					<p:ajax listener="#{ingresoReimpresionBoletaBean.actualizar()}" update="panelDigitoVerificador"/>
+					<f:selectItems value="#{ingresoReimpresionBoletaBean.listaTributos}" 
+								   var="tributo" itemLabel="#{tributo}" itemValue="#{tributo}" />
+				</h:selectOneMenu>
+			</div>
+			<div class="form-group">
+				<label>Cuenta/Dominio</label>
+				<h:inputText value="#{ingresoReimpresionBoletaBean.cuentaDominio}" 
+							 styleClass="form-control" 
+							 required="true" 
+							 requiredMessage="Es necesario que ingrese la CUENTA/DOMINIO" />
+			</div>
+			<h:panelGroup id="panelDigitoVerificador">
+				<ui:fragment rendered="#{ingresoReimpresionBoletaBean.esABL()}">
+					<div class="form-group">
+						<label>D&iacute;gito Verificador</label>
+						<h:inputText value="#{ingresoReimpresionBoletaBean.digitoVerificador}" 
+									 styleClass="form-control" 
+									 maxlength="2" 
+									 required="true" 
+									 requiredMessage="Es necesario que ingrese el Dígito Verificador" />
+					</div>
+				</ui:fragment>
+			</h:panelGroup>
+			
+			<div class="text-center">
+				<h:commandButton action="#{ingresoReimpresionBoletaBean.continuar()}" 
+								 value="CONSULTAR DEUDA" 
+								 styleClass="btn btn-principal"
+								 update=":form:secciones_reimpresion"/>
+			</div>
+		</div>
+	</ui:composition>
+</html>

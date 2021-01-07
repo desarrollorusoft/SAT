@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:composition>
+		<div class="row arriba-10">
+			<div class="col-xs-12">
+				<div class="arriba-20 derecha-15 pull-right">
+					<p:commandButton value="Nueva Consulta"
+									 action="#{listaConsultasBean.irAFormulario()}"
+									 update=":form:panelSecciones"
+									 styleClass="btn btn-primary btn-rounded"/>
+				</div>
+			</div>
+			<div class="padding-15-costados">
+				<ui:fragment rendered="#{!fn:contains(request.requestURL, '/pri')}">
+					<div class="col-xs-12 abajo-15 arriba-20">
+						<div class="col-md-4 col-sm-6 col-xs-12 contenedor-plataforma">
+							<label>Nombre</label>
+							<br />
+							<h:outputText value="#{listaConsultasBean.consulta.nombreCompleto}" />
+						</div>
+						<div class="col-md-2 col-sm-6 col-xs-12 contenedor-plataforma">
+							<label>CUIT/CUIL</label>
+							<br />
+							<h:outputText value="#{listaConsultasBean.consulta.cuit}" />
+						</div>
+						<div class="col-md-2 col-sm-6 col-xs-12 contenedor-plataforma">
+							<label>Telefono</label>
+							<br />
+							<h:outputText value="#{listaConsultasBean.consulta.telefono}" />
+						</div>
+						<div class="col-md-4 col-sm-6 col-xs-12 contenedor-plataforma">
+							<label>Correo </label>
+							<br />
+							<h:outputText value="#{listaConsultasBean.consulta.correo}" styleClass="lower"/>
+						</div>
+					</div>	
+				</ui:fragment>
+		        <div class="col-xs-12">
+		        	<div class="pull-left arriba-20">
+		        		<h3 class="color-azul-primary">Consultas y reclamos</h3>
+		        	</div>
+		        </div>
+				
+				<div class="col-xs-12 arriba-20">
+					<p:dataTable value ="#{listaConsultasBean.listaConsultasAsociadas}"
+								 var="consulta"
+								 emptyMessage="No se encontraron consultas"
+								 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+						<p:column headerText="Nº" width="5%">
+							<h:outputText value="#{consulta.id}"/>
+						</p:column>											 
+						<p:column headerText="Fecha ultima Actualizacion" width="15%">
+							<h:outputText value="#{comunBean.ajustarFecha(consulta.fechaActualizacion)}"/>
+						</p:column>											 
+						<p:column headerText="Motivo" width="15%">
+							<h:outputText value="#{consulta.tipoConsulta}"/>
+						</p:column>											 
+						<p:column headerText="Estado" width="20%">
+							<h:outputText value="#{consulta.estadoContribuyente}"/>
+						</p:column>											 
+						<p:column headerText="Categoria" width="20%">
+							<h:outputText value="#{consulta.categoria.nombre}"/>
+						</p:column>											 
+						<p:column headerText="Cuenta" width="10%">
+							<h:outputText value="#{consulta.dato}"/>
+						</p:column>											 
+						<p:column headerText="Acciones" width="10%">
+							<p:commandButton value=""
+											 action="#{listaConsultasBean.verConsulta(consulta)}"
+											 update=":form:panelSecciones"
+											 styleClass="btn btn-primary btn-circle sin-texto fa fa-info"/>
+						</p:column>											  
+					</p:dataTable>
+				</div>		
+			</div>
+		</div>
+	</ui:composition>
+</html>

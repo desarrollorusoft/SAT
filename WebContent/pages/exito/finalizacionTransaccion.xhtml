@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+	<h:body>
+		<ui:composition template="/templates/comun.xhtml">
+			
+			<ui:define name="titulo-pagina">Éxito</ui:define>
+			
+			<ui:define name="detalle-contenido">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="registro.css" />
+				</f:facet>
+				
+				<h2>Su transacci&oacute;n ha sido cancelada. Ya puede cerrar la ventana</h2>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

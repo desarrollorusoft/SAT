@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:c="http://java.sun.com/jstl/core">
+	  
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+		
+			<ui:define name="titulo-pagina">DDJJ RS #{RSPadron.ano}</ui:define>
+		
+			<ui:define name="cuerpo">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="adaptacion/padron.css" />
+					<h:outputStylesheet library="css/wizard" name="style.css" />
+				</f:facet>
+				
+				<div>
+					<h3>DDJJ R&eacute;gimen Simplificado #{RSPadron.ano} - PADR&Oacute;N #{RSPadron.padron.numero}</h3>
+					<hr/>
+				</div>
+				<h:panelGroup id="secciones">
+					<div class="cont-pasos f1-steps">
+			  			<div class="f1-progress">
+			  			    <div class="f1-progress-line" style="width: #{RSPadron.dimensionBarraProgreso()}%" />
+			  			</div>
+			  			<div class="f1-step #{RSPadron.estilosPaso(1)}" style="width: #{RSPadron.dimensionPaso()}%">
+			  				<div class="f1-step-icon"><b>1</b></div>
+			  				<p>Datos de la Actividad</p>
+			  			</div>
+			  			<div class="f1-step #{RSPadron.estilosPaso(2)}" style="width: #{RSPadron.dimensionPaso()}%">
+			  				<div class="f1-step-icon"><b>2</b></div>
+			  				<p>P. y P./O.E.P.</p>
+			  			</div>
+			  		    <div class="f1-step #{RSPadron.estilosPaso(3)}" style="width: #{RSPadron.dimensionPaso()}%">
+			  				<div class="f1-step-icon"><b>3</b></div>
+			  				<p>Servicios Varios</p>
+			  			</div>
+			  			<div class="f1-step #{RSPadron.estilosPaso(4)}" style="width: #{RSPadron.dimensionPaso()}%">
+			  				<div class="f1-step-icon"><b>4</b></div>
+			  				<p>Resúmen</p>
+			  			</div>
+			  		</div>
+				
+				    <ui:fragment rendered="#{RSPadron.muestro(1)}" >
+				   		<ui:include src="/tiles/rs/datos-actividad.xhtml" />
+				    </ui:fragment>
+				    <ui:fragment rendered="#{RSPadron.muestro(2)}" >
+				    	<ui:include src="/tiles/rs/pyp-oep.xhtml" />
+				    </ui:fragment>
+				    <ui:fragment rendered="#{RSPadron.muestro(3)}" >
+				    	<ui:include src="/tiles/rs/servicios-varios.xhtml" />
+				    </ui:fragment>
+				    <ui:fragment rendered="#{RSPadron.muestro(4)}" >
+				    	<ui:include src="/tiles/rs/resumen.xhtml" />
+				    </ui:fragment>
+				</h:panelGroup>
+					
+				<p:poll widgetVar="pollGuardadorRS" async="true" interval="300" autoStart="true" listener="#{RSPadron.guardarPadron()}" />	
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

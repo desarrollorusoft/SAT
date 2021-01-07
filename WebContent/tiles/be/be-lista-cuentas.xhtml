@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<ui:composition>
+		<!-- Inicio header seccion -->
+		<div class="row m-b-xs">
+			<div class="col-xs-12 flex">
+				<div>
+					<h4 class="color-azul-primary">Mis Boletas Electr&oacute;nicas</h4>
+				</div>
+				<button type="button"
+					onclick="$('html, body').animate({scrollTop: $('#scroll').offset().top}, 1500);"
+					class="btn ui-button btn-primary btn-outline btn-rounded"
+					style="font-size: .9em;">
+					<span class="texto-boton">Adherir Cuenta</span>
+				</button>
+				<p:outputPanel id="panel-botonera" layout="block">
+				</p:outputPanel>
+			</div>
+		</div>
+		<!-- Fin header seccion -->
+		
+		<p:outputPanel id="cambio-disposicion" layout="block">
+			
+			<ui:include src="/tiles/be/be-tabla-cuentas.xhtml"/>
+			
+		</p:outputPanel>
+	
+	</ui:composition>
+</html>

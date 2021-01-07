@@ -1,0 +1,10 @@
+span.campo-resumen.form-control{
+  background: rgb( 241, 242, 242 );
+  border: none;
+  height:auto;
+  padding: 6px 2px; 
+}
+
+div.ui-tabs.ui-tabs-top > ul.ui-tabs-nav > li > a {
+	padding: 10px 20px !Important;
+}

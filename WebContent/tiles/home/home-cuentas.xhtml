@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="adaptacion/home-cuentas.css" />
+		</f:facet>
+		<div class="col-md-6 no-padding">
+			<div class="col-md-12">
+				<div class="ibox float-e-margins">
+					<p:outputPanel id="cuentas">					
+						<div class="ibox-content">
+							<ui:include src="/tiles/home/lista-cuentas.xhtml" />
+							<ui:include src="/tiles/home/asociar-cuentas.xhtml" />
+						</div>
+					</p:outputPanel>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 no-padding">
+			<ui:include src="/tiles/home/banners.xhtml" />
+			<ui:include src="/tiles/home/alertas.xhtml" />
+		</div>
+		
+	</ui:composition>
+</html>

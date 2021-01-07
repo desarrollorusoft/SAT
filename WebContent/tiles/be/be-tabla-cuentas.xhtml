@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:composition>
+    <!-- Inicio Tabs -->
+    <p:tabView value="#{BELista.tiposCuentaAsignadas}" var="tributo">
+        <p:tab titleStyleClass="#{BELista.iconoSolapa(tributo)}"
+               title="( #{BELista.recuperarCuentas(tributo).size()} )">
+            <div class="row">
+                <div class="col-xs-12 m-t-md">
+                    <div class="form-group">
+                        <input id="filtroCuentas-#{tributo.codigo}"
+                               class="form-control ng-untouched ng-pristine ng-valid"
+                               onkeyup="filtrarCuentas('#{tributo.codigo}')" type="text"/>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <p:dataTable id="tablaCuentas"
+                                 value="#{BELista.recuperarCuentas(tributo)}"
+                                 var="cuenta"
+                                 emptyMessage="No hay cuentas"
+                                 rowKey="#{cuenta.hashCode()}"
+                                 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center tabla-filtrar-#{tributo.codigo}"
+                                 scrollable="true"
+                                 scrollHeight="476">
+
+                        <p:column headerText="Cuenta"> <!-- width="17%" -->
+                            <h:outputText value="#{cuenta.datoCuenta}"/>
+                        </p:column>
+
+                        <p:column headerText="Descripción"> <!-- width="41%" -->
+                            <h:outputText value="#{cuenta.descripcion}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado"> <!-- width="25%" -->
+                            ADHERIDO
+                        </p:column>
+
+                        <p:column headerText="Acción"> <!-- width="17%" -->
+                            <p:commandButton value=""
+                                             actionListener="#{BELista.confirmarDesvinculacion(cuenta)}"
+                                             styleClass="btn btn-primary btn-circle fa fa-times sin-texto"
+                                             onclick="PF('bloqueoPantalla').show();"
+                                             oncomplete="PF('bloqueoPantalla').hide();"
+                                             update=":form:cuentas">
+                                <p:confirm header="Confirmation"/>
+                            </p:commandButton>
+
+                            <a href="https://vicentelopez.facturadospuntocero.com/"
+                               class="btn btn-primary btn-circle descargarbe fa fa-arrow-down"
+                               target="_blank"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </p:tab>
+    </p:tabView>
+
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" message="¿Desea desvincular esta cuenta?">
+        <p:commandButton value="No" type="button"
+                         styleClass="ui-confirmdialog-no btn btn-default btn-rounded pull-left"/>
+        <p:commandButton value=" Si " type="button"
+                         styleClass="ui-confirmdialog-yes btn btn-primary btn-rounded pull-right"/>
+    </p:confirmDialog>
+
+    <!-- Fin Tabs -->
+</ui:composition>
+</html>

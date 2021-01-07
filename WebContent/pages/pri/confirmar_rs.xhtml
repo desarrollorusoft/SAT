@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition template="/templates/comun_sat.xhtml">
+			
+		<ui:define name="titulo-pagina">Régimen Simplificado</ui:define>
+		
+		<ui:define name="cuerpo">
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="adaptacion/rs.css" />
+			</f:facet>
+			
+			<div>
+				<h3>Confirmar RS #{RSConfirmar.declaracion.ano}</h3>
+				<hr/>
+			</div>
+			<div class="container contenedor-padrones">
+				<div class="contenedor">
+					<div class="">
+							
+						<div class="row flex-container">
+							<ui:repeat var="deuda" value="#{RSConfirmar.listaDeudas}">
+								
+								<div class="col-md-4 col-sm-6 col-xs-12">
+									<h4 class="color-azul-primary sin-margen">Padr&oacute;n #{deuda.cuenta}</h4>
+									<hr />
+									
+									<p:dataTable var="cuota"
+												 value="#{deuda.vencimientos}"
+												 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center">
+												 
+										<p:column headerText="Cuota" width="20%">
+											#{cuota.cuota}
+										</p:column>
+										<p:column headerText="Periodo">
+											#{cuota.periodo}
+										</p:column>
+										<p:column headerText="Deuda">
+											#{comunBean.formatearMoneda(cuota.monto)}
+										</p:column>
+										<p:column headerText="Vencimiento">
+											#{comunBean.ajustarFecha(cuota.vencimiento)}
+										</p:column>
+									</p:dataTable>
+								
+								</div>
+							
+							</ui:repeat>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<p:commandButton value="Rectificar"
+											 action="#{RSConfirmar.rectificar()}"
+											 styleClass="btn btn-default btn-outline btn-rounded pull-left" />
+			
+							<p:commandButton value="Confirmar"
+											 action="#{RSConfirmar.confirmar()}"
+											 styleClass="btn btn-primary btn-rounded pull-right"
+											 onclick="PF('bloqueoPantalla').show();"
+										 	 oncomplete="PF('bloqueoPantalla').hide()"/>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</html>

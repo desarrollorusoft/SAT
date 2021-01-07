@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+      
+	<h:body>
+		<ui:composition template="/templates/comun.xhtml">
+			
+			<ui:define name="detalle-contenido">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="genericos/comun-interno.css" />
+				</f:facet>
+
+				<div id="wrapper">
+					<ui:include src="/tiles/generico/side-menu.xhtml" />
+					
+					<div id="page-wrapper" class="gray-bg dashbard-1 animated fadeInDown ">
+	
+						<ui:include src="/tiles/generico/top-menu.xhtml" />
+						
+						<main class="wrapper wrapper-content"> 
+							<div class="row">
+								<ui:insert name="cuerpo"></ui:insert>
+							</div>
+						</main>
+					</div>
+				</div>
+	
+				<p:poll listener="#{comunBean.actualizarUsuario()}" interval="1000"/>
+			</ui:define>
+				
+		</ui:composition>
+	</h:body>
+</html>

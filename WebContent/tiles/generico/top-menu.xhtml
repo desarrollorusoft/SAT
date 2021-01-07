@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		
+		<div class="row border-bottom">
+			<nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+				<div class="navbar-header"></div>
+				<ul class="nav navbar-top-links navbar-right">	
+					<li>
+						<p><i class="fa fa-user"></i> <b><h:outputText value="#{comunBean.cuitUsuario()}" /></b></p>
+					</li>
+					<li>
+						<h:commandLink action="#{comunBean.cerrarSesion()}" value=""><i class="fas fa-sign-out-alt"></i> Salir</h:commandLink>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		
+	</ui:composition>
+</html>

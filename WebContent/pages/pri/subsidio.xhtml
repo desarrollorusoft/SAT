@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:c="http://java.sun.com/jstl/core">
+	  
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			
+			<ui:define name="titulo-pagina">Subsidio</ui:define>
+			
+			<ui:define name="cuerpo">
+				
+				<h:panelGroup id="secciones">
+				    <ui:fragment rendered="#{Subsidio.muestro(1)}" >
+				   		<ui:include src="/tiles/subsidio/subsidio-cargar.xhtml" />
+				    </ui:fragment>
+				    
+				    <ui:fragment rendered="#{Subsidio.muestro(2)}" >
+				    	<ui:include src="/tiles/subsidio/subsidio-completo.xhtml" />
+				    </ui:fragment>
+				</h:panelGroup>
+			
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

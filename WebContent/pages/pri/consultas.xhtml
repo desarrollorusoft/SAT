@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition template="/templates/comun_sat.xhtml">		
+		<ui:define name="cuerpo">
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="adaptacion/plataforma-consultas.css" />
+			</f:facet>		 		
+			<p:outputPanel id="panelSecciones" layout="block" styleClass="arriba-25">	
+				<div class="container-plataforma">
+					<ui:fragment rendered="#{consultasBean.formulario}">
+						<ui:include src="/pages/externos/tiles/formulario-consultas-plataforma.xhtml"/>
+					</ui:fragment>
+					
+					<ui:fragment rendered="#{consultasBean.lista}">
+						<ui:include src="/pages/externos/tiles/lista-consultas.xhtml" />
+					</ui:fragment>
+		
+					<ui:fragment rendered="#{consultasBean.soporte}">
+						<ui:include src="/pages/externos/tiles/consulta-soporte.xhtml" />
+					</ui:fragment>
+				</div>		
+			</p:outputPanel>
+		</ui:define>
+
+	</ui:composition>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition template="/templates/comun_publico.xhtml">
+			
+			<ui:define name="titulo-pagina">Registración - RS</ui:define>
+			
+			<ui:define name="contenido">
+				
+				<div class="box animated fadeInDown">
+					<div>
+						<div class="contenedor">
+							<h:panelGroup id="secciones" styleClass="row">
+							    <ui:fragment rendered="#{RegistroRS.muestro(1)}" >
+							   		<ui:include src="/tiles/registro/registro-datos-rs.xhtml" />
+							    </ui:fragment>
+							    <ui:fragment rendered="#{RegistroRS.muestro(2)}" >
+							    	<ui:include src="/tiles/registro/registro-terminos.xhtml" />
+							    </ui:fragment>
+							    <ui:fragment rendered="#{RegistroRS.muestro(3)}" >
+							    	<ui:include src="/tiles/registro/registro-activacion.xhtml" />
+							    </ui:fragment>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

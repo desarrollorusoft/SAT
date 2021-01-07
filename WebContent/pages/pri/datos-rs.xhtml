@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:c="http://java.sun.com/jstl/core">
+	  
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			
+			<ui:define name="titulo-pagina">DATOS DE RS</ui:define>
+			
+			<ui:define name="cuerpo">
+
+				<div class="col-md-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							<h3 class="color-azul-primary abajo-20">Datos de la Actividad</h3>
+							<div class="ng-untouched ng-pristine ng-valid">
+								<div class="row">
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>CUIT</span><br/>
+											<label><b><h:outputText value="#{DatosRS.cuit}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Correo</span><br/>
+											<label><b><h:outputText value="#{DatosRS.correoActividad}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Teléfono</span><br/>
+											<label><b><h:outputText value="#{DatosRS.telefonoActividad}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-3 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Celular</span><br/>
+											<label><b><h:outputText value="#{DatosRS.celularActividad}" /></b></label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h3 class="color-azul-primary abajo-20">Datos del Solicitante</h3>
+							<div class="ng-untouched ng-pristine ng-valid">
+								<div class="row">
+									<div class="col-md-2 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Nombre</span><br/>
+											<label><b><h:outputText value="#{DatosRS.nombreSolicitante}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Apellido</span><br/>
+											<label><b><h:outputText value="#{DatosRS.apellidoSolicitante}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Correo</span><br/>
+											<label><b><h:outputText value="#{DatosRS.correoSolicitante}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Caracter</span><br/>
+											<label><b><h:outputText value="#{DatosRS.caracterSolicitante}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Teléfono</span><br/>
+											<label><b><h:outputText value="#{DatosRS.telefonoSolicitante}" /></b></label>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-4 col-xs-12">
+										<div class="form-group">
+											<span>Celular</span><br/>
+											<label><b><h:outputText value="#{DatosRS.celularSolicitante}" /></b></label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

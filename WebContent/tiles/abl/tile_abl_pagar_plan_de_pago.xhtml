@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<h:body>
+	<head>
+	    <script type="text/javascript" src="https://www.vicentelopez.gov.ar/interbanking/Interbanking.Script/jquery.js"></script>
+	    <script type="text/javascript" src="https://www.vicentelopez.gov.ar/interbanking/Interbanking.Script/JModal.js"></script>
+	    <script type="text/javascript" src="https://www.vicentelopez.gov.ar/interbanking/Interbanking.Script/Interbanking.js"></script>
+	</head>
+	
+		<ui:composition>
+
+			<p:dataTable 
+				value="#{ablPlanDePago.cuotasApagar}" var="cuota"
+				style="margin-top:12pt"
+				emptyMessage="No se encontraron cuotas.">
+				<p:column headerText="Cuotas">
+					<h:outputText value="#{cuota.cuotaPlan}" />
+					
+					<br />
+				</p:column>
+
+				<p:column headerText="Fecha Vencimiento">
+					<h:outputText value="#{ablPlanDePago.formatearFecha(cuota.vencimiento) }" />
+					<br />
+				</p:column>
+				<p:column headerText="Capital">
+							<h:outputText value="#{comunBean.formatearMoneda(cuota.capital)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Recargo">
+							<h:outputText value="#{comunBean.formatearMoneda(cuota.recargo)}" />
+					<br />
+				</p:column>
+
+				<p:column headerText="Multa">
+							<h:outputText value="#{comunBean.formatearMoneda(cuota.multa)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Interes">
+							<h:outputText value="#{comunBean.formatearMoneda(cuota.interes)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Total">
+							<h:outputText value="#{comunBean.formatearMoneda(cuota.total)}" />
+					<br />
+				</p:column>
+
+			</p:dataTable>
+			
+			<p:dataTable id="Totales" value="#{ablPlanDePago.totalAPagar}" var="total"	
+				style="margin-top:12pt">
+				
+
+				<p:column headerText="Fecha Vencimiento">
+					<h:outputText value="#{ablPlanDePago.formatearFecha(total.vencimiento) }" />
+					<br />
+				</p:column>
+				<p:column headerText="Total Capital">
+							<h:outputText value="#{comunBean.formatearMoneda(total.capital)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Total Recargo">
+							<h:outputText value="#{comunBean.formatearMoneda(total.recargo)}" />
+					<br />
+				</p:column>
+
+				<p:column headerText="Total Multa">
+							<h:outputText value="#{comunBean.formatearMoneda(total.multa)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Total Interes">
+							<h:outputText value="#{comunBean.formatearMoneda(total.interes)}" />
+					<br />
+				</p:column>
+				<p:column headerText="Total">
+							<h:outputText value="#{comunBean.formatearMoneda(total.total)}" />
+					<br />
+				</p:column>
+
+			</p:dataTable>
+			
+			<div  class="contenedor-botonera-pagos">
+				<p:selectOneRadio value="#{ablPlanDePago.pagos}" styleClass="rb-comun">
+		   			<f:selectItems value="#{ablPlanDePago.pagosValor}"/>
+		   			<p:ajax update="alerta"/>
+		   		</p:selectOneRadio>
+			</div>
+			
+			<div class="contenedor-botonera" style="text-align: right;">
+				<p:commandButton styleClass="boton-principal" 
+								 value="PAGAR"
+								 onclick="PF('alerta').show();" 
+								 style="margin-right: 10px;">
+					
+					<f:param name="AppID" value="MUNIVLOPEZ"/>
+				</p:commandButton>
+				
+				
+				 <p:confirmDialog message="#{ablPlanDePago.getMensajeAlerta()}" 
+								  id="alerta" 
+								  severity="alert" 
+								  global="true" 
+								  widgetVar="alerta" 
+								  styleClass="conf">
+							 
+					<p:commandButton value="Aceptar" 
+								  	 onclick="PF('confirmation').show();PF('alerta').hide();"
+								  	 rendered="#{ablPlanDePago.eligioTarjetaDeCredito()}"/>
+					<p:commandButton value="Aceptar" 
+							  		 action="#{ablPlanDePago.pagar()}"
+							  		 oncomplete="PF('alerta').hide();"
+							  		 style="margin-right: 10px;"
+							  		 rendered="#{ablPlanDePago.eligioTarjetaDeCredito()}"/>
+			    	<p:commandButton value="Cancelar" 
+								  	 onclick="PF('alerta').hide();"/>
+		    	</p:confirmDialog>
+					
+					<p:confirmDialog message="Tenga en cuenta que la demora en la acreditación de los pagos con tarjeta de crédito es de aproximadamente 30 días, si Ud. necesita un libre deuda para trámites, opte por otro medio de pago disponible." 
+									 id="mensaje" 
+									 severity="alert" 
+									 global="true" 
+									 widgetVar="confirmation"
+									 width="400px" 
+									 styleClass="conf">
+							 
+							 <p:commandButton value="Ok" 
+										  	  action="#{ablPlanDePago.pagar()}"
+										  	  oncomplete="PF('confirmation').hide();"  
+											  style="margin-right: 10px;"/>
+							 <p:commandButton value="Cancelar"  onclick="PF('confirmation').hide();"/>
+					</p:confirmDialog>		 	
+				<p:commandButton styleClass="boton-principal" 
+								 value="VOLVER" 
+								 action="#{ablPlanDePago.cancelar()}" 
+								 onstart="PF('bloqueoPantalla').show()" 
+								 oncomplete="PF('bloqueoPantalla').hide()" 
+								 update="tiles form:div-TablaCuentas"/>
+			</div>
+			
+		</ui:composition>
+	
+</h:body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			<f:facet name="last">
+				<h:outputStylesheet library="css" name="abl.css" />
+			</f:facet>
+			
+			<div class="contenedor-botonera-tile" style="margin-top:10px;">
+	
+				<p:commandButton rendered="#{ablBoletaDePagoBean.renderedPanel}"
+								 value="VOLVER"
+								 action="#{ablBoletaDePagoGeneracionBean.volver()}"
+								 update=":form:panelesReciboPagoDiferido :form:div-TablaCuentas" 
+								 style="margin-right: 15px;"
+								 styleClass="boton-principal"/>
+				
+				<p:commandButton value="GENERAR RECIBO"
+								 update="panelesReciboPagoDiferido modales"
+								 action="#{ablBoletaDePagoGeneracionBean.mostrarRecibo()}"
+								 onclick="PF('bloqueoPantallaContenido').show()"
+								 oncomplete="PF('bloqueoPantallaContenido').hide()"
+								 styleClass="boton-principal"/>			 
+			</div>
+	
+			<div class="contenedor-adobe arriba-20">
+				<div class="contenedor-texto">
+					<h:outputText value="El comprobante se abrira en una ventana en formato PDF."/>
+				</div>
+				
+				<div class="contenedor-texto">
+					Si no posee el Adobe Acrobat Reader instalado, 
+					<a href="http://www.latinamerica.adobe.com/products/acrobat/readstep2.html" target="_blank" style="color: #333333;">haga click aquí</a> 
+					para iniciar la descarga gratuita.
+				</div>
+		
+				<div class="contenedor-imagen-adobe arriba-10">
+					<h:graphicImage value="/resources/img/iconos/getacro.gif" alt="logo Adobe Acrobat Reader" />
+				</div>
+			</div>
+			
+		</ui:composition>
+	</h:body>
+</html>		

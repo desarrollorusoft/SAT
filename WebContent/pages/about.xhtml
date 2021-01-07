@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<ui:insert name="pageTitle">
+			<title>About Application</title>
+		</ui:insert>
+	</h:head>
+	<h:body>
+		<div id="contenedor">
+			<h:form id="form" styleClass="body">
+				<div style="margin: auto">
+					<div style="margin: auto; width: 600px;">
+						<ui:repeat value="#{aboutBean.info.properties}" var="prop">
+							<div class="divAbout">
+								<p:dataTable value="#{aboutBean.getKeys(prop)}" var="p">
+									<p:column width="20%">
+										<h:outputText value="#{p}" />
+									</p:column>
+									<p:column width="80%">
+										<h:outputText value="#{prop.get(p)}" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</ui:repeat>
+						<ui:repeat value="#{aboutBean.WS}" var="WS">
+							<div>
+								<h:outputText value="#{WS}" styleClass="labelAbout" />
+								<ui:repeat value="#{aboutBean.mapaDatos.get(WS).properties}" var="prop">
+									<div class="divAbout">
+										<p:dataTable value="#{aboutBean.getKeys(prop)}" var="p">
+											<p:column width="20%">
+												<h:outputText value="#{p}" />
+											</p:column>
+											<p:column width="80%">
+												<h:outputText value="#{prop.get(p)}" />
+											</p:column>
+										</p:dataTable>
+									</div>
+								</ui:repeat>
+							</div>
+						</ui:repeat>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</h:body>
+</html>

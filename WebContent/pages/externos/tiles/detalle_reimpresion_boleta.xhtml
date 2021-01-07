@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		<f:facet name="last">
+		</f:facet>
+		
+		<div class="contenedor-principal">
+			<div class="col-sx-12">
+				<div class="contenedor-datos container">
+					Descripci&oacute;n: <h:outputText value="#{detalleReimpresionBoletaBean.cuenta.leyenda}" style="font-weight:bold;"/>
+					<br/>
+					Contribuyente: <h:outputText value="#{detalleReimpresionBoletaBean.cuenta.contribuyente.nombreApellido}" style="font-weight:bold;"/>
+				</div>
+			</div>
+			
+			<div class="container-fluid">
+				<h:panelGroup id="secciones_periodos">
+					<ui:fragment rendered="#{detalleReimpresionBoletaBean.esAbl()}">
+				        <ui:include src="/pages/externos/tiles/tile_periodos_abl.xhtml"/>
+				    </ui:fragment>
+				    <ui:fragment rendered="#{(!detalleReimpresionBoletaBean.esAbl())}">
+				        <ui:include src="/pages/externos/tiles/tile_periodos_resto.xhtml"/>
+				    </ui:fragment>
+				</h:panelGroup>	
+			</div>
+			<div class="col-sx-12" style="margin-top:1em;">
+				<div class="container-fluid contenedor-monto-parcial">
+					<p:outputPanel id="panelesMontoParcial">
+						<h:outputText value="#{comunBean.formatearMoneda(detalleReimpresionBoletaBean.montoParcial)}" />
+					</p:outputPanel>
+				</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<h:commandButton action="#{detalleReimpresionBoletaBean.volver()}" 
+								 value="VOLVER" 
+								 styleClass="btn btn-default"
+								 update=":form:secciones_reimpresion"/>
+			</div>
+			<div class="col-md-4 col-xs-12 text-center">
+				<h:commandButton action="#{detalleReimpresionBoletaBean.generarRecibo()}" 
+								 value="GENERAR RECIBO" 
+								 styleClass="btn btn-default btn-principal"
+								 update=":form:secciones_reimpresion :form:modalPosdateoFecha"/>
+			</div>
+			<div class="col-md-4 col-xs-12"></div>
+		</div>
+		
+		<ui:include src="/tiles/modales/modal_impresion_boleta.xhtml" />
+		<ui:include src="/tiles/modales/modal_posdateo_fecha.xhtml" />
+	</ui:composition>
+</html>

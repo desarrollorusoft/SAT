@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<h:body>
+		<ui:composition template="/templates/comun_sat.xhtml">
+			
+			<ui:define name="titulo-pagina">Régimen Simplificado</ui:define>
+			
+			<ui:define name="cuerpo">
+				<f:facet name="last">
+					<h:outputStylesheet library="css" name="adaptacion/rs.css" />
+				</f:facet>
+			
+				<div class="col-xs-12 m-b-md">
+			        <div class="col-xs-12 text-left color-azul-primary">
+			        	<h2><strong>Actualización de Datos</strong></h2>
+			        </div>
+					<div class="col-xs-12 text-left">
+						<hr />
+						<h4 class="color-azul-primary">Datos de la Actividad</h4>
+			
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Teléfono*</label> 
+									<p:inputMask value="#{ActualizacionDatos.telefonoAct}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Teléfono"
+												 mask="(999)-9999-9999" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Celular*</label>
+									<p:inputMask value="#{ActualizacionDatos.celularAct}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Celular"
+												 mask="(999)-9999-9999" />
+								</div>
+							</div>
+						</div>
+					</div>
+			
+					<div class="col-xs-12 text-left">
+						<hr/>
+						<h4 class="color-azul-primary">Datos del Solicitante</h4>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Nombre*</label>
+									<p:inputText value="#{ActualizacionDatos.nombre}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Nombre" />
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Apellido*</label>
+									<p:inputText value="#{ActualizacionDatos.apellido}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Apellido" />
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>CUIT/CUIL*</label>
+									<p:inputMask value="#{ActualizacionDatos.cuitSol}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="CUIT/CUIL"
+												 mask="99-99999999-9">
+									</p:inputMask>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Correo Electrónico*</label>
+									<p:inputText value="#{ActualizacionDatos.correoSol}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Correo" />
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Teléfono*</label>
+									<p:inputMask value="#{ActualizacionDatos.telefonoSol}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Teléfono"
+												 mask="(999)-9999-9999" />
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Celular*</label>
+									<p:inputMask value="#{ActualizacionDatos.celularSol}"
+												 styleClass="form-control ng-untouched ng-pristine ng-invalid"
+												 placeholder="Celular"
+												 mask="(999)-9999-9999" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Caracter</label> 
+									<h:selectOneMenu value="#{ActualizacionDatos.caracterSeleccionado}" 
+													 styleClass="form-control ng-pristine ng-invalid ng-touched">
+										<f:selectItem itemLabel="Seleccione" />
+										<f:selectItems value="#{ActualizacionDatos.listaCaracteres}" var="caracter"/>
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</div>
+			
+					<div class="col-xs-12 m-t-md text-left">
+							<p:commandButton value="Guardar" 
+											 action="#{ActualizacionDatos.actualizar()}"
+											 styleClass="btn btn-sm btn-primary m-b btn-rounded pull-right"
+											 onclick="PF('bloqueoPantalla').show();"
+											 oncomplete="PF('bloqueoPantalla').hide()" />
+					</div>
+				</div>
+			</ui:define>
+			
+		</ui:composition>
+	</h:body>
+</html>

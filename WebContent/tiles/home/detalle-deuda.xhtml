@@ -1,0 +1,438 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:composition>
+	<div class="">
+		<div class="ibox-content animated fadeInDown">
+			<p:outputPanel id="seccionPagos">
+				<div class="row">
+					<!-- Inicio periodos de deuda -->
+					<div class="#{DetalleDeuda.esComercio() ? 'col-md-8' : 'col-md-6'} col-xs-12">
+						<div class="col-xs-12 no-padding">
+							<hr />
+							<div class="col-xs-6 m-t-xs">
+								<div class="row">
+									<span class="pull-left f-16-600 color-azul-primary">Deuda</span>
+								</div>
+							</div>
+							<div class="col-xs-6 m-t-xs">
+								<div class="row">
+									<span class="pull-right f-16-600 "><b>#{comunBean.formatearMoneda(DetalleDeuda.deuda.totalCoutasVencidas.total)}</b></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 arriba-15">
+							<div class="row">
+								<p:selectBooleanCheckbox value="#{DetalleDeuda.cancelaDeuda}" styleClass="acomodo-seleccion">
+									<p:ajax listener="#{DetalleDeuda.seleccionCompletaDeuda()}"
+											update=":form:tabsCuentas:seccionTotal :form:tabsCuentas:tablaVencida" />
+								</p:selectBooleanCheckbox>
+								
+								<p:dataTable id="tablaVencida"
+											 value="#{DetalleDeuda.deuda.cuotasVencidas}"
+											 var="cuota" 
+											 emptyMessage="No hay periodos vencidos"
+											 rowKey="#{cuota.hashCode()}"
+											 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center"
+											 rowStyleClass="#{cuota.mora ? 'registro-mora' : ''} #{cuota.pagar ? 'registro-seleccionado' : ''}">
+	
+									<p:column style="width:16px;text-align:center">
+										<p:selectBooleanCheckbox value="#{cuota.pagar}" rendered="#{DetalleDeuda.seAbonaRS(cuota)}">
+											<p:ajax listener="#{DetalleDeuda.verificarSeleccion(cuota)}"
+													update=":form:tabsCuentas:seccionTotal tablaVencida" />
+										</p:selectBooleanCheckbox>
+										<!-- Seccion de Bonificacion -->
+										<p:outputPanel rendered="#{!DetalleDeuda.seAbonaRS(cuota)}">
+											<div class="cuota-bonificada">
+												<i class="fa fa-check" title="Bonificado"></i>
+											</div>
+										</p:outputPanel>
+										<!-- Seccion de Bonificacion -->
+									</p:column>
+
+									<p:column headerText="Tasa" width="160" rendered="#{DetalleDeuda.esComercio()}">
+										<h:outputText value="#{cuota.tasa}" />
+									</p:column>
+
+									<p:column headerText="Periodo">
+										<h:outputText value="#{comunBean.ajustarPeriodo(cuota.periodo)}" />
+									</p:column>
+	
+									<p:column headerText="Capital">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.capital)}" />
+									</p:column>
+	
+									<p:column headerText="Recargo">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.recargo)}" />
+									</p:column>
+	
+									<p:column headerText="Multa">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.multa)}" />
+									</p:column>
+	
+									<p:column headerText="Total">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.total)}" />
+									</p:column>
+	
+									<p:column headerText="Vencimiento">
+										<h:outputText value="#{comunBean.ajustarFecha(cuota.fechaVencimiento)}" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+					<!-- Fin periodos de deuda -->
+	
+					<!-- Inicio periodos a vencer -->
+						<div class="col-xs-12 no-padding">
+							<hr />
+							<div class="col-xs-6 m-t-xs">
+								<div class="row">
+									<span class="pull-left f-16-600 color-azul-primary">A Vencer</span>
+								</div>
+							</div>
+							<div class="col-xs-6 m-t-xs">
+								<div class="row">
+									<span class="pull-right f-16-600 "><b>#{comunBean.formatearMoneda(DetalleDeuda.deuda.totalCoutasAVencer.total)}</b></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="row">
+								<p:outputPanel rendered="#{DetalleDeuda.descuentoSemestral > 0}" >
+									<div class="col-xs-12 abajo-20 text-center recaudro-simple">
+										<span class="texto-cancelar">¡Si paga el semestre<br/>obtendrá un descuento de <b>#{comunBean.formatearMoneda(DetalleDeuda.descuentoSemestral)}</b>!</span>
+										<br/>
+										<p:commandLink actionListener="#{DetalleDeuda.pagoSemestral()}"
+													   onclick="PF('bloqueoPantalla').show();"
+													   oncomplete="PF('bloqueoPantalla').hide()"
+													   update=":form:tabsCuentas:"
+													   styleClass=""
+													   rendered="#{comunBean.esContribuyente()}">
+											<span class="btn btn-primary btn-rounded ui-button arriba-10">Pago Semestral</span>
+										</p:commandLink>
+									</div>
+								</p:outputPanel>
+							</div>
+						</div>
+						<div class="col-xs-12 arriba-15">
+							<div class="row">
+								<p:selectBooleanCheckbox value="#{DetalleDeuda.cancelaAVencer}" styleClass="acomodo-seleccion">
+									<p:ajax listener="#{DetalleDeuda.seleccionCompletaAVencer()}"
+											update=":form:tabsCuentas:seccionTotal :form:tabsCuentas:tablaAVencer" />
+								</p:selectBooleanCheckbox>
+							
+								<p:dataTable id="tablaAVencer"
+											 value="#{DetalleDeuda.deuda.cuotasAVencer}" 
+											 var="cuota"
+											 emptyMessage="No hay periodos a vencer"
+											 rowKey="#{cuota.hashCode()}"
+											 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center"
+											 rowStyleClass="#{cuota.pagar ? 'registro-seleccionado' : ''} #{DetalleDeuda.seAbonaRS(cuota) ? '' : 'registro-grisado'}">
+	
+									<p:column style="width:16px;text-align:center">
+										<p:selectBooleanCheckbox value="#{cuota.pagar}" rendered="#{DetalleDeuda.seAbonaRS(cuota)}">
+											<p:ajax listener="#{DetalleDeuda.verificarSeleccionVencer(cuota)}"
+													update=":form:tabsCuentas:seccionTotal tablaAVencer" />
+										</p:selectBooleanCheckbox>
+										<!-- Seccion de Bonificacion -->
+										<p:outputPanel rendered="#{!DetalleDeuda.seAbonaRS(cuota)}">
+											<div class="cuota-bonificada">
+												<i class="fa fa-check" title="Bonificado"></i>
+											</div>
+										</p:outputPanel>
+										<!-- Seccion de Bonificacion -->
+									</p:column>
+
+									<p:column headerText="Tasa" width="160" rendered="#{DetalleDeuda.esComercio()}">
+										<h:outputText value="#{cuota.tasa}" />
+									</p:column>
+
+									<p:column headerText="Periodo">
+										<h:outputText value="#{comunBean.ajustarPeriodo(cuota.periodo)}" />
+									</p:column>
+	
+									<p:column headerText="Capital">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.capital)}" />
+									</p:column>
+	
+									<p:column headerText="Recargo">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.recargo)}" />
+									</p:column>
+	
+									<p:column headerText="Multa">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.multa)}" />
+									</p:column>
+	
+									<p:column headerText="Total">
+										<h:outputText value="#{comunBean.formatearMoneda(cuota.total)}" />
+									</p:column>
+	
+									<p:column headerText="Vencimiento">
+										<h:outputText value="#{comunBean.ajustarFecha(cuota.fechaVencimiento)}" />
+									</p:column>
+								</p:dataTable>
+							</div>
+						</div>
+						<!-- Fin periodos a vencer -->
+					</div>
+					
+					<div class="#{DetalleDeuda.esComercio() ? 'col-md-4' : 'col-md-6'} col-xs-12">
+						<!-- Inicio Total y Pagos -->
+						<div class="arriba-15">
+							
+							<h:panelGroup id="cartelesDeuda">
+							    <ui:fragment rendered="#{DetalleDeuda.deuda.tieneDeudaLegales}" >
+							    	<div class="col-xs-12 abajo-20 text-center recaudro-deuda">
+							   			<span class="f-20-600">La cuenta posee deudas en Legales</span>
+							   			<br/>
+										<span class="f-16-600">La cuenta tiene periodos al cobro por vía judicial. Para conocer el detalle diríjase a la oficina de APREMIOS</span>
+							   		</div>
+							    </ui:fragment>
+							    <ui:fragment rendered="#{DetalleDeuda.muestroCarcelCancelacion() and DetalleDeuda.descuentoMostrable>0}" >
+							    	<div class="col-xs-12 abajo-20 text-center recaudro-simple">
+										<span class="texto-cancelar">¡Si cancela toda la deuda<br/>obtendrá un descuento de <b>#{comunBean.formatearMoneda(DetalleDeuda.descuentoMostrable)}</b>!</span>
+										<br/>
+										<p:commandLink actionListener="#{DetalleDeuda.cancelarDeuda()}"
+													   onclick="PF('bloqueoPantalla').show();"
+													   oncomplete="PF('bloqueoPantalla').hide()"
+													   update=":form:tabsCuentas:"
+													   styleClass=""
+													   rendered="#{comunBean.esContribuyente()}">						
+											<span class="btn btn-primary btn-rounded ui-button arriba-10">Cancelar Deuda</span>
+										</p:commandLink>
+									</div>
+							    </ui:fragment>
+							</h:panelGroup>
+							
+							<p:outputPanel id="seccionTotal">
+								<div class="col-xs-12 totalPago contenedor-deuda">
+									<span class="pull-left f-20-600 ">Total a Abonar</span>
+									<span class="pull-right f-20-600 ">
+										<b><p:outputLabel rendered="#{DetalleDeuda.aplicaDescuento() and DetalleDeuda.seCancelaDeuda() and DetalleDeuda.total != DetalleDeuda.totalConDescuento() or DetalleDeuda.pagoSemestral}" value="#{comunBean.formatearMoneda(DetalleDeuda.total)}" styleClass="f-12-600 tachado"/></b>
+										<b><h:outputText  rendered="#{DetalleDeuda.seCancelaDeuda() or DetalleDeuda.pagoSemestral}" value="#{comunBean.formatearMoneda(DetalleDeuda.totalConDescuento())}" styleClass="monto-resaltdo"/></b>
+
+										<b><p:outputLabel rendered="#{!DetalleDeuda.seCancelaDeuda() and !DetalleDeuda.pagoSemestral}" value="#{comunBean.formatearMoneda(DetalleDeuda.total)}"/></b>
+									</span>
+								</div>
+							</p:outputPanel>
+							
+							<p:outputPanel rendered="#{DetalleDeuda.tienePagosVencidosOAVencer()}" styleClass="col-xs-12 arriba-15">
+								<span class="pull-left f-16-600 color-azul-primary">Medios de Pago</span>
+								<div class="row">
+
+									<!-- PARA CUANDO NO ES COMERCIO -->
+									<p:outputPanel rendered="#{!DetalleDeuda.esComercio()}">
+										<div class="col-xs-12 contenedor-medios-pago arriba-20">
+											<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+												<p:commandLink actionListener="#{DetalleDeuda.abrirModalRecibo()}"
+															   onclick="PF('bloqueoPantalla').show()"
+															   oncomplete="PF('bloqueoPantalla').hide();"
+															   update="alertaBoleta">
+													<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/boleta_pago.png" class="img-fluid full-size icono-medio-pago"></img>
+												</p:commandLink>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+												<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaMercadoPago')}"
+															   rendered="#{comunBean.esContribuyente()}">
+													<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/mercadopago.png" class="img-fluid full-size icono-medio-pago" title="Mercado Pago" style="padding:5px;"></img>
+												</p:commandLink>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+												<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaTarjeta')}"
+															   rendered="#{comunBean.esContribuyente()}">
+													<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/tarjetas.png" class="img-fluid full-size icono-medio-pago" title="Tarjetas de Cr&eacute;dito"></img>
+												</p:commandLink>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+												<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaPMC')}"
+															   rendered="#{comunBean.esContribuyente()}" >
+													<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/pagomiscuentas.png" class="img-fluid full-size icono-medio-pago" title="Pago Mis Cuentas"></img>
+												</p:commandLink>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+												<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaLink')}"
+															   rendered="#{comunBean.esContribuyente()}">
+													<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/redlink.png" class="img-fluid full-size icono-medio-pago" title="Red Link"></img>
+												</p:commandLink>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 pagos">
+												<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaInterbanking')}"
+															   rendered="#{comunBean.esContribuyente()}">
+													<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/interbanking.png" class="img-fluid full-size icono-medio-pago" title="Interbanking"></img>
+												</p:commandLink>
+											</div>
+										</div>
+									</p:outputPanel>
+
+									<!-- PARA CUANDO ES COMERCIO -->
+									<p:outputPanel rendered="#{DetalleDeuda.esComercio()}">
+										<div class="col-xs-12 arriba-20">
+
+											<div class="contenedor-medios-pago">
+												<div class="col-md-4 col-sm-6 col-xs-12 pagos">
+													<p:commandLink actionListener="#{DetalleDeuda.abrirModalRecibo()}"
+																   onclick="PF('bloqueoPantalla').show()"
+																   oncomplete="PF('bloqueoPantalla').hide();"
+																   update="alertaBoleta">
+														<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/boleta_pago.png" class="img-fluid full-size icono-medio-pago"></img>
+													</p:commandLink>
+												</div>
+												<div class="col-md-4 col-sm-6 col-xs-12 pagos">
+													<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaMercadoPago')}"
+																   rendered="#{comunBean.esContribuyente()}">
+														<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/mercadopago.png" class="img-fluid full-size icono-medio-pago" title="Mercado Pago" style="padding:5px;"></img>
+													</p:commandLink>
+												</div>
+												<div class="col-md-4 col-sm-6 col-xs-12 pagos">
+													<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaTarjeta')}"
+																   rendered="#{comunBean.esContribuyente()}">
+														<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/tarjetas.png" class="img-fluid full-size icono-medio-pago" title="Tarjetas de Cr&eacute;dito"></img>
+													</p:commandLink>
+												</div>
+											</div>
+											<div class="contenedor-medios-pago m-t-md">
+												<div class="col-md-4 col-sm-6 col-xs-12 pagos">
+													<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaPMC')}"
+																   rendered="#{comunBean.esContribuyente()}" >
+														<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/pagomiscuentas.png" class="img-fluid full-size icono-medio-pago" title="Pago Mis Cuentas"></img>
+													</p:commandLink>
+												</div>
+												<div class="col-md-4 col-sm-6 col-xs-12 pagos">
+													<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaLink')}"
+																   rendered="#{comunBean.esContribuyente()}">
+														<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/redlink.png" class="img-fluid full-size icono-medio-pago" title="Red Link"></img>
+													</p:commandLink>
+												</div>
+												<div class="col-md-4 col-sm-6 col-xs-12 pagos">
+													<p:commandLink actionListener="#{DetalleDeuda.abrirModal('AlertaInterbanking')}"
+																   rendered="#{comunBean.esContribuyente()}">
+														<img src="https://www.vicentelopez.gov.ar/static-iipp/p/imgs/interbanking.png" class="img-fluid full-size icono-medio-pago" title="Interbanking"></img>
+													</p:commandLink>
+												</div>
+											</div>
+										</div>
+									</p:outputPanel>
+
+								</div>
+							</p:outputPanel>
+						</div>
+						<!-- Fin total y pagos -->
+		
+						<ui:include src="/tiles/home/mensajes_pagos.xhtml" />
+						<ui:include src="/tiles/home/modal_recibo.xhtml" />
+						
+						<!-- Inicio - Mensaje de bonificacion -->
+						<p:dialog widgetVar="AblSemestral"
+								  modal="true"
+								  header="¡DESCUENTO POR PAGO SEMESTRAL!"
+								  styleClass="modal-bonificacion">
+
+							<div class="">
+								<div class="col-xs-12">
+									<p class="mensaje-bonificacion">
+										ABONE HASTA EL 28/7 LOS PERIODOS 7 A 12 <br/>
+										Y OBTENGA EL 10% DE DESCUENTO POR PAGO ANTICIPADO,<br/>
+										ADICIONAL AL 10% POR BUEN CONTRIBUYENTE (*)<br/>
+										(*) el segundo descuento aplica para los contribuyentes que no registran deuda
+									</p>
+								</div>
+							</div>
+							<p:commandButton value="Cerrar"
+											 onclick="PF('AblSemestral').hide();"
+											 styleClass="btn btn-primary btn-rounded arriba-20"
+											 type="button"/>
+						</p:dialog>
+
+						<p:dialog widgetVar="BonificacionPendiente"
+								  modal="true"
+								  header="¡Importante Bonificación!"
+								  styleClass="modal-bonificacion">
+								  
+							<div class="">
+								<div class="col-xs-12">
+									<p class="mensaje-bonificacion">
+										Abone la/las cuotas adeudadas del Régimen Simplificado<br/>
+										para acceder a la BONIFICACION de las cuotas 7 a 12<br/>
+										de acuerdo a lo establecido en la <span class="mensaje-decreto"><a href="https://www.vicentelopez.gov.ar/static-iipp/p/IIPP/normativas/resoluciones/Resolucion_1303_19_Reg_Simplif.pdf" target="_blank">Resolución Nº 1303/19</a></span>.<br/><br/>
+									</p>
+								</div>								
+							</div>
+						    <p:commandButton value="Cerrar"
+											 onclick="PF('BonificacionPendiente').hide();"
+											 styleClass="btn btn-primary btn-rounded arriba-20"
+											 type="button"/>
+						</p:dialog> 
+						
+						<p:dialog widgetVar="BonificacionEfectiva" 
+								  modal="true"
+								  header="¡Cuotas Bonificadas!"
+								  styleClass="modal-bonificacion">
+								  
+							<div class="">
+								<div class="col-xs-12">
+									<p class="mensaje-bonificacion">
+										Las cuotas 2, 3, 4, 5 y 6 del Régimen Simplificado<br/>
+										del año en curso han sido BONIFICADAS<br/>
+										mediante <span class="mensaje-decreto"><a href="https://www.vicentelopez.gov.ar/static-iipp/p/IIPP/normativas/resoluciones/Resolucion_548_2020_Regimen_Simplificado_Bonificacion_anticipos_2_al_6_de_2020.pdf" target="_blank">Resolución Nº 548/20</a></span>.<br/><br/>
+									</p>
+								</div>
+							</div>
+							<p:commandButton value="Cerrar"
+										 onclick="PF('BonificacionEfectiva').hide();"
+										 styleClass="btn btn-primary btn-rounded arriba-20"
+										 type="button"/>
+						</p:dialog> 
+						<!-- Fin - Mensaje de bonificacion -->
+						
+						<p:dialog widgetVar="descuentoPresencial" 
+								  modal="true"
+								  header="¡Importantes Beneficios!"
+								  styleClass="modal-bonificacion">
+								  
+							<div class="">
+								<div class="col-xs-12">
+									<p class="mensaje-bonificacion">
+										Consulte c&oacute;mo acceder a los beneficios<br/>de pago contado, de la deuda:<br/><br/>
+									</p>
+									<span class="mensaje-decreto"><a href="https://www.vicentelopez.gov.ar/ingresos-publicos/info/preguntasFrecuentes" target="_blank">Beneficios de Pago al Contado</a><br/></span>
+								</div>
+							</div>
+						    <p:commandButton value="Cerrar"
+											 onclick="PF('descuentoPresencial').hide();"
+											 styleClass="btn btn-primary btn-rounded pull-center arriba-20"
+											 type="button"/>
+						</p:dialog>
+						
+						<p:dialog widgetVar="montoReciboExcedido" 
+								  modal="true"
+								  header="Limite de Pago Presencial"
+								  styleClass="modal-bonificacion">
+								  
+							<div class="">
+								<div class="col-xs-12">
+									<p class="mensaje-bonificacion">
+										El l&iacute;mite de pago por Boleta, es de $ 999.999.<br/>
+										Montos mayores a este deben ser abonados por<br/>
+										Medios de Pago Online. 
+									</p>
+								</div>
+							</div>
+						    <p:commandButton value="Cerrar"
+											 onclick="PF('montoReciboExcedido').hide();"
+											 styleClass="btn btn-primary btn-rounded pull-center arriba-20"
+											 type="button"/>
+						</p:dialog>
+					</div>
+				</div>
+			</p:outputPanel>
+		</div>
+	</div>
+
+</ui:composition>
+</html>

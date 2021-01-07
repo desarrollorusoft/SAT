@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/comun_publico.xhtml">
+
+		<ui:define name="titulo-pagina">LOGIN - RS</ui:define>
+
+		<ui:define name="contenido">
+
+			<div class="middle-box text-center animated fadeInDown">
+				<div>
+					<h2 class="color-azul-secondary"><strong>Régimen Simplificado</strong></h2>
+					<h2 class="color-azul-secondary m-t-xs m-b-md">para Comercio e Industria</h2>
+				
+					<div class="contenedor">
+						<h2 class="color-azul-primary pull-left abajo-20 titulo-login">Ingreso</h2>
+						<div class="col-xs-12 ">
+							<h4 class="pull-left abajo-20">
+					    		<strong>Ingresá con tu Clave Fiscal</strong>
+					    	</h4>
+					    </div>
+						<div class="col-xs-12">
+							<div class="row">
+								<div class="form-group">
+									<label class="pull-left">CUIT/CUIL*</label>
+									<p:inputMask value="#{LoginRS.cuit}" styleClass="form-control" placeholder="CUIT/CUIL" mask="99-99999999-9"/>
+								</div>
+							</div>
+						</div>
+			
+						<div class="col-xs-12">
+							<div class="row">
+								<div class="form-group">
+									<label class="pull-left">Contraseña*</label>
+									<p:password value="#{LoginRS.clave}" styleClass="form-control" placeholder="Contraseña" />
+								</div>
+							</div>
+						</div>
+			
+						<div class="arriba-20 full-width">
+							<div class="margin-auto">
+								<p:commandButton id="botonLogin"
+												 value="Ingresar"
+												 styleClass="btn btn-primary m-b btn-primary btn-rounded"
+												 action="#{LoginRS.logueo()}"
+												 onclick="PF('bloqueoPantalla').show();"
+											 	 oncomplete="PF('bloqueoPantalla').hide()" />
+							</div>
+						</div>
+			
+						<h:commandLink action="#{LoginRS.olvidoClave()}" styleClass="pull-left color-azul-primary">
+							¿Olvidó su contraseña?
+						</h:commandLink>
+						<br/><br/>
+						<h:commandLink action="#{LoginRS.noActivoCuenta()}" styleClass="pull-left color-azul-primary">
+							¿No activó su cuenta?
+						</h:commandLink>
+						<br/><br/><div class="full-width">
+							<div class="margin-auto">
+								<p:commandButton value="Registrarse"
+												 styleClass="btn btn-sm btn-white btn-primary btn-outline btn-rounded"
+												 action="#{LoginRS.primeraVez()}" />
+							</div>
+						</div>
+						<div class="col-xs-12 m-t-md">
+				            Para más información ingrese 
+				            <a href="https://www.vicentelopez.gov.ar/static-iipp/p/IIPP/instructivo/RS/Instructivo_Regimen_Simplificado_2019.pdf" style="color: #2962FF" target="blank"> aquí</a>
+				        </div>
+				        <br/><br/>
+						<div class="col-xs-12 m-t-md">
+				            <a href="https://www.vicentelopez.gov.ar/static-iipp/p/SAT/pdfs/terminos_y_condiciones.pdf" style="color: #2962FF" target="blank"> T&eacute;rminos y Condiciones</a>
+				        </div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Se agrega la modal de TyC -->
+			<ui:include src="/tiles/modal-tyc.xhtml" >
+				<ui:param name="Bean" value="#{LoginRS}" />
+			</ui:include>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

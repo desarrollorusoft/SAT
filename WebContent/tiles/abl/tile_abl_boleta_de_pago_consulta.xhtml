@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:body>
+	<ui:composition>
+		<f:facet name="last">
+			<h:outputStylesheet library="css" name="abl.css" />
+		</f:facet>
+		<div class="contenedor-texto abajo-10">
+			<p:outputLabel value="Seleccione Fecha de Pago"/>
+				
+			<p:calendar id="popupFechaDePagoPagoDiferido"
+						value="#{ablBoletaDePagoConsultaBean.fechaSeleccionada}"
+						mindate="#{ablBoletaDePagoConsultaBean.fechaMinimaDePago}"
+						maxdate="#{comunBean.fechaMaximaCon(60)}"
+						locale="es"
+						styleClass="text-comun" >
+						
+				<p:ajax event="dateSelect"
+						listener="#{ablBoletaDePagoConsultaBean.abrirAlerta()}"
+						update=":form:modalAlerta" />
+			</p:calendar>
+			
+			<p:dialog id="modalAlerta" 
+					  widgetVar="alerta" 
+					  modal="true" 
+					  header="Atención" 
+					  width="400" 
+					  closable="false"
+					  resizable="false"
+					  style="font-size:15px;text-align:justify;">
+					  
+				<h:outputText value="#{ablBoletaDePagoConsultaBean.mensajeAlerta}" /><br/><br/>
+				<h:outputText value="¿Confirma la fecha seleccionada?" /><br/><br/><br/>
+				<p:commandButton value="Aceptar" 
+								 actionListener="#{ablBoletaDePagoConsultaBean.confirmarFecha()}" 
+								 onstart="PF('alerta').hide();PF('bloqueoPantallaContenido').show()"
+								 oncomplete="PF('bloqueoPantallaContenido').hide()"
+								 update="panelesReciboPagoDiferido listaDeuda"
+								 styleClass="derecha" >
+				</p:commandButton>
+				<p:commandButton value="Cancelar" onclick="PF('alerta').hide()"></p:commandButton>
+			</p:dialog>		
+		</div>
+		
+		<p:outputPanel id="leyendaLegales">
+			<p:outputPanel rendered="#{ablBoletaDePagoConsultaBean.deudaEnLegales}">
+				<div class="label-destacado" style="text-align: center; font-size: 20px; font-family: Brandon Grotesque med; background-color:#F11212; margin:0">
+					<h:outputText value="Usted posee deudas en Legales"/>
+					<div style="text-align: center; font-size: 16px; font-family: Brandon Grotesque med;">
+						<h:outputText value="La cuenta tiene periodos al cobro por vía judicial. Para conocer el detalle diríjase a la oficina de APREMIOS"></h:outputText>
+					</div>
+				</div>
+			</p:outputPanel>
+		</p:outputPanel>
+		
+		<p:outputPanel rendered="#{ablBoletaDePagoBean.renderedPanel and !ablBoletaDePagoConsultaBean.deudaEnLegales}">
+			<div class="label-destacado">
+				<h:outputText value="CANCELE SU DEUDA AL CONTADO Y ACCEDA A IMPORTANTES DESCUENTOS"/> 
+				<div class="contenedor-tabla">
+					<div class="contenedor-tabla-totales-contado">
+						<div style="text-align:center;">
+							<div class="tabla-contenido-cabecera columna-pago-contado" style="margin-left: 30px;"><h:outputText value="Capital" /></div>
+							<div class="tabla-contenido-cabecera columna-pago-contado"><h:outputText value="Multas" /></div>
+							<div class="tabla-contenido-cabecera columna-pago-contado"><h:outputText value="Recargos" /></div>
+							<div class="tabla-contenido-cabecera columna-pago-contado"><h:outputText value="Total a Pagar" /></div>
+							<div class="tabla-contenido-cabecera-pagar  columna-pago-contado-mini"><h:outputText value="Contado" /></div>										
+							
+							<div class="tabla-contenido columna-pago-contado" style="background: white; color: black; margin-left: 30px;"><h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoConsultaBean.deudaCuentaAbl.totalApagarContado.capital)}" /></div>
+							<div class="tabla-contenido columna-pago-contado" style="background: white; color: black;"><h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoConsultaBean.deudaCuentaAbl.totalApagarContado.multa)}" /></div>
+							<div class="tabla-contenido columna-pago-contado" style="background: white; color: black;"><h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoConsultaBean.deudaCuentaAbl.totalApagarContado.recargo)}"/></div>
+							<div class="tabla-contenido columna-pago-contado" style="background: white; color: black;"><h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoConsultaBean.deudaCuentaAbl.totalApagarContado.total)}" /></div>
+							<div class="tabla-contenido-pagar columna-pago-contado-mini" style="background: white; color: black;">
+							<p:selectBooleanCheckbox value="#{ablBoletaDePagoConsultaBean.pagoContado}" 
+													 style="margin-top: 4px;" >
+								 <p:ajax update="listaDeuda" listener="#{ablBoletaDePagoConsultaBean.selecionarPagoContado()}"/>
+							</p:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>					
+				</div>
+				<div style="text-align: center; font-size: 20px; font-family: Brandon Grotesque med;">
+					<h:outputText value="Descuento total obtenido "></h:outputText>
+					<h:outputText value="#{comunBean.formatearMoneda(ablBoletaDePagoConsultaBean.deudaCuentaAbl.totalApagarContado.recargo)}"></h:outputText>
+				</div>	
+				</div>
+		</p:outputPanel>
+		
+		<div class="contenedor-texto">
+			<p:outputLabel rendered="#{ablBoletaDePagoBean.renderedPanel}"
+						   value="Para abonar parcialmente su deuda, seleccione los periodos que desea incluir y haga click en" />
+				
+			<p:outputLabel rendered="#{ablBoletaDePagoBean.renderedPanel}"
+						   style="font-style: oblique; font-weight: bold;" value="VER RESUMEN" />
+		</div>
+
+		<div class="contenedor-tabla">
+			<p:dataTable id="listaDeuda"
+						 var="dupla"
+						 value="#{ablBoletaDePagoConsultaBean.deudaCuentaAbl.duplaCuotasAPagar}"
+						 rendered="#{ablBoletaDePagoBean.renderedPanel}"
+						 emptyMessage="No se encontraron registros.">
+						 
+				<p:column headerText="Tributo">
+					<h:outputText value="#{dupla.cuotaAbl.tasa}" rendered="#{dupla.tieneABL()}" />
+					<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+					<h:outputText value="#{dupla.cuotaProt.tasa}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+				</p:column>
+				
+				<p:column headerText="Periodo">
+					<h:outputText value="#{comunBean.ajustarPeriodo(dupla.periodo)}" />
+				</p:column>
+				
+				<p:column headerText="Capital">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.capital)}" rendered="#{dupla.tieneABL()}" />
+					<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.capital)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+				</p:column>
+				
+				<p:column headerText="Recargo">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.recargo)}" rendered="#{dupla.tieneABL()}" />
+					<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.recargo)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+				</p:column>
+				
+				<p:column headerText="Multa">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.multa)}" rendered="#{dupla.tieneABL()}" />
+					<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.multa)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+				</p:column>
+				
+				<p:column headerText="Total">
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaAbl.total)}" rendered="#{dupla.tieneABL()}" />
+					<p:outputPanel rendered="#{dupla.tieneABL() and dupla.tieneProteccionCiudadana()}" />
+					<h:outputText value="#{comunBean.formatearMoneda(dupla.cuotaProt.total)}" rendered="#{dupla.tieneProteccionCiudadana()}" />
+				</p:column>
+				
+				<p:column headerText="Pagar">
+					<p:selectBooleanCheckbox value="#{dupla.pagar}" disabled="#{ablBoletaDePagoConsultaBean.pagoContado and dupla.vencida}">
+						<p:ajax listener="#{ablBoletaDePagoConsultaBean.verificarSeleccion(dupla)}" update=":form:panelesReciboPagoDiferido listaDeuda" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+			</p:dataTable>
+		</div>
+
+		<div class="contenedor-botonera" style="width: 100%; text-align: center;">
+			<h:panelGroup rendered="#{ablBoletaDePagoBean.renderedPanel}">
+				<p:commandButton rendered="#{ablBoletaDePagoConsultaBean.tieneCuotas()}"
+								 value="VER RESUMEN"
+								 action="#{ablBoletaDePagoConsultaBean.verResumen()}"
+								 update=":form:panelesReciboPagoDiferido form:div-TablaCuentas" 
+								 onstart="PF('bloqueoPantallaContenido').show()"
+								 oncomplete="PF('bloqueoPantallaContenido').hide()"
+								 styleClass="boton-principal" />
+			</h:panelGroup>
+		</div>
+		
+	</ui:composition>
+</h:body>
+</html>

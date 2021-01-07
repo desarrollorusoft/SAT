@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:body>
+		<ui:composition>
+			
+			<p:dialog widgetVar="ModalAlias"
+					  id="modalAlias"
+					  header="Cambio de Alias"
+					  modal="true"
+					  closable="true"
+					  hideEffect="fade"
+					  showEffect="fade"
+					  width="400"
+					  styleClass="modalAlias" >
+					  
+			    <div class="container-flex">
+		        	<p:inputText value="#{ModalAlias.alias}" styleClass="inputAlias"/>
+		        </div>
+		        <div class="modal-footer">
+		        	<p:commandButton value="Aceptar"
+								 	 actionListener="#{ModalAlias.actualizar()}"
+								 	 styleClass="btn btn-primary btn-rounded pull-right"
+								 	 onclick="PF('ModalAlias').hide();PF('bloqueoPantalla').show();"
+								 	 oncomplete="PF('bloqueoPantalla').hide()" />
+								 
+					<p:commandButton value="Cancelar" 
+									 styleClass="btn btn-default btn-rounded pull-left" 
+									 onclick="PF('ModalAlias').hide();"
+									 actionListener="#{ModalAlias.cancelar()}"/>
+		      	</div>
+			</p:dialog>  
+			
+		</ui:composition>
+	</h:body>
+</html>

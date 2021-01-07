@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:composition>
+
+
+    <!-- Inicio Tabs -->
+    <p:tabView value="#{ListaCuentas.tiposCuenta}" var="tributo">
+        <p:tab titleStyleClass="#{ListaCuentas.iconoSolapa(tributo)}"
+               title="( #{ListaCuentas.recuperarCuentas(tributo).size()} )">
+            <div class="row">
+                <div class="col-xs-12 m-t-md">
+                    <div class="form-group">
+                        <input id="filtroCuentas-#{tributo.codigo}"
+                               class="form-control ng-untouched ng-pristine ng-valid"
+                               onkeyup="filtrarCuentas('#{tributo.codigo}')" type="text"/>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <p:dataTable id="tablaCuentas"
+                                 value="#{ListaCuentas.recuperarCuentas(tributo)}"
+                                 var="cuenta"
+                                 emptyMessage="No hay cuentas"
+                                 rowKey="#{cuenta.hashCode()}"
+                                 styleClass="table tabla-cuentas table-striped sin-bordes-costado text-center tabla-filtrar-#{tributo.codigo}"
+                                 scrollable="true"
+                                 scrollHeight="476">
+
+                        <p:column headerText="Cuenta"> <!-- width="17%" -->
+                            <h:outputText value="#{cuenta.datoCuenta}"/>
+                        </p:column>
+
+                        <p:column headerText="Descripción"> <!-- width="41%" -->
+                            <h:outputText value="#{cuenta.descripcion}"/>
+                        </p:column>
+
+                        <p:column headerText="Deuda / A vencer"> <!-- width="25%" -->
+                            <p:outputPanel rendered="#{!cuenta.esPileta()}">
+                                <h:outputText value="#{comunBean.formatearMoneda(cuenta.deuda)}"
+                                              styleClass="monto-deuda"/> / <h:outputText
+                                    value="#{comunBean.formatearMoneda(cuenta.aVencer)}" styleClass="monto-vencer"/>
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{cuenta.esPileta()}">
+                                <h:outputText value="#{comunBean.formatearMoneda(cuenta.deuda)}"
+                                              styleClass="monto-deuda"/>
+                            </p:outputPanel>
+                        </p:column>
+
+                        <p:column headerText="Acción">
+                    <p:commandButton value=""
+                                     actionListener="#{ListaCuentas.cargarModalAlias(cuenta)}"
+                                     oncomplete="PF('ModalAlias').show()"
+                                     update=":form"
+                                     styleClass="btn btn-primary btn-circle fas fa-pencil-alt text-right"
+                                     rendered="#{comunBean.esContribuyente()}">
+
+                        <p:tooltip value="modificar alias"></p:tooltip>
+                    </p:commandButton>
+
+                            <p:commandButton value=""
+                                             actionListener="#{ListaCuentas.desvincular(cuenta)}"
+                                             styleClass="btn btn-primary btn-circle fa fa-times"
+                                             rendered="#{comunBean.esContribuyente()}"/>
+                            <p:commandButton value=""
+                                             actionListener="#{ListaCuentas.detalle(cuenta)}"
+                                             styleClass="btn btn-primary btn-circle fa fa-info text-navy "
+                                             update=":form:secciones"
+                                             onclick="PF('bloqueoPantalla').show();"
+                                             oncomplete="PF('bloqueoPantalla').hide()"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </p:tab>
+    </p:tabView>
+
+    <!-- Fin Tabs -->
+</ui:composition>
+</html>

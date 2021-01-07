@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<ui:composition>
+		
+		<p:dialog id="modalTyC" 
+				  widgetVar="ModalTyC" 
+				  showEffect="fade"
+				  hideEffect="fade" 
+				  modal="true" 
+				  resizable="false" 
+				  closable="false"
+				  dynamic="true" 
+				  width="1024px"
+				  style="width: 300px; background-color: #EEECEC;">
+
+			<object type="application/pdf"
+				data="https://www.vicentelopez.gov.ar/static-iipp/p/SAT/pdfs/terminos_y_condiciones.pdf"
+				height="500px" width="100%"> No se encontró el documento.
+			</object>
+
+			<div class="contenedor-botonera arriba-10">
+				<div class="pull-left">
+					<p:commandButton value="CANCELAR" 
+									 type="button"
+									 styleClass="btn btn-outline btn-default btn-rounded"
+									 onclick="PF('ModalTyC').hide()" />
+				</div>
+				<div class="pull-right">
+					<p:commandButton value="ACEPTAR" 
+									 action="#{Bean.aceptaTyC()}"
+									 styleClass="btn btn-primary btn-outline btn-rounded" />
+				</div>
+			</div>
+		</p:dialog>
+		
+	</ui:composition>
+</html>

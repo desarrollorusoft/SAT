@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition>
+			<div class="text-center flex">
+				<h:outputText value="#{bloqueoPlataformaBean.titulo}" styleClass="titulo" />
+				<br />
+				<br />
+				<p>
+					Estimado,Contribuyente<br/>
+					Usted no tiene acceso a esta Pagina,<br/><br/>
+					Para realizar una consulta dirijase al <a href="../externos/formulario_consultas.xhtml">Formulario de Consultas</a>
+				</p>
+			</div>		
+	</ui:composition>
+</html>
